@@ -134,8 +134,13 @@ func (c Compiler) handleMetaFuncs(funcs map[string]string) {
 }
 
 func (c Compiler) handleParams(i input.DTO, result *compiled.DTO) {
-	// todo the following code is unstable, iterate over slice instead of map
-	for n, v := range i.Params {
+	var names []string
+	for n, _ := range i.Params {
+		names = append(names, n)
+	}
+	sort.Strings(names)
+	for _, n := range names {
+		v := i.Params[n]
 		param, err := c.paramResolver.Resolve(v)
 		if err != nil {
 			throwCompilerError(
