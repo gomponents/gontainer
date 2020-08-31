@@ -1,6 +1,7 @@
 package input
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -36,18 +37,40 @@ func TestCreateDefaultDTO(t *testing.T) {
 }
 
 func TestTag_UnmarshalYAML(t *testing.T) {
-	y1 := `
+	scenarios := []struct {
+		input  string
+		output Tag
+		error  string
+	}{
+		{
+			input: `
 name: hello
 priority: 100
-`
-	t1 := Tag{}
-	err1 := yaml.Unmarshal([]byte(y1), &t1)
-	assert.NoError(t, err1)
-	assert.Equal(t, Tag{Name: "hello", Priority: 100}, t1)
+`,
+			output: Tag{Name: "hello", Priority: 100},
+		},
+		{
+			input: `
+name: hello
+`,
+			output: Tag{Name: "hello"},
+		},
+		{
+			input:  "tag",
+			output: Tag{Name: "tag"},
+		},
+	}
 
-	y2 := `tag`
-	t2 := Tag{}
-	err2 := yaml.Unmarshal([]byte(y2), &t2)
-	assert.NoError(t, err2)
-	assert.Equal(t, Tag{Name: "tag", Priority: 0}, t2)
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			tag := Tag{}
+			err := yaml.Unmarshal([]byte(s.input), &tag)
+			if s.error != "" {
+				assert.EqualError(t, err, s.error)
+				return
+			}
+			assert.NoError(t, err)
+			assert.Equal(t, s.output, tag)
+		})
+	}
 }
