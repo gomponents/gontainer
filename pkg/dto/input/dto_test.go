@@ -69,6 +69,17 @@ func TestCall_UnmarshalYAML(t *testing.T) {
 			assert.Equal(t, s.output, call)
 		})
 	}
+
+	t.Run("Given unmarshal error", func(t *testing.T) {
+		call := Call{}
+		assert.EqualError(
+			t,
+			call.UnmarshalYAML(func(interface{}) error {
+				return fmt.Errorf("some error")
+			}),
+			"some error",
+		)
+	})
 }
 
 func TestCreateDefaultDTO(t *testing.T) {
@@ -134,4 +145,15 @@ priority: 100
 			assert.Equal(t, s.output, tag)
 		})
 	}
+
+	t.Run("Given unmarshal error", func(t *testing.T) {
+		tag := Tag{}
+		assert.EqualError(
+			t,
+			tag.UnmarshalYAML(func(interface{}) error {
+				return fmt.Errorf("some error")
+			}),
+			"some error",
+		)
+	})
 }

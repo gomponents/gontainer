@@ -60,7 +60,7 @@ type Tag struct {
 func (t *Tag) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	var z interface{}
 	if err := unmarshal(&z); err != nil {
-		return nil
+		return err
 	}
 
 	if s, ok := z.(string); ok {
