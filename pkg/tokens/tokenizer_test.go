@@ -29,7 +29,6 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 					Kind:      KindReference,
 					Raw:       "%name%",
 					DependsOn: []string{"name"},
-					Code:      "",
 				},
 			},
 		},
@@ -40,7 +39,6 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 					Kind:      KindReference,
 					Raw:       "%firstname%",
 					DependsOn: []string{"firstname"},
-					Code:      "",
 				},
 				{
 					Kind: KindString,
@@ -50,7 +48,6 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 					Kind:      KindReference,
 					Raw:       "%lastname%",
 					DependsOn: []string{"lastname"},
-					Code:      "",
 				},
 			},
 		},
@@ -61,6 +58,19 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 					Kind: KindCode,
 					Raw:  "%%",
 					Code: `"%"`,
+				},
+			},
+		},
+		{
+			input: "John %",
+			output: []Token{
+				{
+					Kind: KindString,
+					Raw:  "John ",
+				},
+				{
+					Kind: KindString,
+					Raw:  "%",
 				},
 			},
 		},
