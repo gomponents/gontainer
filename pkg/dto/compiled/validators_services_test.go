@@ -74,6 +74,16 @@ func TestValidateServicesCircularDeps(t *testing.T) {
 				},
 			},
 		},
+		{
+			services: []Service{
+				{
+					Name: "library",
+					Fields: []Field{
+						{Name: "Books", Value: Arg{DependsOnTags: []string{"book"}}},
+					},
+				},
+			},
+		},
 	}
 
 	for i, s := range scenarios {
