@@ -8,6 +8,9 @@ templates: clean
 tests-unit: templates
 	go test -coverprofile=coverage.out ./cmd/... ./pkg/...
 
+lint: templates
+	golangci-lint run
+
 code-coverage:
 	go tool cover -func=coverage.out
 
@@ -32,3 +35,7 @@ run-example-env: build
 
 run-example-params:
 	cd examples/params && gontainer dump-params -i gontainer.yml
+
+tests: tests-unit lint
+
+.DEFAULT_GOAL := tests
