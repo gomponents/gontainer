@@ -57,7 +57,7 @@ func ValidateParamsCircularDeps(d DTO) error {
 	})
 
 	for _, p := range params {
-		if deps := finder.find(p.Name); deps != nil {
+		if circular, deps := finder.find(p.Name); circular {
 			return fmt.Errorf("circular dependency in params: %s", strings.Join(deps, " -> "))
 		}
 	}

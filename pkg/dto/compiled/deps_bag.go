@@ -21,8 +21,9 @@ func (c chainDeps) has(id string) bool {
 	return false
 }
 
-func (c circularDepFinder) find(id string) []string {
-	return c.doFind(id, c.findFn(id), make(chainDeps, 0))
+func (c circularDepFinder) find(id string) (bool, []string) {
+	deps := c.doFind(id, c.findFn(id), make(chainDeps, 0))
+	return len(deps) > 0, deps
 }
 
 func (c circularDepFinder) doFind(id string, deps []string, chain chainDeps) []string {

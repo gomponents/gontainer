@@ -18,8 +18,13 @@ func Test_circularDepFinder_doFind(t *testing.T) {
 		return deps
 	})
 
-	assert.Equal(t, []string{"bar", "foobar", "foo", "bar"}, finder.find("bar"))
-	assert.Equal(t, []string{"foo", "bar", "foobar", "foo"}, finder.find("foo"))
-	assert.Nil(t, finder.find("hey"))
-	assert.Nil(t, finder.find("test"))
+	find := func(id string) []string {
+		_, deps := finder.find(id)
+		return deps
+	}
+
+	assert.Equal(t, []string{"bar", "foobar", "foo", "bar"}, find("bar"))
+	assert.Equal(t, []string{"foo", "bar", "foobar", "foo"}, find("foo"))
+	assert.Empty(t, find("hey"))
+	assert.Empty(t, find("test"))
 }

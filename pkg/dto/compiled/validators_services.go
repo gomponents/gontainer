@@ -74,7 +74,7 @@ func ValidateServicesCircularDeps(d DTO) error {
 	})
 
 	for _, s := range services {
-		if deps := finder.find(s.Name); deps != nil {
+		if circular, deps := finder.find(s.Name); circular {
 			return fmt.Errorf("circular dependency in services: %s", strings.Join(deps, " -> "))
 		}
 	}
