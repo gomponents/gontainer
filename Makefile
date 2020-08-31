@@ -29,6 +29,8 @@ globally: build
 
 upgrade-helpers:
 	go get -u github.com/gomponents/gontainer-helpers
+	cd examples/env && go get -u github.com/gomponents/gontainer-helpers
+	cd examples/library && go get -u github.com/gomponents/gontainer-helpers
 
 run-example-library:
 	cd examples/library && go generate && go run main.go
