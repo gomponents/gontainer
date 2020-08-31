@@ -65,17 +65,17 @@ func TestTokenFactoryStrategy(t *testing.T) {
 			supports: false,
 		},
 		{
-			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Env"),
+			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Getenv"),
 			expr:     `%env("FOO")%`,
 			supports: true,
 			token: Token{
 				Kind: KindCode,
 				Raw:  `%env("FOO")%`,
-				Code: `osAlias.Env("FOO")`,
+				Code: `osAlias.Getenv("FOO")`,
 			},
 		},
 		{
-			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Env"),
+			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Getenv"),
 			expr:     `lorep ipsum`,
 			supports: false,
 		},
@@ -99,12 +99,4 @@ func TestTokenFactoryStrategy(t *testing.T) {
 			assert.False(t, s.factory.Supports(s.expr))
 		})
 	}
-}
-
-type mockAliasProvider struct {
-	alias string
-}
-
-func (m mockAliasProvider) GetAlias(string) string {
-	return m.alias
 }

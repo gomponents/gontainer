@@ -17,14 +17,14 @@ func NewPatternTokenizer(strategies []TokenFactoryStrategy, importAliasProvider 
 	return &PatternTokenizer{strategies: strategies, importAliasProvider: importAliasProvider}
 }
 
-func (s PatternTokenizer) RegisterFunction(goImport string, goFunc string, tokenFunc string) {
+func (s *PatternTokenizer) RegisterFunction(goImport string, goFunc string, tokenFunc string) {
 	s.strategies = append(
 		[]TokenFactoryStrategy{NewTokenSimpleFunction(s.importAliasProvider, tokenFunc, goImport, goFunc)},
 		s.strategies...,
 	)
 }
 
-func (s PatternTokenizer) Tokenize(pattern string) ([]Token, error) {
+func (s *PatternTokenizer) Tokenize(pattern string) ([]Token, error) {
 	result := make([]Token, 0)
 
 	opened := false
@@ -70,7 +70,7 @@ func (s PatternTokenizer) Tokenize(pattern string) ([]Token, error) {
 	return result, nil
 }
 
-func (s PatternTokenizer) createToken(expr string) (Token, error) {
+func (s *PatternTokenizer) createToken(expr string) (Token, error) {
 	for _, strategy := range s.strategies {
 		if strategy.Supports(expr) {
 			t, err := strategy.Create(expr)

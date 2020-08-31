@@ -116,6 +116,32 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 	}
 }
 
+func TestPatternTokenizer_RegisterFunction(t *testing.T) {
+	tokenizer := NewPatternTokenizer(nil, mockAliasProvider{alias: "myAlias"})
+	assert.Empty(t, tokenizer.strategies)
+	const expr = `%env("VAR")%`
+
+	tkns1, err1 := tokenizer.Tokenize(expr)
+	assert.EqualError(t, err1, "invalid token `%env(\"VAR\")%`")
+	assert.Empty(t, tkns1)
+
+	tokenizer.RegisterFunction("os", "Getenv", "env")
+	assert.NotEmpty(t, tokenizer.strategies)
+	tkns2, err2 := tokenizer.Tokenize(expr)
+	assert.NoError(t, err2)
+	assert.Equal(
+		t,
+		[]Token{
+			{
+				Kind: KindCode,
+				Raw:  expr,
+				Code: `myAlias.Getenv("VAR")`,
+			},
+		},
+		tkns2,
+	)
+}
+
 type tokenMock struct {
 	supports bool
 	token    Token
