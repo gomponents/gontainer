@@ -17,6 +17,15 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 		nil,
 	)
 	emptyTokenizer := NewPatternTokenizer(nil, nil)
+	errorTokenizer := NewPatternTokenizer(
+		[]TokenFactoryStrategy{
+			tokenMock{
+				supports: true,
+				token:    Token{},
+				error:    fmt.Errorf("custom error"),
+			},
+		}, nil,
+	)
 
 	scenarios := []struct {
 		tokenizer Tokenizer
@@ -85,6 +94,11 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 			input:     "test",
 			error:     "invalid token `test`",
 		},
+		{
+			tokenizer: errorTokenizer,
+			input:     "hello",
+			error:     "cannot create token `hello`: custom error",
+		},
 	}
 
 	for i, s := range scenarios {
@@ -100,4 +114,18 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 			assert.EqualError(t, err, s.error)
 		})
 	}
+}
+
+type tokenMock struct {
+	supports bool
+	token    Token
+	error    error
+}
+
+func (t tokenMock) Supports(string) bool {
+	return t.supports
+}
+
+func (t tokenMock) Create(string) (Token, error) {
+	return t.token, t.error
 }
