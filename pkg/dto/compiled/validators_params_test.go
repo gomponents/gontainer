@@ -67,3 +67,35 @@ func TestValidateParamsReqParamsExist(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateParamsCircularDeps(t *testing.T) {
+	scenarios := []struct {
+		params []Param
+		error  string
+	}{
+		{
+			params: []Param{
+				{Name: "name", DependsOn: []string{"firstname"}},
+				{Name: "firstname"},
+			},
+		},
+		{
+			params: []Param{
+				{Name: "name", DependsOn: []string{"firstname"}},
+				{Name: "firstname", DependsOn: []string{"name"}},
+			},
+			error: "circular dependency in params: firstname -> name -> firstname",
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			err := ValidateParamsCircularDeps(DTO{Params: s.params})
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+			assert.EqualError(t, err, s.error)
+		})
+	}
+}
