@@ -39,8 +39,7 @@ func ValidateParamsReqParamsExist(d DTO) error {
 
 func ValidateParamsCircularDeps(d DTO) error {
 	mapping := make(map[string]Param)
-	//nolint:staticcheck
-	params := append(d.Params)
+	params := append(d.Params) //nolint:staticcheck
 	for _, p := range d.Params {
 		mapping[p.Name] = p
 	}

@@ -67,8 +67,7 @@ func ValidateServicesCircularDeps(d DTO) error {
 		return r
 	})
 
-	//nolint:staticcheck
-	services := append(d.Services)
+	services := append(d.Services) //nolint:staticcheck
 	sort.Slice(services, func(i, j int) bool {
 		return services[i].Name < services[j].Name
 	})
