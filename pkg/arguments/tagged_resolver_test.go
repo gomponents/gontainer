@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestServiceResolver_Supports(t *testing.T) {
+func TestTaggedResolver_Supports(t *testing.T) {
 	scenarios := []struct {
 		input  interface{}
 		output bool
@@ -22,23 +22,11 @@ func TestServiceResolver_Supports(t *testing.T) {
 			output: false,
 		},
 		{
-			input:  "@service",
+			input:  "!tagged tagName",
 			output: true,
 		},
 		{
-			input:  "@@",
-			output: false,
-		},
-		{
-			input:  "@",
-			output: false,
-		},
-		{
-			input:  "@ service",
-			output: false,
-		},
-		{
-			input:  "@s.e_r.v_i_c_e",
+			input:  "!tagged tag_name",
 			output: true,
 		},
 	}
@@ -48,21 +36,21 @@ func TestServiceResolver_Supports(t *testing.T) {
 			assert.Equal(
 				t,
 				s.output,
-				NewServiceResolver().Supports(s.input),
+				NewTaggedResolver().Supports(s.input),
 			)
 		})
 	}
 }
 
-func TestServiceResolver_Resolve(t *testing.T) {
-	arg, err := NewServiceResolver().Resolve("@db")
+func TestTaggedResolver_Resolve(t *testing.T) {
+	arg, err := NewTaggedResolver().Resolve("!tagged my_tag")
 	assert.NoError(t, err)
 	assert.Equal(
 		t,
 		compiled.Arg{
-			Code:              `container.MustGet("db")`,
-			Raw:               "@db",
-			DependsOnServices: []string{"db"},
+			Code:          `container.MustGetByTag("my_tag")`,
+			Raw:           "!tagged my_tag",
+			DependsOnTags: []string{"my_tag"},
 		},
 		arg,
 	)
