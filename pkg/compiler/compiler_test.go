@@ -22,9 +22,31 @@ func TestCompiler_handleService(t *testing.T) {
 			output: compiled.Service{Name: "db", Todo: true},
 		},
 		{
-			name:   "db",
-			input:  input.Service{Constructor: `"mypkg/db".NewDB`},
-			output: compiled.Service{Name: "db", Constructor: "alias.NewDB"},
+			name: "db",
+			input: input.Service{
+				Constructor: `"mypkg/db".NewDB`,
+				Fields: map[string]interface{}{
+					"Port": "%port%",
+					"Host": "%host%",
+				},
+				Tags: []input.Tag{
+					{"storage", 100},
+					{"sql", 0},
+				},
+			},
+			output: compiled.Service{
+				Name:        "db",
+				Constructor: "alias.NewDB",
+				Fields: []compiled.Field{
+					{"Host", compiled.Arg{Code: "mock"}},
+					{"Port", compiled.Arg{Code: "mock"}},
+				},
+				Tags: []compiled.Tag{
+					{"storage", 100},
+					{"sql", 0},
+				},
+			},
+			argResolver: mockArgResolver{arg: compiled.Arg{Code: "mock"}},
 		},
 		{
 			name: "db",
