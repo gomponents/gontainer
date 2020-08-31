@@ -99,6 +99,11 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 			input:     "hello",
 			error:     "cannot create token `hello`: custom error",
 		},
+		{
+			tokenizer: errorTokenizer,
+			input:     "name: %name%",
+			error:     "cannot create token `name: `: custom error",
+		},
 	}
 
 	for i, s := range scenarios {
