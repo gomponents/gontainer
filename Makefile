@@ -27,10 +27,11 @@ build: clean templates
 globally: build
 	mv app.bin /usr/local/bin/gontainer
 
+upgrade-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
 upgrade-helpers:
-	go get -u github.com/gomponents/gontainer-helpers
-	cd examples/env && go get -u github.com/gomponents/gontainer-helpers
-	cd examples/library && go get -u github.com/gomponents/gontainer-helpers
+	go get -u ${HELPERS_PATH}
+	cd examples/env && go get -u ${HELPERS_PATH}
+	cd examples/library && go get -u ${HELPERS_PATH}
 
 run-example-library:
 	cd examples/library && go generate && go run main.go
