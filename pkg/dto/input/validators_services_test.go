@@ -373,9 +373,12 @@ func TestValidateServiceFields(t *testing.T) {
 }
 
 func TestValidateServiceTags(t *testing.T) {
-	t.Run("Given duplicate", func(t *testing.T) {
-		s := Service{
-			Tags: []Tag{
+	scenarios := []struct {
+		tags  []Tag
+		error string
+	}{
+		{
+			tags: []Tag{
 				{
 					Name:     "logger",
 					Priority: 0,
@@ -385,8 +388,35 @@ func TestValidateServiceTags(t *testing.T) {
 					Priority: 10,
 				},
 			},
-		}
-		err := ValidateServiceTags(s)
-		assert.EqualError(t, err, "duplicate tag `logger`")
-	})
+			error: "duplicate tag `logger`",
+		},
+		{
+			tags: []Tag{
+				{
+					Name:     "logger",
+					Priority: 0,
+				},
+			},
+		},
+		{
+			tags: []Tag{
+				{
+					Name:     "white space",
+					Priority: 0,
+				},
+			},
+			error: "tag must match `" + regexServiceTag.String() + "`, `white space` given",
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			err := ValidateServiceTags(Service{Tags: s.tags})
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+			assert.EqualError(t, err, s.error)
+		})
+	}
 }
