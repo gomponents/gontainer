@@ -2,9 +2,11 @@ name: Examples
 
 on:
   push:
-    branches: [ master ]
+    tags:
+      - v*
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
 
 jobs:
 
@@ -28,16 +30,14 @@ jobs:
     - name: Get dependencies
       run: go mod download
 
+    - name: Globally
+      run: sudo make globally
+
     - name: Example "Environment variables"
-      run: |
-        make run-example-env
+      run: make run-example-env
 
     - name: Example "Library"
-      run: |
-        sudo make globally
-        make run-example-library
+      run: make run-example-library
 
     - name: Example "Params"
-      run: |
-        sudo make globally
-        make run-example-params
+      run: make run-example-params
