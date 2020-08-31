@@ -126,12 +126,12 @@ func ValidateServiceArgs(s Service) error {
 
 func ValidateServiceCalls(s Service) error {
 	for j, c := range s.Calls {
-		if err := validateRegexField(fmt.Sprintf("call%d", j), c.Method, regexServiceCallName, false); err != nil {
+		if err := validateRegexField(fmt.Sprintf("method name (call %d)", j), c.Method, regexServiceCallName, false); err != nil {
 			return err
 		}
 		for i, a := range c.Args {
 			if !isPrimitiveType(a) {
-				return fmt.Errorf("unsupported type `%T` of call%d.arg%d", a, j, i)
+				return fmt.Errorf("unsupported type `%T` of (call `%s`, arg %d)", a, c.Method, i)
 			}
 		}
 	}

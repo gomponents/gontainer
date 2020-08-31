@@ -288,7 +288,47 @@ func TestValidateServiceArgs(t *testing.T) {
 }
 
 func TestValidateServiceCalls(t *testing.T) {
-	// todo
+	scenarios := []struct {
+		calls []Call
+		error string
+	}{
+		{
+			calls: []Call{
+				{
+					Method:    "WithDB",
+					Args:      []interface{}{"@db"},
+					Immutable: true,
+				},
+			},
+		},
+		{
+			calls: []Call{
+				{
+					Method: "Incorrect method name",
+				},
+			},
+			error: "method name (call 0) must match `" + regexServiceCallName.String() + "`, `Incorrect method name` given",
+		},
+		{
+			calls: []Call{
+				{
+					Method: "SetID",
+					Args:   []interface{}{struct{}{}},
+				},
+			},
+			error: "unsupported type `struct {}` of (call `SetID`, arg 0)",
+		},
+	}
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			err := ValidateServiceCalls(Service{Calls: s.calls})
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+			assert.EqualError(t, err, s.error)
+		})
+	}
 }
 
 func TestValidateServiceFields(t *testing.T) {
