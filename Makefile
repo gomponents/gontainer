@@ -35,7 +35,7 @@ run-example-library:
 
 run-example-env: build
 	./app.bin build -i examples/env/gontainer.yml -o examples/env/container.go
-	cd examples/env && GOCACHE=off PERSON_NAME="Harry Potter" PERSON_AGE="13" go run .
+	cd examples/env && PERSON_NAME="Harry Potter" PERSON_AGE="13" go run .
 
 run-example-circular-deps: build
 	./app.bin build -i examples/circular-deps/gontainer.yml -o /dev/null
