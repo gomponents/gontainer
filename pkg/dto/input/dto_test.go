@@ -56,6 +56,25 @@ name: hello
 			output: Tag{Name: "hello"},
 		},
 		{
+			input: `
+name: 123
+`,
+			error: "name must be an instance of string",
+		},
+		{
+			input: `
+name: hello
+priority: high
+`,
+			error: "priority must be an instance of int",
+		},
+		{
+			input: `
+priority: 100
+`,
+			error: "name of tag is required",
+		},
+		{
 			input:  "tag",
 			output: Tag{Name: "tag"},
 		},
