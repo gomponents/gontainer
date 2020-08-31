@@ -8,12 +8,12 @@ import (
 	"github.com/gomponents/gontainer/pkg/imports"
 )
 
-type TokenKind uint
+type Kind uint
 
 const (
-	TokenKindString TokenKind = iota
-	TokenKindReference
-	TokenKindCode
+	KindString Kind = iota
+	KindReference
+	KindCode
 )
 
 const (
@@ -28,7 +28,7 @@ var (
 )
 
 type Token struct {
-	Kind      TokenKind
+	Kind      Kind
 	Raw       string
 	DependsOn []string
 	Code      string
@@ -62,9 +62,10 @@ func (t TokenPercentSign) Supports(expr string) bool {
 
 func (t TokenPercentSign) Create(expr string) (Token, error) {
 	return Token{
-		Kind:      TokenKindString,
+		Kind:      KindCode,
 		Raw:       "%%",
 		DependsOn: nil,
+		Code:      `"%"`,
 	}, nil
 }
 
@@ -81,7 +82,7 @@ func (t TokenReference) Create(s string) (Token, error) {
 	ref, _ := toExpr(s)
 
 	return Token{
-		Kind:      TokenKindReference,
+		Kind:      KindReference,
 		Raw:       s,
 		DependsOn: []string{ref},
 	}, nil
@@ -95,7 +96,7 @@ func (t TokenString) Supports(expr string) bool {
 
 func (t TokenString) Create(expr string) (Token, error) {
 	return Token{
-		Kind:      TokenKindString,
+		Kind:      KindString,
 		Raw:       expr,
 		DependsOn: nil,
 	}, nil
@@ -131,7 +132,7 @@ func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 		fn = fmt.Sprintf("%s.%s", t.imports.GetAlias(t.goImport), fn)
 	}
 	return Token{
-		Kind: TokenKindCode,
+		Kind: KindCode,
 		Raw:  expr,
 		Code: fn,
 	}, nil

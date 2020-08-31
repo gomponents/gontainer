@@ -67,18 +67,18 @@ func (s SimpleResolver) resolveString(v string) (Expr, error) {
 
 	solveTokenCode := func(t tokens.Token) (string, error) {
 		switch t.Kind {
-		case tokens.TokenKindString:
+		case tokens.KindString:
 			return s.exporter.Export(t.Raw)
-		case tokens.TokenKindReference:
+		case tokens.KindReference:
 			runes := []rune(t.Raw)
 			depID := string(runes[1 : len(runes)-1])
 			dependsOn = append(dependsOn, depID)
 			// todo make result injectable
 			return fmt.Sprintf("container.MustGetParam(%+q)", depID), nil
-		case tokens.TokenKindCode:
+		case tokens.KindCode:
 			return t.Code, nil
 		default:
-			return "", fmt.Errorf("unexpected TokenKind %v", t.Kind)
+			return "", fmt.Errorf("unexpected Kind %v", t.Kind)
 		}
 	}
 
