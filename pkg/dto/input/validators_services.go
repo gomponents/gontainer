@@ -3,6 +3,7 @@ package input
 import (
 	"fmt"
 	"regexp"
+	"sort"
 
 	"github.com/gomponents/gontainer/pkg/regex"
 )
@@ -139,7 +140,13 @@ func ValidateServiceCalls(s Service) error {
 }
 
 func ValidateServiceFields(s Service) error {
-	for n, v := range s.Fields {
+	var names []string
+	for n, _ := range s.Fields {
+		names = append(names, n)
+	}
+	sort.Strings(names)
+	for _, n := range names {
+		v := s.Fields[n]
 		if err := validateRegexField("field", n, regexServiceFieldName, false); err != nil {
 			return err
 		}

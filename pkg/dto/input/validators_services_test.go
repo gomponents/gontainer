@@ -332,7 +332,44 @@ func TestValidateServiceCalls(t *testing.T) {
 }
 
 func TestValidateServiceFields(t *testing.T) {
-	// todo
+	scenarios := []struct {
+		fields map[string]interface{}
+		error  string
+	}{
+		{
+			fields: map[string]interface{}{
+				"foo": "bar",
+			},
+		},
+		{
+			fields: map[string]interface{}{
+				"Incorrect field name": "bar",
+			},
+			error: "field must match `" + regexServiceFieldName.String() + "`, `Incorrect field name` given",
+		},
+		{
+			fields: map[string]interface{}{
+				"foo": struct{}{},
+			},
+			error: "unsupported type `struct {}` of field `foo`",
+		},
+		{
+			fields: map[string]interface{}{
+				"Bar": []uint{},
+			},
+			error: "unsupported type `[]uint` of field `Bar`",
+		},
+	}
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			err := ValidateServiceFields(Service{Fields: s.fields})
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+			assert.EqualError(t, err, s.error)
+		})
+	}
 }
 
 func TestValidateServiceTags(t *testing.T) {
