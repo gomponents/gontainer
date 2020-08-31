@@ -41,3 +41,6 @@ jobs:
 
     - name: Example "Params"
       run: make run-example-params
+
+    - name: Exmaple "Circular dependencies"
+      run: make run-example-circular-deps

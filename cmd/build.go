@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/fatih/color"
 	"github.com/gomponents/gontainer/pkg"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/template"
@@ -18,18 +19,8 @@ func NewBuildCmd() *cobra.Command {
 		cmd        *cobra.Command
 	)
 
-	writeErr := func(s string) {
-		_, err := cmd.OutOrStderr().Write([]byte(s))
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	handleErr := func(err error, msg string) {
-		if err != nil {
-			writeErr(fmt.Sprintf("%s: %s\n", msg, err.Error()))
-			os.Exit(1)
-		}
+	printErr := func(s string) {
+		_, _ = color.New(color.BgRed, color.FgBlack).Fprint(cmd.OutOrStderr(), s)
 	}
 
 	write := func(s string) {
@@ -39,11 +30,23 @@ func NewBuildCmd() *cobra.Command {
 		}
 	}
 
+	handleErr := func(err error, msg string) {
+		if err != nil {
+			printErr(fmt.Sprintf(" %s: %s ", msg, err.Error()))
+			fmt.Println()
+			os.Exit(1)
+		}
+	}
+
+	printHeader := func(s string) {
+		_, _ = color.New(color.FgBlack, color.FgGreen).Fprint(cmd.OutOrStdout(), s)
+	}
+
 	callback := func(cmd *cobra.Command, args []string) {
 		reader := pkg.NewDefaultConfigReader(func(s string) {
 			write(fmt.Sprintf("    %s\n", s))
 		})
-		write("Reading files...\n")
+		printHeader("Reading files...\n")
 		input, err := reader.Read(inputFiles)
 		handleErr(err, "Configuration error")
 
