@@ -2,6 +2,7 @@ package arguments
 
 import (
 	"fmt"
+	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -51,4 +52,18 @@ func TestServiceResolver_Supports(t *testing.T) {
 			)
 		})
 	}
+}
+
+func TestServiceResolver_Resolve(t *testing.T) {
+	arg, err := ServiceResolver{}.Resolve("@db")
+	assert.NoError(t, err)
+	assert.Equal(
+		t,
+		compiled.Arg{
+			Code:              `container.MustGet("db")`,
+			Raw:               "@db",
+			DependsOnServices: []string{"db"},
+		},
+		arg,
+	)
 }
