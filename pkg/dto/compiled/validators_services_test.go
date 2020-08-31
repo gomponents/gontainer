@@ -36,3 +36,54 @@ func TestValidateServicesReqServicesExist(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateServicesCircularDeps(t *testing.T) {
+	scenarios := []struct {
+		services []Service
+		error    string
+	}{
+		{
+			services: []Service{
+				{
+					Name: "harryPotter",
+					Tags: []Tag{{Name: "book"}},
+					Calls: []Call{
+						{Method: "SetLibrary", Args: []Arg{{DependsOnServices: []string{"library"}}}},
+					},
+				},
+				{
+					Name: "library",
+					Fields: []Field{
+						{Name: "Books", Value: Arg{DependsOnTags: []string{"book"}}},
+					},
+				},
+			},
+			error: "circular dependency in services: harryPotter -> library -> harryPotter",
+		},
+		{
+			services: []Service{
+				{
+					Name: "harryPotter",
+					Tags: []Tag{{Name: "book"}},
+				},
+				{
+					Name: "library",
+					Fields: []Field{
+						{Name: "Books", Value: Arg{DependsOnTags: []string{"book"}}},
+					},
+				},
+			},
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			err := ValidateServicesCircularDeps(DTO{Services: s.services})
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+			assert.EqualError(t, err, s.error)
+		})
+	}
+}
