@@ -21,7 +21,7 @@ func DefaultParamsValidators() []func(DTO) error {
 
 func ValidateParams(d DTO) error {
 	var names []string
-	for k, _ := range d.Params {
+	for k, _ := range d.Params { //nolint:gosimple
 		names = append(names, k)
 	}
 	sort.Strings(names)

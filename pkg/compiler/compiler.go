@@ -135,7 +135,7 @@ func (c Compiler) handleMetaFuncs(funcs map[string]string) {
 
 func (c Compiler) handleParams(i input.DTO, result *compiled.DTO) {
 	var names []string
-	for n, _ := range i.Params {
+	for n, _ := range i.Params { //nolint:gosimple
 		names = append(names, n)
 	}
 	sort.Strings(names)

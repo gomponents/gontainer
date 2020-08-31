@@ -39,6 +39,7 @@ func ValidateParamsReqParamsExist(d DTO) error {
 
 func ValidateParamsCircularDeps(d DTO) error {
 	mapping := make(map[string]Param)
+	//nolint:staticcheck
 	params := append(d.Params)
 	for _, p := range d.Params {
 		mapping[p.Name] = p
@@ -48,6 +49,7 @@ func ValidateParamsCircularDeps(d DTO) error {
 	})
 
 	finder := newCircularDepFinder(func(id string) []string {
+		//nolint:gosimple
 		param, _ := mapping[id]
 		deps := param.DependsOn
 		sort.Strings(deps)

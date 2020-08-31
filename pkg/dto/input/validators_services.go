@@ -141,7 +141,7 @@ func ValidateServiceCalls(s Service) error {
 
 func ValidateServiceFields(s Service) error {
 	var names []string
-	for n, _ := range s.Fields {
+	for n, _ := range s.Fields { //nolint:gosimple
 		names = append(names, n)
 	}
 	sort.Strings(names)

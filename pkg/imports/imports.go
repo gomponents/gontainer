@@ -69,6 +69,7 @@ func (s *SimpleImports) GetAlias(path string) string {
 }
 
 func (s *SimpleImports) GetImports() []Import {
+	//nolint:gosimple,staticcheck
 	return append(s.importsSlice)
 }
 

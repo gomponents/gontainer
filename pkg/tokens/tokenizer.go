@@ -30,7 +30,7 @@ func (s *PatternTokenizer) Tokenize(pattern string) ([]Token, error) {
 	opened := false
 	buff := ""
 
-	for _, c := range []rune(pattern) {
+	for _, c := range []rune(pattern) { //nolint:gosimple,staticcheck
 		ch := string(c)
 		if ch == TokenDelimiter {
 			if opened {

@@ -47,7 +47,7 @@ func ValidateServicesCircularDeps(d DTO) error {
 		var res []string
 		res = append(res, a.DependsOnServices...)
 		for _, t := range a.DependsOnTags {
-			deps, _ := taggedMapping[t]
+			deps, _ := taggedMapping[t] //nolint:gosimple
 			res = append(res, deps...)
 		}
 		return res
@@ -67,6 +67,7 @@ func ValidateServicesCircularDeps(d DTO) error {
 		return r
 	})
 
+	//nolint:staticcheck
 	services := append(d.Services)
 	sort.Slice(services, func(i, j int) bool {
 		return services[i].Name < services[j].Name

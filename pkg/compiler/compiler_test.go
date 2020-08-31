@@ -30,20 +30,20 @@ func TestCompiler_handleService(t *testing.T) {
 					"Host": "%host%",
 				},
 				Tags: []input.Tag{
-					{"storage", 100},
-					{"sql", 0},
+					{Name: "storage", Priority: 100},
+					{Name: "sql", Priority: 0},
 				},
 			},
 			output: compiled.Service{
 				Name:        "db",
 				Constructor: "alias.NewDB",
 				Fields: []compiled.Field{
-					{"Host", compiled.Arg{Code: "mock"}},
-					{"Port", compiled.Arg{Code: "mock"}},
+					{Name: "Host", Value: compiled.Arg{Code: "mock"}},
+					{Name: "Port", Value: compiled.Arg{Code: "mock"}},
 				},
 				Tags: []compiled.Tag{
-					{"storage", 100},
-					{"sql", 0},
+					{Name: "storage", Priority: 100},
+					{Name: "sql"},
 				},
 			},
 			argResolver: mockArgResolver{arg: compiled.Arg{Code: "mock"}},

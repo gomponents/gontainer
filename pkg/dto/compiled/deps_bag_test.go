@@ -14,7 +14,7 @@ func Test_circularDepFinder_doFind(t *testing.T) {
 	}
 
 	finder := newCircularDepFinder(func(id string) []string {
-		deps, _ := a[id]
+		deps, _ := a[id] //nolint:gosimple
 		return deps
 	})
 
