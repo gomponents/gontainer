@@ -185,7 +185,7 @@ func (c Compiler) handleService(name string, s input.Service) compiled.Service {
 		}
 	}
 
-	r := compiled.Service{
+	return compiled.Service{
 		Name:        name,
 		Getter:      s.Getter,
 		Type:        c.handleServiceType(s.Type),
@@ -198,8 +198,6 @@ func (c Compiler) handleService(name string, s input.Service) compiled.Service {
 		Disposable:  s.Disposable,
 		Todo:        false,
 	}
-
-	return r
 }
 
 func (c Compiler) handleServiceType(serviceType string) string {

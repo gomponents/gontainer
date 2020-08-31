@@ -9,7 +9,6 @@ import (
 )
 
 func TestCompiler_handleService(t *testing.T) {
-	// todo more tests
 	scenarios := []struct {
 		argResolver ArgResolver
 		name        string
@@ -23,6 +22,11 @@ func TestCompiler_handleService(t *testing.T) {
 			output: compiled.Service{Name: "db", Todo: true},
 		},
 		{
+			name:   "db",
+			input:  input.Service{Constructor: `"mypkg/db".NewDB`},
+			output: compiled.Service{Name: "db", Constructor: "alias.NewDB"},
+		},
+		{
 			name: "db",
 			input: input.Service{
 				Args: []interface{}{
@@ -31,6 +35,30 @@ func TestCompiler_handleService(t *testing.T) {
 			},
 			argResolver: mockArgResolver{error: fmt.Errorf("some error")},
 			panic:       "service `db`: cannot resolve arg0: some error",
+		},
+		{
+			name: "db",
+			input: input.Service{
+				Calls: []input.Call{
+					{
+						Method:    "SetHost",
+						Args:      []interface{}{"%host%"},
+						Immutable: false,
+					},
+				},
+			},
+			argResolver: mockArgResolver{error: fmt.Errorf("some error")},
+			panic:       "service: `db`: call `SetHost`: cannot resolve arg0: some error",
+		},
+		{
+			name: "db",
+			input: input.Service{
+				Fields: map[string]interface{}{
+					"Host": "%host%",
+				},
+			},
+			argResolver: mockArgResolver{error: fmt.Errorf("some error")},
+			panic:       "service `db`: field `Host`: some error",
 		},
 	}
 
