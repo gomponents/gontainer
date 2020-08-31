@@ -420,3 +420,31 @@ func TestValidateServiceTags(t *testing.T) {
 		})
 	}
 }
+
+func TestValidateServices(t *testing.T) {
+	t.Run("Given incorrect service name", func(t *testing.T) {
+		d := DTO{
+			Services: map[string]Service{
+				"white space": {},
+			},
+		}
+		err := ValidateServices(d)
+		assert.EqualError(t, err, "service name must match pattern `"+regexServiceName.String()+"`, `white space` given")
+	})
+	t.Run("Given incorrect type", func(t *testing.T) {
+		d := DTO{
+			Services: map[string]Service{
+				"db": {Type: "@!#$"},
+			},
+		}
+		assert.EqualError(t, ValidateServices(d), "service `db`: type must match `"+regexServiceType.String()+"`, `@!#$` given")
+	})
+	t.Run("Given todo", func(t *testing.T) {
+		d := DTO{
+			Services: map[string]Service{
+				"db": {Todo: true, Type: "@!#$"}, // incorrect type, but service is marked as todo
+			},
+		}
+		assert.NoError(t, ValidateServices(d))
+	})
+}
