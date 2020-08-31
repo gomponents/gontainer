@@ -20,7 +20,6 @@ func NewVersionCmd(version, commit, date string) *cobra.Command {
 					c.OutOrStdout(),
 					goVersion.FuncWithOutput(false, version, commit, date, format),
 				)
-				return
 			},
 		}
 	)
