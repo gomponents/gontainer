@@ -9,6 +9,7 @@ require (
 	github.com/landoop/tableprinter v0.0.0-20200805134727-ea32388e35c1
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/spf13/cobra v1.0.0
+	github.com/stretchr/testify v1.6.1
 	go.hein.dev/go-version v0.1.0
 	gopkg.in/yaml.v2 v2.3.0
 )

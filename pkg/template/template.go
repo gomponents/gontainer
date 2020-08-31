@@ -7,11 +7,10 @@ import (
 	"text/template"
 
 	"github.com/gomponents/gontainer-helpers/exporters"
+	"github.com/gomponents/gontainer/pkg/consts"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/imports"
 )
-
-const gontainerHelperPath = "github.com/gomponents/gontainer-helpers"
 
 //go:generate go run ../../templater/main.go head.tmpl template TemplateHead tmpl_head.go
 //go:generate go run ../../templater/main.go body.tmpl template TemplateBody tmpl_body.go
@@ -50,13 +49,13 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 			return strings.Replace(input, from, to, -1)
 		},
 		"callerAlias": func() string {
-			return s.imports.GetAlias(gontainerHelperPath + "/caller")
+			return s.imports.GetAlias(consts.GontainerHelperPath + "/caller")
 		},
 		"containerAlias": func() string {
-			return s.imports.GetAlias(gontainerHelperPath + "/container")
+			return s.imports.GetAlias(consts.GontainerHelperPath + "/container")
 		},
 		"setterAlias": func() string {
-			return s.imports.GetAlias(gontainerHelperPath + "/setter")
+			return s.imports.GetAlias(consts.GontainerHelperPath + "/setter")
 		},
 	}
 

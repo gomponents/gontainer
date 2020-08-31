@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/gomponents/gontainer/pkg/consts"
 	"github.com/gomponents/gontainer/pkg/tokens"
 )
 
@@ -106,7 +107,7 @@ func (s SimpleResolver) resolveString(v string) (Expr, error) {
 			return Expr{}, solveErr
 		}
 
-		tmp = s.imports.GetAlias("github.com/gomponents/gontainer-helpers/exporters") + `.MustToString(` + tmp + `)`
+		tmp = s.imports.GetAlias(consts.GontainerHelperPath+"/exporters") + `.MustToString(` + tmp + `)`
 		codeParts = append(codeParts, tmp)
 	}
 
