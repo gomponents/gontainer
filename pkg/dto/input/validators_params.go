@@ -3,6 +3,7 @@ package input
 import (
 	"fmt"
 	"regexp"
+	"sort"
 
 	"github.com/gomponents/gontainer/pkg/regex"
 )
@@ -19,14 +20,21 @@ func DefaultParamsValidators() []func(DTO) error {
 }
 
 func ValidateParams(d DTO) error {
-	// todo the following code is unstable, iterate over slice instead of map
-	for k, v := range d.Params {
-		if !regexParamName.MatchString(k) {
-			return fmt.Errorf("parameter name should match `%s`, `%s` given", regexParamName.String(), k)
+	var names []string
+	for k, _ := range d.Params {
+		names = append(names, k)
+	}
+	sort.Strings(names)
+
+	for _, n := range names {
+		if !regexParamName.MatchString(n) {
+			return fmt.Errorf("parameter name should match `%s`, `%s` given", regexParamName.String(), n)
 		}
 
+		v := d.Params[n]
+
 		if !isPrimitiveType(v) {
-			return fmt.Errorf("unsupported type `%T` of parameter `%s`", v, k)
+			return fmt.Errorf("unsupported type `%T` of parameter `%s`", v, n)
 		}
 	}
 	return nil
