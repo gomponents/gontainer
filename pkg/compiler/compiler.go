@@ -67,7 +67,7 @@ type compilerError struct {
 func throwCompilerError(err error, msg ...string) {
 	if err != nil {
 		if len(msg) > 0 {
-			err = fmt.Errorf("%s: %s", msg, err.Error())
+			err = fmt.Errorf("%s: %s", msg[0], err.Error())
 		}
 		panic(compilerError{err})
 	}
@@ -237,7 +237,7 @@ func (c Compiler) handleServiceArgs(errorPrefix string, args []interface{}) (res
 		arg, err := c.argResolver.Resolve(a)
 		throwCompilerError(
 			err,
-			fmt.Sprintf("%s: cannot solve arg%d", errorPrefix, i),
+			fmt.Sprintf("%s: cannot resolve arg%d", errorPrefix, i),
 		)
 		res = append(res, arg)
 	}
