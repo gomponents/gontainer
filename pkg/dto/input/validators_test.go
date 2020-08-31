@@ -22,4 +22,10 @@ func TestChainValidator_Validate(t *testing.T) {
 			"my custom error",
 		)
 	})
+	t.Run("No error", func(t *testing.T) {
+		v := NewChainValidator(func(DTO) error {
+			return nil
+		})
+		assert.NoError(t, v.Validate(DTO{}))
+	})
 }
