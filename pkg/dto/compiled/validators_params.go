@@ -8,12 +8,12 @@ import (
 
 func DefaultParamsValidators() []func(DTO) error {
 	return []func(DTO) error{
-		ValidateParamReqParamsExist,
+		ValidateParamsReqParamsExist,
 		ValidateParamsCircularDeps,
 	}
 }
 
-func ValidateParamReqParamsExist(d DTO) error {
+func ValidateParamsReqParamsExist(d DTO) error {
 	list := make(map[string]bool)
 	for _, p := range d.Params {
 		list[p.Name] = true
