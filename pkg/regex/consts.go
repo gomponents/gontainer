@@ -18,7 +18,7 @@ const (
 
 	ServiceName   = YamlToken
 	ServiceGetter = GoToken
-	ServiceType   = `(?P<ptr>\*)?` + `((?P<import>` + Import + `)\.)?(?P<type>` + GoToken + `)` // todo maybe better to use & instead of *
+	ServiceType   = `(?P<ptr>\*)?` + `((?P<import>` + Import + `)\.)?(?P<type>` + GoToken + `)`
 	// ServiceValue supports
 	// Value
 	// my/import.Value
