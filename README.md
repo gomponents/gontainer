@@ -192,3 +192,9 @@ service:
     foo:
         value: "MyType{}"
 ```
+
+**!value**
+
+```yaml
+args: ["!value config.Cfg.Some.Global.Config"]
+```
