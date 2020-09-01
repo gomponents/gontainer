@@ -151,49 +151,6 @@ services:
         args: ["!tagged handler"]
 ```
 
-## Example
-
-```yaml
-meta:
-  pkg: container
-  container_type: MyContainer
-  imports:
-    gontainer: "github.com/gomponents/gontainer"
-
-parameters:
-  first_name: '%env("NAME")%'
-  last_name: "Doe"
-  age: '%envInt("AGE")%'
-  salary: 30000
-  position: "CTO"
-
-services:
-  personExample1:
-    type: "*gontainer/example/pkg/Employee" # alias.Employee{}
-
-  personExample2:
-    type: "gontainer/example/pkg/Employee" # &alias.Employee{}
-
-  person: # alias.NewPerson(...)
-    constructor: "github.com/gomponents/gontainer/example/pkg.NewPerson"
-    args: ["%first_name% %last_name%", "%age%"]
-
-  employee: # alias.NewEmployee(container.Get("person'), ...)
-    getter: "Employee"
-    type: "*gontainer/example/pkg/Employee"
-    constructor: "gontainer/example/pkg.NewEmployee"
-    args:
-      - "@person.(*gontainer/example/pkg.Person)"
-      - "%salary%"
-      - "%position%"
-```
-
-```go
-    c := CreateContainer()
-    employee, employeeErr := c.GetEmployee()
-    person, personErr := c.Get("person")
-```
-
 ### TODO
 
 **Decorators**
