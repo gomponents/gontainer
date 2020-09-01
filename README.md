@@ -91,7 +91,7 @@ parameters:
     password: "root"
 
 services:
-    # dv := db.NewDB(container.GetParameter("host"), ...
+    # db := db.NewDB(container.GetParameter("host"), ...
     # db.Debug(true)
     db:
         constructor: "pkg/db.NewDB"
