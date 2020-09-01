@@ -105,6 +105,18 @@ services:
         type: "pkg/storage.Storage"
         fields:
             Db: "@db"
+
+    handlerOne:
+        constructor: "pkg.NewHandler1"
+        tags ["handler"]
+
+    handlerTwo:
+        constructor: "pkg.NewHandler2"
+        tags ["handler"]
+
+    handlerCollection:
+        constructor: "pkg.NewHandlerCollection"
+        args: ["!tagged handler"]
 ```
 
 ## Example
