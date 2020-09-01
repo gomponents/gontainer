@@ -100,6 +100,20 @@ services:
         args: ["%host%", "%port%", "%user%", "%password%"]
 ```
 
+### Setter Injection
+
+```yaml
+services:
+    # db := db.NewDB(container.GetParameter("host"), ...
+    # db.Debug(true)
+    db:
+        constructor: "pkg/db.NewDB"
+        args: ["%host%", "%port%", "%user%", "%password%"]
+        calls:
+            - ["Debug", [true]] # see https://symfony.com/doc/current/service_container/calls.html
+                                # see https://symfony.com/blog/new-in-symfony-4-3-configuring-services-with-immutable-setters
+```
+
 ```yaml
 parameters:
     host: "localhost"
