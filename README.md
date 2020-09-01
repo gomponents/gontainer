@@ -47,10 +47,7 @@ meta:
 
 ## Parameters
 
-Content between percent signs is a `%reference%` to another parameter or a `%function()%`.
-```
-%sth% != %sth()%
-```
+Content between percent signs is a `%reference%` to another parameter or a `%function()%` (`%sth% != %sth()%`).
 
 ```yaml
 parameters:
