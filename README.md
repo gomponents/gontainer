@@ -56,3 +56,23 @@ services:
     employee, employeeErr := c.GetEmployee()
     person, personErr := c.Get("person")
 ```
+
+### TODO
+
+**Decorators**
+```
+decorators:
+    - tag: http-client
+      decorator: myImport/pkg.MakeTracedHttpClient
+      args: [@tracer]
+
+# svc := pkg.MakeTracedHttpClient(svc, container.Get("tracer"))
+
+    - instanceof: myImport/pkg.HttpClient
+      decorator: myImport/pkg.MakeTracedHttpClient
+      args: [@tracer]
+
+# if _, ok := svc.(pkg.HttpClient); ok {
+#     svc = pkg.MakeTracedHttpClient(svc, container.Get("tracer"))
+# }
+```
