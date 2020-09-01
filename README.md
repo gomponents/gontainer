@@ -45,9 +45,31 @@ meta:
                                          # e.g.: 'env("ENVIRONMENT")'.
 ```
 
+#### Parameters
+
+```yaml
+parameters:
+    env: '%env("ENVIRONMENT")%' # os.Get("ENVIRONMENT")
+    host: "localhost"           # "localhost"
+    port: 80                    # 80
+    hostport: "%host%:%port%"   # "localhost:80"
+```
+
+Gontainer has 3 default functions:
+
+* `%env("NAME")%` - returns value of environment variable `NAME`.
+* `%envInt("PORT")%` - returns value of environment variable `PORT` and converts to int.
+* `%todo()%` - fake parameter, can be used during development to avoid compiler errors.
+
+All parameters can override in runtime (`container.OverrideParam`), it can be useful when combined with `%todo%`.
+
 #### Imports
 
+TODO
 
+#### Services
+
+TODO
 
 ## Example
 
