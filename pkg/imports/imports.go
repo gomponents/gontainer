@@ -2,8 +2,13 @@ package imports
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
+)
+
+var (
+	regexNoAlphaNum = regexp.MustCompile("[^a-zA-Z0-9]")
 )
 
 type Import struct {
@@ -42,19 +47,11 @@ func (s *SimpleImports) GetAlias(path string) string {
 
 	parts := strings.Split(path, "/")
 
-	escape := func(s string) string {
-		chars := []string{".", "-"}
-		for _, c := range chars {
-			s = strings.ReplaceAll(s, c, "_")
-		}
-		return s
-	}
-
 	alias := parts[len(parts)-1]
 	if len(parts) >= 2 {
 		alias = parts[len(parts)-2] + "_" + alias
 	}
-	alias = escape(alias)
+	alias = regexNoAlphaNum.ReplaceAllString(alias, "_")
 	alias = fmt.Sprintf("i%s_%s", strconv.FormatInt(s.counter, 16), alias)
 
 	i := Import{
