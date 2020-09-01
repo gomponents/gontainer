@@ -1,11 +1,10 @@
 package cmd
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
-	"github.com/fatih/color"
 	"github.com/gomponents/gontainer/pkg"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/template"
@@ -19,54 +18,40 @@ func NewBuildCmd() *cobra.Command {
 		cmd        *cobra.Command
 	)
 
-	printErr := func(s string) {
-		_, _ = color.New(color.BgRed, color.FgBlack).Fprint(cmd.OutOrStderr(), s)
-	}
-
-	write := func(s string) {
-		_, err := cmd.OutOrStdout().Write([]byte(s))
-		if err != nil {
-			panic(err)
+	handleErr := func(h string, err error) {
+		if err == nil {
+			return
 		}
-	}
-
-	handleErr := func(err error, msg string) {
-		if err != nil {
-			printErr(fmt.Sprintf(" %s: %s ", msg, err.Error()))
-			fmt.Println()
-			os.Exit(1)
-		}
-	}
-
-	printHeader := func(s string) {
-		_, _ = color.New(color.FgBlack, color.FgGreen).Fprint(cmd.OutOrStdout(), s)
+		cmd.PrintErrf("%s: %s\n", h, err.Error())
+		os.Exit(1)
 	}
 
 	callback := func(cmd *cobra.Command, args []string) {
 		reader := pkg.NewDefaultConfigReader(func(s string) {
-			write(fmt.Sprintf("    %s\n", s))
+			cmd.Printf("    %s\n", s)
 		})
-		printHeader("Reading files...\n")
-		input, err := reader.Read(inputFiles)
-		handleErr(err, "Configuration error")
+		cmd.Printf("Reading files...\n")
+		input, rErr := reader.Read(inputFiles)
+		handleErr("Configuration error", rErr)
 
 		imps := imports.NewSimpleImports()
-		compiler := pkg.NewDefaultCompiler(imps)
+		c := pkg.NewDefaultCompiler(imps)
 
-		compiledInput, ciErr := compiler.Compile(input)
-		handleErr(ciErr, "Cannot build container")
+		compiledInput, ciErr := c.Compile(input)
+		handleErr("Cannot build container", ciErr)
 
 		tpl, tplErr := template.NewSimpleBuilder(imps).Build(compiledInput)
-		handleErr(tplErr, "Unexpected error has occurred during building container")
-		fileErr := ioutil.WriteFile(outputFile, []byte(tpl), 0644)
-		handleErr(fileErr, "Error has occurred during saving file")
-		write(fmt.Sprintf("Container has been built\n    %s\n", outputFile))
+		handleErr("Unexpected error has occurred during building container", tplErr)
+		of := filepath.Clean(outputFile)
+		fileErr := ioutil.WriteFile(of, []byte(tpl), 0644)
+		handleErr("Error has occurred during saving file", fileErr)
+		cmd.Printf("Container has been built: %s\n", of)
 	}
 
 	cmd = &cobra.Command{
 		Use:   "build",
-		Short: "build-container",
-		Long:  "build-long",
+		Short: "Build container",
+		Long:  "",
 		Run:   callback,
 	}
 
