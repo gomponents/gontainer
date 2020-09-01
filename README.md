@@ -174,3 +174,21 @@ decorators:
 #     svc = pkg.MakeTracedHttpClient(svc.(pkg.HttpClient), container.Get("tracer"))
 # }
 ```
+
+**Create service by type**
+
+remove:
+
+```yaml
+service:
+    foo:
+        type: "MyType"
+```
+
+and replace by:
+
+```yaml
+service:
+    foo:
+        value: "MyType{}"
+```

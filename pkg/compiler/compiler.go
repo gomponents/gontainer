@@ -216,14 +216,23 @@ func (c Compiler) handleServiceType(serviceType string) string {
 
 func (c Compiler) handleServiceValue(serviceValue string) string {
 	_, m := regex.Match(regexServiceValue, serviceValue)
+
+	if m["v1"] != "" {
+		parts := make([]string, 0)
+		if m["import"] != "" {
+			parts = append(parts, c.imports.GetAlias(sanitizeImport(m["import"])))
+		}
+		if m["struct"] != "" {
+			parts = append(parts, m["struct"]+"{}")
+		}
+		return strings.Join(append(parts, m["value"]), ".")
+	}
+
 	parts := make([]string, 0)
-	if m["import"] != "" {
-		parts = append(parts, c.imports.GetAlias(sanitizeImport(m["import"])))
+	if m["import2"] != "" {
+		parts = append(parts, c.imports.GetAlias(sanitizeImport(m["import2"])))
 	}
-	if m["struct"] != "" {
-		parts = append(parts, m["struct"]+"{}")
-	}
-	return strings.Join(append(parts, m["value"]), ".")
+	return m["ptr2"] + strings.Join(append(parts, m["struct2"]), ".") + "{}"
 }
 
 func (c Compiler) handleServiceConstructor(serviceConstructor string) string {

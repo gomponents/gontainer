@@ -147,6 +147,22 @@ func TestCompiler_handleServiceValue(t *testing.T) {
 			input:  `"my/import".MyStruct{}.MyMethod`,
 			output: "alias.MyStruct{}.MyMethod",
 		},
+		{
+			input:  `&"my/import".MyStruct{}`,
+			output: "&alias.MyStruct{}",
+		},
+		{
+			input:  `&my/import.MyStruct{}`,
+			output: "&alias.MyStruct{}",
+		},
+		{
+			input:  `&MyStruct{}`,
+			output: "&MyStruct{}",
+		},
+		{
+			input:  `MyStruct{}`,
+			output: "MyStruct{}",
+		},
 	}
 
 	doTestInputOutput(
