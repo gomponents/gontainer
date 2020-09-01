@@ -41,7 +41,7 @@ meta:
                                          # e.g.: "viper.New" instead of "github.com/spf13/viper.New".
 
     functions:                           # List of functions to use in parameters.
-        "env": "os.Getenv"               # It allows to inject values calculated in real-time,
+        "env": "os.Getenv"               # It allows to inject values calculated in runtime,
                                          # e.g.: 'env("ENVIRONMENT")'.
 ```
 
