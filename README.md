@@ -16,7 +16,7 @@ gontainer build -i container.yml -i container_dev.yml [...] -o container.go
 ```
 
 Files are being processed from the left to the right, it means in the above example
-`container.yml` will be parsed as a first then values from `container_dev.yml`
+at first `container.yml` will be parsed, then values from `container_dev.yml`
 will override already loaded values.
 
 ## Schema
