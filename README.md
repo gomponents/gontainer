@@ -28,7 +28,7 @@ services:
 # list of services
 ```
 
-### Meta
+## Meta
 
 ```yaml
 meta:
@@ -45,7 +45,7 @@ meta:
                                          # e.g.: 'env("ENVIRONMENT")'.
 ```
 
-### Parameters
+## Parameters
 
 Content between percent signs is a `%reference%` to another parameter or a `%function()%`.
 
@@ -77,11 +77,11 @@ parameters:
 
 will be compiled to `pkg.Sum(1, 2, 3)`.
 
-### Imports
+## Imports
 
 TODO
 
-### Services
+## Services
 
 ```yaml
 parameters:
