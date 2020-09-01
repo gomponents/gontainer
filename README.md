@@ -73,6 +73,6 @@ decorators:
       args: [@tracer]
 
 # if _, ok := svc.(pkg.HttpClient); ok {
-#     svc = pkg.MakeTracedHttpClient(svc, container.Get("tracer"))
+#     svc = pkg.MakeTracedHttpClient(svc.(pkg.HttpClient), container.Get("tracer"))
 # }
 ```
