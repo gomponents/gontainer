@@ -42,7 +42,7 @@ meta:
 
     functions:                           # List of functions to use in parameters.
         "env": "os.Getenv"               # It allows to inject values calculated in real-time,
-                                         # e.g.: 'env("ENVIRONMENT")'
+                                         # e.g.: 'env("ENVIRONMENT")'.
 ```
 
 #### Imports
