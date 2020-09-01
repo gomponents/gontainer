@@ -91,12 +91,16 @@ parameters:
     password: "root"
 
 services:
+    # dv := db.NewDB(container.GetParameter("host"), ...
+    # db.Debug(true)
     db:
         constructor: "pkg/db.NewDB"
         args: ["%host%", "%port%", "%user%", "%password%"]
         calls:
             - ["Debug", [true]] # see https://symfony.com/doc/current/service_container/calls.html
 
+    # var storage storage.Storage
+    # storage.Db = container.Get("db")
     storage:
         type: "pkg/storage.Storage"
         fields:
