@@ -5,14 +5,49 @@
 
 # Gontainer
 
-Depenendency Injection container for GO inspired by Symfony.
+Depenendency Injection container for GO inspired by [Symfony](https://symfony.com/doc/current/components/dependency_injection.html).
 
-## Cmd
+## Command
+
+Flag `-i` supports [glob](https://golang.org/pkg/path/filepath/#Glob) patterns.
 
 ```bash
-ENV=dev
-gontainer build -i container.yml -i container_${DEV}.yml -o container.go
+gontainer build -i container.yml -i container_dev.yml [...] -o container.go
 ```
+
+### Schema
+
+```yaml
+meta:
+# additional options
+
+parameters:
+# list of parameters
+
+services:
+# list of services
+```
+
+#### Meta
+
+```
+meta:
+    pkg: "main"                          # Package name, default "main".
+
+    container_type: "gontainer"          # Type of declared container, default "gontainer".
+
+    imports:                             # List of aliases.
+        "viper": github.com/spf13/viper" # It allows to use shorter syntax in service definition,
+                                         # e.g.: "viper.New" instead of "github.com/spf13/viper.New".
+
+    functions:                           # List of functions to use in parameters.
+        "env": "os.Getenv"               # It allows to inject values calculated in real-time,
+                                         # e.g.: 'env("ENVIRONMENT")'
+```
+
+#### Imports
+
+
 
 ## Example
 
