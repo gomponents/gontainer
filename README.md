@@ -30,7 +30,7 @@ services:
 
 #### Meta
 
-```
+```yaml
 meta:
     pkg: "main"                          # Package name, default "main".
 
