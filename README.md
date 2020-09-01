@@ -47,6 +47,8 @@ meta:
 
 #### Parameters
 
+Content between percent signs is a `%reference%` to another parameter or a `%function()%`.
+
 ```yaml
 parameters:
     env: '%env("ENVIRONMENT")%' # os.Get("ENVIRONMENT")
@@ -62,6 +64,18 @@ Gontainer has 3 default functions:
 * `%todo()%` - fake parameter, can be used during development to avoid compiler errors.
 
 All parameters can override in runtime (`container.OverrideParam`), it can be useful when combined with `%todo%`.
+All content between parentheses must be valid GO code, because it is directly used in compiled DI container.
+The following code
+
+```yaml
+meta:
+    functions:
+        "sum": "pkg.Sum"
+parameters:
+    six: '%sum(1, 2, 3)%'
+```
+
+will be compiled to `pkg.Sum(1, 2, 3)`.
 
 #### Imports
 
