@@ -60,7 +60,7 @@ services:
 ### TODO
 
 **Decorators**
-```
+```yaml
 decorators:
     - tag: http-client
       decorator: myImport/pkg.MakeTracedHttpClient
