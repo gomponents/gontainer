@@ -84,6 +84,11 @@ TODO
 
 ## Services
 
+Fields, arguments of constructors and calls accept the same syntax as parameters and in addition:
+
+* reference to any other service, e.g.: `@service`
+* reference to group of tagged services, e.g.: `!tagged my.tag`
+
 ### Create service using constructor
 
 ```yaml
@@ -114,37 +119,33 @@ services:
                                 # see https://symfony.com/blog/new-in-symfony-4-3-configuring-services-with-immutable-setters
 ```
 
+### Direct Injection
+
 ```yaml
-parameters:
-    host: "localhost"
-    port: 3306
-    user: "root"
-    password: "root"
-
 services:
-    # db := db.NewDB(container.GetParameter("host"), ...
-    # db.Debug(true)
-    db:
-        constructor: "pkg/db.NewDB"
-        args: ["%host%", "%port%", "%user%", "%password%"]
-        calls:
-            - ["Debug", [true]] # see https://symfony.com/doc/current/service_container/calls.html
-
-    # var storage storage.Storage
-    # storage.Db = container.Get("db")
-    storage:
+    # var myStorage storage.Storage
+    # myStorage.Db = container.Get("db")
+    # myStorage.Debug = true
+    myStorage:
         type: "pkg/storage.Storage"
         fields:
             Db: "@db"
+            Debug: true
+```
 
+### Tags
+
+```yaml
+services:
     handlerOne:
         constructor: "pkg.NewHandler1"
-        tags ["handler"]
+        tags: ["handler"]
 
     handlerTwo:
         constructor: "pkg.NewHandler2"
-        tags ["handler"]
+        tags: [{"name": "handler", "priority": 100}]
 
+    # handlerCollection := pkg.NewHandlerCollection(container.MustGetByTag("handler"))
     handlerCollection:
         constructor: "pkg.NewHandlerCollection"
         args: ["!tagged handler"]
