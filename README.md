@@ -83,7 +83,25 @@ TODO
 
 #### Services
 
-TODO
+```yaml
+parameters:
+    host: "localhost"
+    port: 3306
+    user: "root"
+    password: "root"
+
+services:
+    db:
+        constructor: "pkg/db.NewDB"
+        args: ["%host%", "%port%", "%user%", "%password%"]
+        calls:
+            - ["Debug", [true]] # see https://symfony.com/doc/current/service_container/calls.html
+
+    storage:
+        type: "pkg/storage.Storage"
+        fields:
+            Db: "@db"
+```
 
 ## Example
 
