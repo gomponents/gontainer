@@ -15,7 +15,7 @@ Flag `-i` supports [glob](https://golang.org/pkg/path/filepath/#Glob) patterns.
 gontainer build -i container.yml -i container_dev.yml [...] -o container.go
 ```
 
-Files are being processed from left to right, it means in the above example
+Files are being processed from the left to the right, it means in the above example
 `container.yml` will be parsed as a first then values from `container_dev.yml`
 will override already loaded values.
 
