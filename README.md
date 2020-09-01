@@ -109,7 +109,7 @@ services:
         args: ["%host%", "%port%", "%user%", "%password%"]
 ```
 
-### Setter Injection
+### Setter injection
 
 ```yaml
 services:
@@ -123,7 +123,7 @@ services:
                                 # see https://symfony.com/blog/new-in-symfony-4-3-configuring-services-with-immutable-setters
 ```
 
-### Direct Injection
+### Direct injection
 
 ```yaml
 services:
