@@ -48,6 +48,9 @@ meta:
 ## Parameters
 
 Content between percent signs is a `%reference%` to another parameter or a `%function()%`.
+```
+%sth% != %sth()%
+```
 
 ```yaml
 parameters:
@@ -63,7 +66,7 @@ Gontainer has 3 default functions:
 * `%envInt("PORT")%` - returns value of environment variable `PORT` and converts to int.
 * `%todo()%` - fake parameter, can be used during development to avoid compiler errors.
 
-You can override all parameters in runtime (`container.OverrideParam`), it can be useful when combined with `%todo%`.
+You can override all parameters in runtime (`container.OverrideParam`), it can be useful when combined with `%todo()%`.
 All content between parentheses must be valid GO code, because it is directly used in compiled DI container.
 The following code
 
