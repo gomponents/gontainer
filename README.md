@@ -84,6 +84,22 @@ TODO
 
 ## Services
 
+### Create service using constructor
+
+```yaml
+parameters:
+    host: "localhost"
+    port: 3306
+    user: "root"
+    password: "root"
+
+services:
+    # db := db.NewDB(container.GetParameter("host"), ...
+    db:
+        constructor: "pkg/db.NewDB"
+        args: ["%host%", "%port%", "%user%", "%password%"]
+```
+
 ```yaml
 parameters:
     host: "localhost"
