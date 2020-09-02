@@ -6,8 +6,7 @@ templates: clean
 	go generate pkg/template/template.go
 
 fake-templates: clean
-	cp pkg/template/fake_tmpl_body.go.txt pkg/template/tmpl_body.go
-	cp pkg/template/fake_tmpl_head.go.txt pkg/template/tmpl_head.go
+	cp pkg/template/fake_tmpl_all.go.txt pkg/template/tmpl_all.go
 
 tests-unit: templates
 	go test -coverprofile=coverage.out ./cmd/... ./pkg/...
