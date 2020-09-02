@@ -12,6 +12,30 @@ import (
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
+// todo split compiler to smaller parts
+
+type CompilerStep interface {
+	Do(input.DTO, *compiled.DTO) error
+}
+
+type Compiler2 struct {
+	steps []CompilerStep
+}
+
+func NewCompiler2(steps ...CompilerStep) *Compiler2 {
+	return &Compiler2{steps: steps}
+}
+
+func (c Compiler2) Compile(i input.DTO) (compiled.DTO, error) {
+	r := compiled.DTO{}
+	for _, s := range c.steps {
+		if err := s.Do(i, &r); err != nil {
+			return compiled.DTO{}, err
+		}
+	}
+	return r, nil
+}
+
 type Imports interface {
 	GetAlias(string) string
 	RegisterPrefix(shortcut string, path string) error
