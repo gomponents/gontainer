@@ -23,6 +23,10 @@ func TestStepServices_handleServiceType(t *testing.T) {
 			input:  `"my/import".MyStruct`,
 			output: "alias.MyStruct",
 		},
+		{
+			input:  "",
+			output: "",
+		},
 	}
 
 	doTestInputOutput(
@@ -96,6 +100,10 @@ func TestStepServices_handleServiceConstructor(t *testing.T) {
 		{
 			input:  "NewFoo",
 			output: "NewFoo",
+		},
+		{
+			input:  "",
+			output: "",
 		},
 	}
 
