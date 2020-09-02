@@ -1,5 +1,5 @@
 services:
   time:
-    value: "runtimeTime"
+    value: "&runtimeTime"
     getter: "GetTime"
-    type: "time.Time"
+    type: "*time.Time"

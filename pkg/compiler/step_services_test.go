@@ -45,12 +45,24 @@ func TestStepServices_handleServiceValue(t *testing.T) {
 			output: "MyValue",
 		},
 		{
+			input:  "&MyValue",
+			output: "&MyValue",
+		},
+		{
 			input:  "my/import.MyValue",
 			output: "alias.MyValue",
 		},
 		{
+			input:  "&my/import.MyValue",
+			output: "&alias.MyValue",
+		},
+		{
 			input:  `"my/import".MyValue`,
 			output: "alias.MyValue",
+		},
+		{
+			input:  `&"my/import".MyValue`,
+			output: "&alias.MyValue",
 		},
 		{
 			input:  `my/import.MyVar.SomeField`, // compiler doesn't know whether `my/import` or `my/import.MyVar` is the import path

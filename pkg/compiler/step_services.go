@@ -108,7 +108,7 @@ func (ss StepServices) handleServiceValue(serviceValue string) string {
 		if m["import"] != "" {
 			parts = append(parts, ss.aliases.GetAlias(sanitizeImport(m["import"])))
 		}
-		return strings.Join(append(parts, m["value"]), ".")
+		return m["ptr"] + strings.Join(append(parts, m["value"]), ".")
 	}
 
 	parts := make([]string, 0)

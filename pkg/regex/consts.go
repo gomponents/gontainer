@@ -21,13 +21,15 @@ const (
 	ServiceType   = `(?P<ptr>\*)?` + `((?P<import>` + Import + `)\.)?(?P<type>` + GoToken + `)`
 	// ServiceValue supports
 	// Value
+	// &Value
 	// my/import.Value
 	// "my/import".GlobalVar.Field
+	// &"my/import".GlobalVar.Field
 	// MyStruct{}
 	// &MyStruct{}
 	// my/import.MyStruct{}
 	// &my/import.MyStruct{}
-	ServiceValue = `((?P<v1>((?P<import>` + Import + `)\.)?(?P<value>` + GoToken + `(\.` + GoToken + `)*` + `))` +
+	ServiceValue = `((?P<v1>(?P<ptr>\&)?((?P<import>` + Import + `)\.)?(?P<value>` + GoToken + `(\.` + GoToken + `)*` + `))` +
 		`|(?P<v2>(?P<ptr2>\&)?((?P<import2>` + Import + `)\.)?(?P<struct2>` + GoToken + `)\{\}))`
 	ServiceConstructor = GoFunc
 	ServiceCallName    = GoToken
