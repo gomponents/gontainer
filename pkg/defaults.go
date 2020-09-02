@@ -34,13 +34,4 @@ func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler {
 		compiler.NewStepServices(imports, arguments.NewDefaultResolver(paramResolver)), // process services
 		compiler.NewStepValidateOutput(compiled.NewDefaultValidator()),                 // validate output
 	)
-
-	//return compiler.NewCompiler(
-	//	input.NewDefaultValidator(),
-	//	compiled.NewDefaultValidator(),
-	//	imports,
-	//	tokenizer,
-	//	paramResolver,
-	//	arguments.NewDefaultResolver(paramResolver),
-	//)
 }
