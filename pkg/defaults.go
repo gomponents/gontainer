@@ -28,11 +28,11 @@ func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler2 {
 	)
 
 	return compiler.NewCompiler2(
-		compiler.NewStepValidateInput(input.NewDefaultValidator()),
-		compiler.NewStepMeta(imports, tokenizer),
-		compiler.NewStepParams(paramResolver),
-		compiler.NewStepServices(imports, arguments.NewDefaultResolver(paramResolver)),
-		compiler.NewStepValidateOutput(compiled.NewDefaultValidator()),
+		compiler.NewStepValidateInput(input.NewDefaultValidator()),                     // validate input
+		compiler.NewStepMeta(imports, tokenizer),                                       // process meta
+		compiler.NewStepParams(paramResolver),                                          // process params
+		compiler.NewStepServices(imports, arguments.NewDefaultResolver(paramResolver)), // process services
+		compiler.NewStepValidateOutput(compiled.NewDefaultValidator()),                 // validate output
 	)
 
 	//return compiler.NewCompiler(
