@@ -11,5 +11,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/spf13/cobra v1.0.0
 	github.com/stretchr/testify v1.6.1
+	github.com/ulule/deepcopier v0.0.0-20200430083143-45decc6639b6
 	gopkg.in/yaml.v2 v2.3.0
 )

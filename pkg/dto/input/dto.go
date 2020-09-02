@@ -117,6 +117,38 @@ type DTO struct {
 	Services map[string]Service     `yaml:"services"`
 }
 
+func (d DTO) Clone() DTO {
+	var r DTO
+
+	r.Meta.Pkg = d.Meta.Pkg
+	r.Meta.ContainerType = d.Meta.ContainerType
+	r.Meta.Imports = deepClone(d.Meta.Imports).(map[string]string)
+	r.Meta.Functions = deepClone(d.Meta.Functions).(map[string]string)
+
+	r.Params = deepClone(d.Params).(map[string]interface{})
+
+	r.Services = make(map[string]Service)
+	for n, s := range d.Services {
+		cp := s
+		cp.Args = deepClone(cp.Args).([]interface{})
+
+		cp.Calls = nil
+		for _, call := range s.Calls {
+			cpCall := call
+			cpCall.Args = deepClone(cpCall.Args).([]interface{})
+			cp.Calls = append(cp.Calls, cpCall)
+		}
+
+		cp.Fields = deepClone(cp.Fields).(map[string]interface{})
+
+		cp.Tags = deepClone(cp.Tags).([]Tag)
+
+		r.Services[n] = cp
+	}
+
+	return r
+}
+
 func CreateDefaultDTO() DTO {
 	result := DTO{}
 	result.Meta.Pkg = defaultPkg
