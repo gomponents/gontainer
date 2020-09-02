@@ -8,17 +8,20 @@ import (
 	"github.com/gomponents/gontainer-helpers/exporters"
 	"github.com/gomponents/gontainer/pkg/consts"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
-	"github.com/gomponents/gontainer/pkg/imports"
 )
 
 //go:generate go run ../../templater/main.go head.tmpl template TemplateHead tmpl_head.go
 //go:generate go run ../../templater/main.go body.tmpl template TemplateBody tmpl_body.go
 
-type SimpleBuilder struct {
-	imports imports.Imports
+type Imports interface {
+	GetAlias(string) string
 }
 
-func NewSimpleBuilder(imports imports.Imports) *SimpleBuilder {
+type SimpleBuilder struct {
+	imports Imports
+}
+
+func NewSimpleBuilder(imports Imports) *SimpleBuilder {
 	return &SimpleBuilder{imports: imports}
 }
 
