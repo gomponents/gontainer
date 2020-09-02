@@ -9,6 +9,8 @@ Depenendency Injection container for GO inspired by [Symfony](https://symfony.co
 
 ## TL;DR
 
+**Describe dependencies in YAML**
+
 ```yaml
 parameters:
     db.host: "localhost"
@@ -24,6 +26,8 @@ services:
         getter: "GetStorage"
         type: "*pkg.Storage"
 ```
+
+**Voilà!**
 
 ```go
 c := NewContainer()
