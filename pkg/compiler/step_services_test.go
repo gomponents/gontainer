@@ -27,19 +27,6 @@ func TestStepServices_handleServiceType(t *testing.T) {
 	)
 }
 
-type mockImports struct {
-	alias string
-	error error
-}
-
-func (m mockImports) GetAlias(string) string {
-	return m.alias
-}
-
-func (m mockImports) RegisterPrefix(shortcut string, path string) error {
-	return m.error
-}
-
 func TestStepServices_handleServiceValue(t *testing.T) {
 	scenarios := []inputOutputScenario{
 		{
@@ -87,4 +74,42 @@ func TestStepServices_handleServiceValue(t *testing.T) {
 		}.handleServiceValue,
 		scenarios...,
 	)
+}
+
+func TestStepServices_handleServiceConstructor(t *testing.T) {
+	scenarios := []inputOutputScenario{
+		{
+			input:  "my/import.NewFoo",
+			output: "alias.NewFoo",
+		},
+		{
+			input:  `"my/import".NewBar`,
+			output: "alias.NewBar",
+		},
+		{
+			input:  "NewFoo",
+			output: "NewFoo",
+		},
+	}
+
+	doTestInputOutput(
+		t,
+		StepServices{
+			aliases: mockImports{alias: "alias"},
+		}.handleServiceConstructor,
+		scenarios...,
+	)
+}
+
+type mockImports struct {
+	alias string
+	error error
+}
+
+func (m mockImports) GetAlias(string) string {
+	return m.alias
+}
+
+func (m mockImports) RegisterPrefix(shortcut string, path string) error {
+	return m.error
 }
