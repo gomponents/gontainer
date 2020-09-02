@@ -16,7 +16,6 @@ type Exporter interface {
 	Export(interface{}) (string, error)
 }
 
-// todo remove it
 type Resolver interface {
 	Resolve(interface{}) (Expr, error)
 }

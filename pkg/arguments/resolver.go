@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/parameters"
 )
 
 type Subresolver interface {
@@ -34,7 +35,7 @@ func (s Resolver) Resolve(i interface{}) (compiled.Arg, error) {
 	return compiled.Arg{}, fmt.Errorf("cannot resolve argument `%s`", i)
 }
 
-func NewDefaultResolver(resolver RawParamResolver) *Resolver {
+func NewDefaultResolver(resolver parameters.Resolver) *Resolver {
 	return NewResolver(
 		NewServiceResolver(),
 		NewTaggedResolver(),
