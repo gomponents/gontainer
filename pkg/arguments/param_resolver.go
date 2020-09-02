@@ -5,11 +5,15 @@ import (
 	"github.com/gomponents/gontainer/pkg/parameters"
 )
 
-type ParamResolver struct {
-	resolver parameters.Resolver
+type RawParamResolver interface {
+	Resolve(interface{}) (parameters.Expr, error)
 }
 
-func NewParamResolver(resolver parameters.Resolver) *ParamResolver {
+type ParamResolver struct {
+	resolver RawParamResolver
+}
+
+func NewParamResolver(resolver RawParamResolver) *ParamResolver {
 	return &ParamResolver{resolver: resolver}
 }
 
