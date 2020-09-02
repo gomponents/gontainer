@@ -4,6 +4,7 @@ import (
 	"reflect"
 )
 
+// deepClone makes deep clone of input variable, only for DTO.Clone purposes.
 func deepClone(i interface{}) interface{} {
 	v := reflect.ValueOf(i)
 	switch v.Kind() {
