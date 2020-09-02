@@ -95,7 +95,7 @@ func TestCompiler_handleService(t *testing.T) {
 					assert.EqualError(t, r.(error), s.panic)
 				}()
 			}
-			compiler := Compiler{
+			compiler := CompilerOld{
 				imports:     mockImports{alias: "alias"},
 				argResolver: s.argResolver,
 			}
@@ -122,7 +122,7 @@ func TestCompiler_handleServiceType(t *testing.T) {
 
 	doTestInputOutput(
 		t,
-		Compiler{
+		CompilerOld{
 			imports: mockImports{alias: "alias"},
 		}.handleServiceType,
 		scenarios...,
@@ -171,7 +171,7 @@ func TestCompiler_handleServiceValue(t *testing.T) {
 
 	doTestInputOutput(
 		t,
-		Compiler{
+		CompilerOld{
 			imports: mockImports{alias: "alias"},
 		}.handleServiceValue,
 		scenarios...,
@@ -196,7 +196,7 @@ func TestCompiler_handleServiceConstructor(t *testing.T) {
 
 	doTestInputOutput(
 		t,
-		Compiler{
+		CompilerOld{
 			imports: mockImports{alias: "alias"},
 		}.handleServiceConstructor,
 		scenarios...,
