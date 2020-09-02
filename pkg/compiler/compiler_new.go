@@ -3,6 +3,7 @@ package compiler
 import (
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
+	"github.com/gomponents/gontainer/pkg/parameters"
 )
 
 type Step interface {
@@ -38,6 +39,10 @@ type ImportAliases interface {
 
 type ImportPrefixes interface {
 	RegisterPrefix(shortcut string, path string) error
+}
+
+type ParamResolver interface {
+	Resolve(interface{}) (parameters.Expr, error)
 }
 
 type Tokenizer interface {

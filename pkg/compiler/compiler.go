@@ -164,12 +164,6 @@ func (c Compiler) handleServices(i input.DTO, result *compiled.DTO) {
 	)
 }
 
-var (
-	regexServiceType        = regexp.MustCompile("^" + regex.ServiceType + "$")
-	regexServiceValue       = regexp.MustCompile("^" + regex.ServiceValue + "$")
-	regexServiceConstructor = regexp.MustCompile("^" + regex.ServiceConstructor + "$")
-)
-
 func (c Compiler) handleService(name string, s input.Service) compiled.Service {
 	if s.Todo {
 		return compiled.Service{
