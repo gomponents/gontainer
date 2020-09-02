@@ -7,6 +7,29 @@
 
 Depenendency Injection container for GO inspired by [Symfony](https://symfony.com/doc/current/components/dependency_injection.html).
 
+## TL;DR
+
+```yaml
+parameters:
+    db.host: "localhost"
+    db.port: 3306
+
+services:
+    db:
+        constructor: "pkg.NewDB"
+        args: ["%db.host%", "%db.port%"]
+    storage:
+        constructor: "pkg.NewStorage"
+        args: ["@db"]
+        getter: "GetStorage"
+        type: "*pkg.Storage"
+```
+
+```go
+c := NewContainer()
+s, err := c.GetStorage()
+```
+
 ## Command
 
 Flag `-i` supports [glob](https://golang.org/pkg/path/filepath/#Glob) patterns.
@@ -151,7 +174,7 @@ services:
         args: ["!tagged handler"]
 ```
 
-### TODO
+## TODO
 
 **Decorators**
 ```yaml
