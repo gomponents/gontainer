@@ -22,6 +22,10 @@ type StepServices struct {
 	argResolver ArgResolver
 }
 
+func NewStepServices(aliases ImportAliases, argResolver ArgResolver) *StepServices {
+	return &StepServices{aliases: aliases, argResolver: argResolver}
+}
+
 func (ss StepServices) Do(i *input.DTO, r *compiled.DTO) error {
 	var names []string
 	for n, _ := range i.Services { //nolint:gosimple

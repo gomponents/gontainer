@@ -11,7 +11,7 @@ import (
 	"github.com/gomponents/gontainer/pkg/tokens"
 )
 
-func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler {
+func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler2 {
 	tokenizer := tokens.NewPatternTokenizer(
 		[]tokens.TokenFactoryStrategy{
 			tokens.TokenPercentSign{},
@@ -27,12 +27,20 @@ func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler {
 		imports,
 	)
 
-	return compiler.NewCompiler(
-		input.NewDefaultValidator(),
-		compiled.NewDefaultValidator(),
-		imports,
-		tokenizer,
-		paramResolver,
-		arguments.NewDefaultResolver(paramResolver),
+	return compiler.NewCompiler2(
+		compiler.NewStepValidateInput(input.NewDefaultValidator()),
+		compiler.NewStepMeta(imports, tokenizer),
+		compiler.NewStepParams(paramResolver),
+		compiler.NewStepServices(imports, arguments.NewDefaultResolver(paramResolver)),
+		compiler.NewStepValidateOutput(compiled.NewDefaultValidator()),
 	)
+
+	//return compiler.NewCompiler(
+	//	input.NewDefaultValidator(),
+	//	compiled.NewDefaultValidator(),
+	//	imports,
+	//	tokenizer,
+	//	paramResolver,
+	//	arguments.NewDefaultResolver(paramResolver),
+	//)
 }
