@@ -1,6 +1,8 @@
 package compiler
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestStepServices_handleServiceType(t *testing.T) {
 	scenarios := []inputOutputScenario{
