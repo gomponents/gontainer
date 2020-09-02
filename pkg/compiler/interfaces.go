@@ -19,7 +19,7 @@ type ImportPrefixes interface {
 	RegisterPrefix(shortcut string, path string) error
 }
 
-type Tokenizer interface {
+type Functions interface {
 	RegisterFunction(goImport string, goFunc string, tokenFunc string)
 }
 

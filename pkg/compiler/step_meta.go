@@ -15,11 +15,11 @@ var (
 
 type StepMeta struct {
 	imports   ImportPrefixes
-	tokenizer Tokenizer
+	functions Functions
 }
 
-func NewStepMeta(imports ImportPrefixes, tokenizer Tokenizer) *StepMeta {
-	return &StepMeta{imports: imports, tokenizer: tokenizer}
+func NewStepMeta(imports ImportPrefixes, functions Functions) *StepMeta {
+	return &StepMeta{imports: imports, functions: functions}
 }
 
 func (s StepMeta) Do(i *input.DTO, result *compiled.DTO) error {
@@ -48,6 +48,6 @@ func (s StepMeta) handleImports(i *input.DTO, result *compiled.DTO) error {
 func (s StepMeta) handleFunctions(i *input.DTO) {
 	for fn, goFn := range i.Meta.Functions {
 		_, m := regex.Match(regexMetaGoFn, goFn)
-		s.tokenizer.RegisterFunction(sanitizeImport(m["import"]), m["fn"], fn)
+		s.functions.RegisterFunction(sanitizeImport(m["import"]), m["fn"], fn)
 	}
 }
