@@ -9,14 +9,14 @@ import (
 )
 
 var (
-	regexServiceName        = regexp.MustCompile("^" + regex.ServiceName + "$")
-	regexServiceGetter      = regexp.MustCompile("^" + regex.ServiceGetter + "$")
-	regexServiceType        = regexp.MustCompile("^" + regex.ServiceType + "$")
-	regexServiceValue       = regexp.MustCompile("^" + regex.ServiceValue + "$")
-	regexServiceConstructor = regexp.MustCompile("^" + regex.ServiceConstructor + "$")
-	regexServiceCallName    = regexp.MustCompile("^" + regex.ServiceCallName + "$")
-	regexServiceFieldName   = regexp.MustCompile("^" + regex.ServiceFieldName + "$")
-	regexServiceTag         = regexp.MustCompile("^" + regex.ServiceTag + "$")
+	regexServiceName        = regexp.MustCompile(`\A` + regex.ServiceName + `\z`)
+	regexServiceGetter      = regexp.MustCompile(`\A` + regex.ServiceGetter + `\z`)
+	regexServiceType        = regexp.MustCompile(`\A` + regex.ServiceType + `\z`)
+	regexServiceValue       = regexp.MustCompile(`\A` + regex.ServiceValue + `\z`)
+	regexServiceConstructor = regexp.MustCompile(`\A` + regex.ServiceConstructor + `\z`)
+	regexServiceCallName    = regexp.MustCompile(`\A` + regex.ServiceCallName + `\z`)
+	regexServiceFieldName   = regexp.MustCompile(`\A` + regex.ServiceFieldName + `\z`)
+	regexServiceTag         = regexp.MustCompile(`\A` + regex.ServiceTag + `\z`)
 )
 
 type ValidateService func(Service) error

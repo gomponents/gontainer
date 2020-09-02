@@ -8,12 +8,12 @@ import (
 )
 
 var (
-	regexpMetaPkg           = regexp.MustCompile("^" + regex.MetaPkg + "$")
-	regexpMetaContainerType = regexp.MustCompile("^" + regex.MetaContainerType + "$")
-	regexMetaImport         = regexp.MustCompile("^" + regex.MetaImport + "$")
-	regexMetaImportAlias    = regexp.MustCompile("^" + regex.MetaImportAlias + "$")
-	regexMetaFn             = regexp.MustCompile("^" + regex.MetaFn + "$")
-	regexMetaGoFn           = regexp.MustCompile("^" + regex.MetaGoFn + "$")
+	regexpMetaPkg           = regexp.MustCompile(`\A` + regex.MetaPkg + `\z`)
+	regexpMetaContainerType = regexp.MustCompile(`\A` + regex.MetaContainerType + `\z`)
+	regexMetaImport         = regexp.MustCompile(`\A` + regex.MetaImport + `\z`)
+	regexMetaImportAlias    = regexp.MustCompile(`\A` + regex.MetaImportAlias + `\z`)
+	regexMetaFn             = regexp.MustCompile(`\A` + regex.MetaFn + `\z`)
+	regexMetaGoFn           = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
 )
 
 // DefaultMetaValidators returns validators for DTO.Meta struct.

@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	regexServiceType        = regexp.MustCompile("^" + regex.ServiceType + "$")
-	regexServiceValue       = regexp.MustCompile("^" + regex.ServiceValue + "$")
-	regexServiceConstructor = regexp.MustCompile("^" + regex.ServiceConstructor + "$")
+	regexServiceType        = regexp.MustCompile(`\A` + regex.ServiceType + `\z`)
+	regexServiceValue       = regexp.MustCompile(`\A` + regex.ServiceValue + `\z`)
+	regexServiceConstructor = regexp.MustCompile(`\A` + regex.ServiceConstructor + `\z`)
 )
 
 type StepServices struct {

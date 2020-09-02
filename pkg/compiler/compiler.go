@@ -111,7 +111,7 @@ func (c Compiler) handleMetaImport(imports map[string]string) {
 }
 
 var (
-	regexMetaGoFn = regexp.MustCompile("^" + regex.MetaGoFn + "$")
+	regexMetaGoFn = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
 )
 
 func (c Compiler) handleMetaFuncs(funcs map[string]string) {

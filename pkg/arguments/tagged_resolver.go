@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	taggedRegex = regexp.MustCompile("^" + regex.TaggedArg + "$")
+	taggedRegex = regexp.MustCompile(`\A` + regex.TaggedArg + `\z`)
 )
 
 type TaggedResolver struct {

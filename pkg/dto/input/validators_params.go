@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	regexParamName = regexp.MustCompile("^" + regex.ParamName + "$")
+	regexParamName = regexp.MustCompile(`\A` + regex.ParamName + `\z`)
 )
 
 // DefaultParamsValidators returns validators for DTO.Params.

@@ -26,7 +26,7 @@ func (s ServiceResolver) Resolve(v interface{}) (compiled.Arg, error) {
 }
 
 var (
-	serviceNameRegex = regexp.MustCompile("^" + regex.ServiceName + "$")
+	serviceNameRegex = regexp.MustCompile(`\A` + regex.ServiceName + `\z`)
 )
 
 func (s ServiceResolver) Supports(v interface{}) bool {
