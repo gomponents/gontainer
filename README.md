@@ -160,7 +160,7 @@ services:
     # myStorage.Db = container.Get("db")
     # myStorage.Debug = true
     myStorage:
-        type: "pkg/storage.Storage"
+        value: "pkg/storage.Storage{}"
         fields:
             Db: "@db"
             Debug: true
