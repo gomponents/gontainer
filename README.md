@@ -120,27 +120,25 @@ Fields, arguments of constructors and calls accept the same syntax as parameters
 
 ```yaml
 parameters:
-    host: "localhost"
-    port: 3306
-    user: "root"
-    password: "root"
+    db.host: "localhost"
+    db.port: 3306
 
 services:
-    # db := db.NewDB(container.GetParameter("host"), ...
+    # db := db.NewDB(container.GetParameter("db.host"), ...
     db:
         constructor: "pkg/db.NewDB"
-        args: ["%host%", "%port%", "%user%", "%password%"]
+        args: ["%host%", "%port%"]
 ```
 
 ### Setter injection
 
 ```yaml
 services:
-    # db := db.NewDB(container.GetParameter("host"), ...
+    # db := db.NewDB(container.GetParameter("db.host"), ...
     # db.Debug(true)
     db:
         constructor: "pkg/db.NewDB"
-        args: ["%host%", "%port%", "%user%", "%password%"]
+        args: ["%host%", "%port%"]
         calls:
             - ["Debug", [true]] # see https://symfony.com/doc/current/service_container/calls.html
                                 # see https://symfony.com/blog/new-in-symfony-4-3-configuring-services-with-immutable-setters
