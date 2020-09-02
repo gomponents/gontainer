@@ -44,3 +44,7 @@ jobs:
 
     - name: Exmaple "Circular dependencies"
       run: make run-example-circular-deps || true
+
+    - name: Example "Global variable"
+      run: make run-example-global-var
+

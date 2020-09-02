@@ -30,6 +30,7 @@ upgrade-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
 upgrade-helpers:
 	go get -u ${HELPERS_PATH}
 	cd examples/env && go get -u ${HELPERS_PATH}
+	cd examples/global-var && go get -u ${HELPERS_PATH}
 	cd examples/library && go get -u ${HELPERS_PATH}
 
 run-example-library:
@@ -44,6 +45,10 @@ run-example-circular-deps: build
 
 run-example-params:
 	cd examples/params && gontainer dump-params -i gontainer.yml
+
+run-example-global-var: build
+	./app.bin build -i examples/global-var/gontainer.yml -o examples/global-var/container.go
+	cd examples/global-var && go run .
 
 tests: tests-unit lint
 
