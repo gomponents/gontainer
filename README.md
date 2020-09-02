@@ -65,7 +65,7 @@ services:
 meta:
     pkg: "main"                          # Package name, default "main".
 
-    container_type: "gontainer"          # Type of declared container, default "gontainer".
+    container_type: "Gontainer"          # Type of declared container, default "Gontainer".
 
     imports:                             # List of aliases.
         "viper": github.com/spf13/viper" # It allows to use shorter syntax in service definition,
