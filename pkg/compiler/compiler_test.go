@@ -163,6 +163,10 @@ func TestCompiler_handleServiceValue(t *testing.T) {
 			input:  `MyStruct{}`,
 			output: "MyStruct{}",
 		},
+		{
+			input:  "",
+			output: "",
+		},
 	}
 
 	doTestInputOutput(

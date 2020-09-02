@@ -215,6 +215,10 @@ func (c Compiler) handleServiceType(serviceType string) string {
 }
 
 func (c Compiler) handleServiceValue(serviceValue string) string {
+	if serviceValue == "" {
+		return ""
+	}
+
 	_, m := regex.Match(regexServiceValue, serviceValue)
 
 	if m["v1"] != "" {
