@@ -19,7 +19,7 @@ func deepCloneSlice(i interface{}) interface{} {
 	v := reflect.ValueOf(i)
 	r := reflect.MakeSlice(v.Type(), 0, 0)
 	for i := 0; i < v.Len(); i++ {
-		curr := r.Index(i)
+		curr := v.Index(i)
 		cp := deepClone(curr.Interface())
 		r = reflect.Append(r, reflect.ValueOf(cp))
 	}
