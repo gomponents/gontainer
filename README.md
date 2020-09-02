@@ -100,7 +100,7 @@ Gontainer has 3 default functions:
 
 * `%env("NAME")%` - returns value of environment variable `NAME`.
 * `%envInt("PORT")%` - returns converted to int value of environment variable `PORT`.
-* `%todo()%` - fake parameter, can be used during development to avoid compiler errors.
+* `%todo()%` - fake parameter, can be used during development to avoid compiler errors (e.g. `service "db" requires param "db.host", but it does not exist`).
 
 You can override all parameters in runtime (`container.OverrideParam`), it can be useful when combined with `%todo()%`.
 
