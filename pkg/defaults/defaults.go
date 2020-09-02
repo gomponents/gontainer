@@ -1,4 +1,4 @@
-package pkg
+package defaults
 
 import (
 	"github.com/gomponents/gontainer-helpers/exporters"

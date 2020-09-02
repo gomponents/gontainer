@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/gomponents/gontainer/pkg"
+	"github.com/gomponents/gontainer/pkg/defaults"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/template"
 	"github.com/spf13/cobra"
@@ -35,7 +36,7 @@ func NewBuildCmd() *cobra.Command {
 		handleErr("Configuration error", rErr)
 
 		imps := imports.NewSimpleImports()
-		c := pkg.NewDefaultCompiler(imps)
+		c := defaults.NewDefaultCompiler(imps)
 
 		compiledInput, ciErr := c.Compile(input)
 		handleErr("Cannot build container", ciErr)

@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/gomponents/gontainer/pkg"
+	"github.com/gomponents/gontainer/pkg/defaults"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/landoop/tableprinter"
 	"github.com/spf13/cobra"
@@ -68,7 +69,7 @@ func NewDumpParamsCmd() *cobra.Command {
 			l = minImportLen
 		}
 		imps := &mockImports{maxLen: int(l)}
-		c := pkg.NewDefaultCompiler(imps)
+		c := defaults.NewDefaultCompiler(imps)
 
 		compiledInput, ciErr := c.Compile(input)
 		handleErr("Cannot build container", ciErr)
