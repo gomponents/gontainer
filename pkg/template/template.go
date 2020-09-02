@@ -2,7 +2,6 @@ package template
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 	"text/template"
 
@@ -37,13 +36,8 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 			}
 			return r
 		},
-		"importAlias": func(input interface{}) string {
-			alias, ok := input.(string)
-			if !ok {
-				panic(fmt.Errorf("func `importAlias` expects `%T`, `%T` given", "", input))
-			}
-
-			return s.imports.GetAlias(alias)
+		"importAlias": func(i string) string {
+			return s.imports.GetAlias(i)
 		},
 		"replace": func(input, from, to string) string {
 			return strings.Replace(input, from, to, -1)
