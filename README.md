@@ -156,7 +156,7 @@ services:
 
 ```yaml
 services:
-    # var myStorage storage.Storage
+    # myStorage := storage.Storage{}
     # myStorage.Db = container.Get("db")
     # myStorage.Debug = true
     myStorage:
