@@ -211,16 +211,3 @@ type mockArgResolver struct {
 func (m mockArgResolver) Resolve(interface{}) (compiled.Arg, error) {
 	return m.arg, m.error
 }
-
-type mockImports struct {
-	alias string
-	error error
-}
-
-func (m mockImports) GetAlias(string) string {
-	return m.alias
-}
-
-func (m mockImports) RegisterPrefix(shortcut string, path string) error {
-	return m.error
-}
