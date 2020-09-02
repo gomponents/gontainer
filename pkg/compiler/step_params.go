@@ -6,14 +6,13 @@ import (
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
-	"github.com/gomponents/gontainer/pkg/parameters"
 )
 
 type StepParams struct {
-	paramResolver parameters.Resolver
+	paramResolver ParamResolver
 }
 
-func NewStepParams(paramResolver parameters.Resolver) *StepParams {
+func NewStepParams(paramResolver ParamResolver) *StepParams {
 	return &StepParams{paramResolver: paramResolver}
 }
 
