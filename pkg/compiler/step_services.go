@@ -65,6 +65,17 @@ func (ss StepServices) handleService(name string, s input.Service) (compiled.Ser
 	if err != nil {
 		return compiled.Service{}, err
 	}
+	r.Calls, err = ss.handleServiceCalls(s.Calls)
+	if err != nil {
+		return compiled.Service{}, err
+	}
+	r.Fields, err = ss.handleServiceFields(s.Fields)
+	if err != nil {
+		return compiled.Service{}, err
+	}
+	r.Tags = ss.handleServiceTags(s.Tags)
+	r.Disposable = s.Disposable
+	r.Todo = false
 
 	return r, nil
 }
@@ -123,9 +134,57 @@ func (ss StepServices) handleServiceArgs(args []interface{}) ([]compiled.Arg, er
 	for i, a := range args {
 		arg, err := ss.argResolver.Resolve(a)
 		if err != nil {
-			return nil, fmt.Errorf("cannot resolve arg%d", i)
+			return nil, fmt.Errorf("cannot resolve arg%d: %s", i, err.Error())
 		}
 		res = append(res, arg)
 	}
 	return res, nil
+}
+
+func (ss StepServices) handleServiceCalls(calls []input.Call) ([]compiled.Call, error) {
+	var res []compiled.Call
+	for _, raw := range calls {
+		args, err := ss.handleServiceArgs(raw.Args)
+		if err != nil {
+			return nil, fmt.Errorf("call `%s`: %s", raw.Method, err.Error())
+		}
+		call := compiled.Call{
+			Method:    raw.Method,
+			Args:      args,
+			Immutable: raw.Immutable,
+		}
+		res = append(res, call)
+	}
+	return res, nil
+}
+
+func (ss StepServices) handleServiceFields(fields map[string]interface{}) ([]compiled.Field, error) {
+	var res []compiled.Field
+	for n, f := range fields {
+		arg, err := ss.argResolver.Resolve(f)
+		if err != nil {
+			return nil, fmt.Errorf("field `%s`: %s", n, err.Error())
+		}
+		field := compiled.Field{
+			Name:  n,
+			Value: arg,
+		}
+		res = append(res, field)
+	}
+
+	sort.SliceStable(res, func(i, j int) bool {
+		return res[i].Name < res[j].Name
+	})
+
+	return res, nil
+}
+
+func (ss StepServices) handleServiceTags(tags []input.Tag) (r []compiled.Tag) {
+	for _, t := range tags {
+		r = append(r, compiled.Tag{
+			Name:     t.Name,
+			Priority: t.Priority,
+		})
+	}
+	return
 }
