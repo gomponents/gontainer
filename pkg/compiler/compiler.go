@@ -13,7 +13,7 @@ type Compiler struct {
 	steps []Step
 }
 
-func NewCompiler2(steps ...Step) *Compiler {
+func NewCompiler(steps ...Step) *Compiler {
 	return &Compiler{steps: steps}
 }
 

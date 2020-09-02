@@ -27,7 +27,7 @@ func NewDefaultCompiler(imports imports.Imports) *compiler.Compiler {
 		imports,
 	)
 
-	return compiler.NewCompiler2(
+	return compiler.NewCompiler(
 		compiler.NewStepValidateInput(input.NewDefaultValidator()),                     // validate input
 		compiler.NewStepMeta(imports, tokenizer),                                       // process meta
 		compiler.NewStepParams(paramResolver),                                          // process params

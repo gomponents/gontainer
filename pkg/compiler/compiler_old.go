@@ -26,7 +26,7 @@ type CompilerOld struct {
 	argResolver       ArgResolver
 }
 
-func NewCompiler(
+func NewCompilerOld(
 	inputValidator InputValidator,
 	compiledValidator CompiledValidator,
 	imports Imports,
