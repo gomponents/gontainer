@@ -9,35 +9,36 @@ services:
   library:
     getter: "GetLibrary"
     type: "library/pkg.Library"
+    value: "library/pkg.Library{}"
     fields:
       Books: "!tagged book"
 
   authorBrandonSanderson:
-    type: "library/pkg.Author"
+    value: "library/pkg.Author{}"
     fields:
       Name: "%brandonSanderson%"
 
   authorGeorgeRRMartin:
-    type: "library/pkg.Author"
+    value: "library/pkg.Author{}"
     fields:
       Name: "%georgeRRMartin%"
 
   bookTheWayOfKings:
-    type: "library/pkg.Book"
+    value: "library/pkg.Book{}"
     fields:
       Author: "@authorBrandonSanderson"
       Title: "The Way of Kings"
     tags: [{"name": "book", "priority": 100}]
 
   bookWordsOfRadiance:
-    type: "library/pkg.Book"
+    value: "library/pkg.Book{}"
     fields:
       Author: "@authorBrandonSanderson"
       Title: "Words of Radiance"
     tags: ["book"] # priority is equal to 0
 
   bookAGameOfThrones:
-    type: "library/pkg.Book"
+    value: "library/pkg.Book{}"
     fields:
       Author: "@authorGeorgeRRMartin"
       Title: "A Game of Thrones"
