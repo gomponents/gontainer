@@ -53,8 +53,16 @@ func TestStepServices_handleServiceValue(t *testing.T) {
 			output: "alias.MyValue",
 		},
 		{
-			input:  `"my/import".MyStruct{}.MyMethod`,
-			output: "alias.MyStruct{}.MyMethod",
+			input:  `my/import.MyVar.SomeField`, // compiler doesn't know whether `my/import` or `my/import.MyVar` is the import path
+			output: "alias.SomeField",
+		},
+		{
+			input:  `"my/import".MyVar.SomeField`, // surrounding import by `"` makes it explicit
+			output: "alias.MyVar.SomeField",
+		},
+		{
+			input:  `"github.com/gontainer/gontainer/pkg/dto/input".GlobalDTO.Meta.Functions`,
+			output: `alias.GlobalDTO.Meta.Functions`,
 		},
 		{
 			input:  `&"my/import".MyStruct{}`,

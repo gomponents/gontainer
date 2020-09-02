@@ -186,13 +186,6 @@ func TestValidateServiceValue(t *testing.T) {
 			val: "my/import/foo.Bar",
 		},
 		{
-			val: "my/import/foo.MyStruct{}.Bar",
-		},
-		{
-			val:   "my/import/foo.MyStruct{.Bar",
-			error: "value must match `" + regexServiceValue.String() + "`, `my/import/foo.MyStruct{.Bar` given",
-		},
-		{
 			val:   "my/import/foo",
 			error: "value must match `" + regexServiceValue.String() + "`, `my/import/foo` given",
 		},
