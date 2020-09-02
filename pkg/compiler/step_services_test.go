@@ -165,8 +165,8 @@ func TestStepServices_handleServiceTags(t *testing.T) {
 			},
 		},
 		{
-			input:  nil,
-			output: nil,
+			input:  ([]input.Tag)(nil),
+			output: ([]compiled.Tag)(nil),
 		},
 	}
 
