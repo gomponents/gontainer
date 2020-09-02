@@ -50,7 +50,7 @@ func TestValidateConstructorType(t *testing.T) {
 			},
 		},
 		{
-			error: "missing constructor, value or type",
+			error: "missing constructor or value",
 		},
 		{
 			service: Service{
@@ -61,22 +61,8 @@ func TestValidateConstructorType(t *testing.T) {
 		},
 		{
 			service: Service{
-				Constructor: "MyConstructor",
-				Type:        "MyType",
-			},
-			error: "defined type will not be used, provide getter",
-		},
-		{
-			service: Service{
-				Value: "MyValue",
-				Type:  "MyType",
-			},
-			error: "defined type will not be used, provide getter",
-		},
-		{
-			service: Service{
-				Type: "MyType",
-				Args: []interface{}{"param"},
+				Value: "MyType{}",
+				Args:  []interface{}{"param"},
 			},
 			error: "arguments are not empty, but constructor is missing",
 		},
@@ -143,27 +129,36 @@ func TestValidateServiceGetter(t *testing.T) {
 
 func TestValidateServiceType(t *testing.T) {
 	scenarios := []struct {
-		type_ string
-		error string
+		type_  string
+		getter string
+		error  string
 	}{
 		{
 			type_: "",
 		},
 		{
-			type_: "my/import/foo.Bar",
+			type_:  "my/import/foo.Bar",
+			getter: "GetBar",
 		},
 		{
-			type_: "*my/import/foo.Bar",
+			type_:  "*my/import/foo.Bar",
+			getter: "GetBar",
 		},
 		{
-			type_: "**my/import/foo.Bar",
-			error: "type must match `" + regexServiceType.String() + "`, `**my/import/foo.Bar` given",
+			type_:  "**my/import/foo.Bar",
+			getter: "GetBar",
+			error:  "type must match `" + regexServiceType.String() + "`, `**my/import/foo.Bar` given",
+		},
+		{
+			type_:  "foo.Bar",
+			getter: "",
+			error:  "type is given, but getter is missing",
 		},
 	}
 
 	for i, s := range scenarios {
 		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
-			err := ValidateServiceType(Service{Type: s.type_})
+			err := ValidateServiceType(Service{Type: s.type_, Getter: s.getter})
 			if s.error == "" {
 				assert.NoError(t, err)
 				return
@@ -427,7 +422,7 @@ func TestValidateServices(t *testing.T) {
 	t.Run("Given incorrect type", func(t *testing.T) {
 		d := DTO{
 			Services: map[string]Service{
-				"db": {Type: "@!#$"},
+				"db": {Type: "@!#$", Getter: "GetDB", Constructor: "pkg.NewDB"},
 			},
 		}
 		assert.EqualError(t, ValidateServices(d), "service `db`: type must match `"+regexServiceType.String()+"`, `@!#$` given")

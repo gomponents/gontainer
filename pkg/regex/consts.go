@@ -35,5 +35,5 @@ const (
 	ServiceTag         = YamlToken
 
 	ArgTagged = "!tagged +(?P<tag>" + YamlToken + ")"
-	ArgValue  = "!value +(" + ServiceValue + ")" // todo
+	ArgValue  = "!value +(" + ServiceValue + ")"
 )

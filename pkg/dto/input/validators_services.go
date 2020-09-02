@@ -71,23 +71,12 @@ func ValidateServiceName(n string) error {
 }
 
 func ValidateConstructorType(s Service) error {
-	if s.Constructor == "" && s.Value == "" && s.Type == "" {
-		return fmt.Errorf("missing constructor, value or type")
+	if s.Constructor == "" && s.Value == "" {
+		return fmt.Errorf("missing constructor or value")
 	}
 
 	if s.Constructor != "" && s.Value != "" {
 		return fmt.Errorf("cannot define constructor and value together")
-	}
-
-	// e.g.
-	// Service{
-	//		Getter:      "",
-	//		Type:        "MyType",
-	//		Value:       "",
-	//		Constructor: "NewService",
-	//	}
-	if (s.Constructor != "" || s.Value != "") && (s.Getter == "" && s.Type != "") {
-		return fmt.Errorf("defined type will not be used, provide getter")
 	}
 
 	if len(s.Args) > 0 && s.Constructor == "" {
@@ -105,6 +94,9 @@ func ValidateServiceGetter(s Service) error {
 }
 
 func ValidateServiceType(s Service) error {
+	if s.Type != "" && s.Getter == "" {
+		return fmt.Errorf("type is given, but getter is missing")
+	}
 	return validateRegexField("type", s.Type, regexServiceType, true)
 }
 

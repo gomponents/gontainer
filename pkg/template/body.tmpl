@@ -69,9 +69,6 @@ func NewContainer() *{{$containerType}} {
 			if err != nil {
 			    return
 			}
-			{{- else if ne $service.Type "" }}
-			var typeService {{$service.Type}}
-            service = typeService
             {{- else if ne $service.Value "" }}
             service = {{ $service.Value }}
 			{{- end -}}

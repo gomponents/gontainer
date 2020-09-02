@@ -12,13 +12,21 @@ Depenendency Injection container for GO inspired by [Symfony](https://symfony.co
 **Describe dependencies in YAML**
 
 ```yaml
+meta:
+    imports:
+        "pkg": "github.com/org/repo/pkg"
+
 parameters:              # No need to hardcode configuration values, e.g.:
     db.host: "localhost" # '%env("APP_DB_HOST")%'
     db.port: 3306        # '%envInt("APP_DB_PORT")%'
 
 services:
     db:
-        constructor: "pkg.NewDB"
+        constructor: "pkg.NewDB" # equivalent for "github.com/org/repo/pkg.NewDB", additionally
+                                 # import can be surrounded by `"` to make it more explicit
+                                 # e.g.:
+                                 # - "pkg".NewDB
+                                 # - "github.com/org/repo/pkg".NewDB
         args: ["%db.host%", "%db.port%"]
     storage:
         constructor: "pkg.NewStorage"
@@ -197,22 +205,6 @@ decorators:
 ```
 
 **Create service by type**
-
-remove:
-
-```yaml
-service:
-    foo:
-        type: "MyType"
-```
-
-and replace by:
-
-```yaml
-service:
-    foo:
-        value: "MyType{}"
-```
 
 **!value**
 
