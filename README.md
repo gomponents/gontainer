@@ -82,10 +82,6 @@ parameters:
 
 will be compiled to `pkg.Sum(1, 2, 3)`.
 
-## Imports
-
-TODO
-
 ## Services
 
 Fields, arguments of constructors and calls accept the same syntax as parameters and in addition:
