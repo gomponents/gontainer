@@ -217,5 +217,5 @@ service:
 **!value**
 
 ```yaml
-args: ["!value config.Cfg.Some.Global.Config", "!value &myStruct{}"]
+args: ['!value "config".Cfg.Some.Global.Config', "!value &myStruct{}"]
 ```
