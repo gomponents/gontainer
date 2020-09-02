@@ -85,7 +85,7 @@ parameters:
     env: '%env("ENVIRONMENT")%' # os.Get("ENVIRONMENT")
     host: "localhost"           # "localhost"
     port: 80                    # 80
-    hostport: "%host%:%port%"   # "localhost:80"
+    hostport: "%host%:%port%"   # "localhost:80" // ToString(container.GetParam("host")) + ":" + ToString(container.GetParam("port"))
 ```
 
 Gontainer has 3 default functions:
