@@ -12,9 +12,9 @@ Depenendency Injection container for GO inspired by [Symfony](https://symfony.co
 **Describe dependencies in YAML**
 
 ```yaml
-parameters:
-    db.host: "localhost"
-    db.port: 3306
+parameters:              # No need to hardcode configuration values, e.g.:
+    db.host: "localhost" # '%env("APP_DB_HOST")%'
+    db.port: 3306        # '%envInt("APP_DB_PORT")%'
 
 services:
     db:
