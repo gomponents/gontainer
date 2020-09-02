@@ -152,6 +152,31 @@ func TestStepServices_Do(t *testing.T) {
 	})
 }
 
+func TestStepServices_handleServiceTags(t *testing.T) {
+	scenarios := []inputOutputScenario{
+		{
+			input: []input.Tag{
+				{Name: "storage", Priority: 200},
+				{Name: "db", Priority: 100},
+			},
+			output: []compiled.Tag{
+				{Name: "storage", Priority: 200},
+				{Name: "db", Priority: 100},
+			},
+		},
+		{
+			input:  nil,
+			output: nil,
+		},
+	}
+
+	doTestInputOutput(
+		t,
+		StepServices{}.handleServiceTags,
+		scenarios...,
+	)
+}
+
 type mockImports struct {
 	alias string
 	error error
