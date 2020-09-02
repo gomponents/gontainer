@@ -26,17 +26,28 @@ func (s StepMeta) Do(i *input.DTO, result *compiled.DTO) error {
 	result.Meta.Pkg = i.Meta.Pkg
 	result.Meta.ContainerType = i.Meta.ContainerType
 
+	if err := s.handleImports(i, result); err != nil {
+		return err
+	}
+
+	s.handleFunctions(i)
+
+	return nil
+}
+
+func (s StepMeta) handleImports(i *input.DTO, result *compiled.DTO) error {
 	for a, p := range i.Meta.Imports {
 		err := s.imports.RegisterPrefix(a, sanitizeImport(p))
 		if err != nil {
 			return fmt.Errorf("cannot register alias: %s", err.Error())
 		}
 	}
+	return nil
+}
 
+func (s StepMeta) handleFunctions(i *input.DTO) {
 	for fn, goFn := range i.Meta.Functions {
 		_, m := regex.Match(regexMetaGoFn, goFn)
 		s.tokenizer.RegisterFunction(sanitizeImport(m["import"]), m["fn"], fn)
 	}
-
-	return nil
 }
