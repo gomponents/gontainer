@@ -34,6 +34,6 @@ const (
 	ServiceFieldName   = GoToken
 	ServiceTag         = YamlToken
 
-	TaggedArg   = "!tagged +(?P<tag>" + YamlToken + ")"
-	TaggedValue = "!tagged +(" + ServiceValue + ")" // todo
+	ArgTagged = "!tagged +(?P<tag>" + YamlToken + ")"
+	ArgValue  = "!value +(" + ServiceValue + ")" // todo
 )

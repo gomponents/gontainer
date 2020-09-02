@@ -10,7 +10,7 @@ import (
 
 func TestNewDefaultResolver(t *testing.T) {
 	resolver := NewDefaultResolver(nil)
-	assert.NotEmpty(t, resolver.subresolvers)
+	assert.NotEmpty(t, resolver.subResolvers)
 }
 
 func TestResolver_Resolve(t *testing.T) {

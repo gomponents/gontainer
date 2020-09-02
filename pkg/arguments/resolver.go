@@ -7,21 +7,21 @@ import (
 	"github.com/gomponents/gontainer/pkg/parameters"
 )
 
-type Subresolver interface {
+type SubResolver interface {
 	Resolve(interface{}) (compiled.Arg, error)
 	Supports(interface{}) bool
 }
 
 type Resolver struct {
-	subresolvers []Subresolver
+	subResolvers []SubResolver
 }
 
-func NewResolver(subresolvers ...Subresolver) *Resolver {
-	return &Resolver{subresolvers: subresolvers}
+func NewResolver(subResolvers ...SubResolver) *Resolver {
+	return &Resolver{subResolvers: subResolvers}
 }
 
 func (s Resolver) Resolve(i interface{}) (compiled.Arg, error) {
-	for _, r := range s.subresolvers {
+	for _, r := range s.subResolvers {
 		if r.Supports(i) {
 			result, err := r.Resolve(i)
 			if err == nil {
