@@ -17,10 +17,6 @@ type Imports interface {
 	RegisterPrefix(shortcut string, path string) error
 }
 
-type ArgResolver interface {
-	Resolve(interface{}) (compiled.Arg, error)
-}
-
 type Compiler struct {
 	inputValidator    InputValidator
 	compiledValidator CompiledValidator
