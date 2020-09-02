@@ -5,6 +5,7 @@ services:
   person:
     getter: "GetPerson"
     type: "Person"
+    value: "Person{}"
     fields:
       Name: "%name%"
       Age: '%envInt("PERSON_AGE")%'
