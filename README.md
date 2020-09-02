@@ -14,7 +14,7 @@ Depenendency Injection container for GO inspired by [Symfony](https://symfony.co
 ```yaml
 meta:
     imports:
-        "pkg": "github.com/org/repo/pkg"
+        "pkg": "github.com/gontainer/repo/pkg"
 
 parameters:              # No need to hardcode configuration values, e.g.:
     db.host: "localhost" # '%env("APP_DB_HOST")%'
@@ -22,11 +22,11 @@ parameters:              # No need to hardcode configuration values, e.g.:
 
 services:
     db:
-        constructor: "pkg.NewDB" # equivalent for "github.com/org/repo/pkg.NewDB", additionally
+        constructor: "pkg.NewDB" # equivalent for "github.com/gontainer/repo/pkg.NewDB", additionally
                                  # import can be surrounded by `"` to make it more explicit
                                  # e.g.:
                                  # - "pkg".NewDB
-                                 # - "github.com/org/repo/pkg".NewDB
+                                 # - "github.com/gontainer/repo/pkg".NewDB
         args: ["%db.host%", "%db.port%"]
     storage:
         constructor: "pkg.NewStorage"
