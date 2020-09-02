@@ -17,10 +17,6 @@ type Imports interface {
 	RegisterPrefix(shortcut string, path string) error
 }
 
-type CompiledValidator interface {
-	Validate(compiled.DTO) error
-}
-
 type ArgResolver interface {
 	Resolve(interface{}) (compiled.Arg, error)
 }

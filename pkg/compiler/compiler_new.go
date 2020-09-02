@@ -43,3 +43,7 @@ type ImportPrefixes interface {
 type Tokenizer interface {
 	RegisterFunction(goImport string, goFunc string, tokenFunc string)
 }
+
+type CompiledValidator interface {
+	Validate(compiled.DTO) error
+}
