@@ -1,9 +1,11 @@
 package compiler
 
 import (
-	"strings"
+	"github.com/gomponents/gontainer/pkg/syntax"
 )
 
+// deprecated
+// use syntax.SanitizeImport
 func sanitizeImport(i string) string {
-	return strings.Trim(i, `"`)
+	return syntax.SanitizeImport(i)
 }

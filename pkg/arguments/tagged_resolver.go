@@ -20,7 +20,7 @@ func NewTaggedResolver() *TaggedResolver {
 }
 
 func (t TaggedResolver) Resolve(p interface{}) (compiled.Arg, error) {
-	s, _ := p.(string)
+	s := p.(string)
 	_, m := regex.Match(taggedRegex, s)
 
 	return compiled.Arg{

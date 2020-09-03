@@ -16,7 +16,7 @@ func NewServiceResolver() *ServiceResolver {
 }
 
 func (s ServiceResolver) Resolve(v interface{}) (compiled.Arg, error) {
-	expr, _ := v.(string)
+	expr := v.(string)
 	service := expr[1:]
 	return compiled.Arg{
 		Code:              fmt.Sprintf("container.MustGet(%+q)", service),

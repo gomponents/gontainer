@@ -2,18 +2,16 @@ package compiler
 
 import (
 	"fmt"
-	"regexp"
-	"sort"
-	"strings"
-
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
 	"github.com/gomponents/gontainer/pkg/regex"
+	"github.com/gomponents/gontainer/pkg/syntax"
+	"regexp"
+	"sort"
 )
 
 var (
 	regexServiceType        = regexp.MustCompile(`\A` + regex.ServiceType + `\z`)
-	regexServiceValue       = regexp.MustCompile(`\A` + regex.ServiceValue + `\z`)
 	regexServiceConstructor = regexp.MustCompile(`\A` + regex.ServiceConstructor + `\z`)
 )
 
@@ -101,21 +99,7 @@ func (ss StepServices) handleServiceValue(serviceValue string) string {
 		return ""
 	}
 
-	_, m := regex.Match(regexServiceValue, serviceValue)
-
-	if m["v1"] != "" {
-		parts := make([]string, 0)
-		if m["import"] != "" {
-			parts = append(parts, ss.aliases.GetAlias(sanitizeImport(m["import"])))
-		}
-		return m["ptr"] + strings.Join(append(parts, m["value"]), ".")
-	}
-
-	parts := make([]string, 0)
-	if m["import2"] != "" {
-		parts = append(parts, ss.aliases.GetAlias(sanitizeImport(m["import2"])))
-	}
-	return m["ptr2"] + strings.Join(append(parts, m["struct2"]), ".") + "{}"
+	return syntax.CompileServiceValue(ss.aliases, serviceValue)
 }
 
 func (ss StepServices) handleServiceConstructor(serviceConstructor string) string {
