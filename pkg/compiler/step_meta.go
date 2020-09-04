@@ -2,12 +2,13 @@ package compiler
 
 import (
 	"fmt"
-	"github.com/gomponents/gontainer/pkg/imports"
 	"regexp"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
+	"github.com/gomponents/gontainer/pkg/tokens"
 )
 
 var (
@@ -16,7 +17,7 @@ var (
 
 type StepMeta struct {
 	imports   imports.Prefixes
-	functions Functions
+	functions tokens.Functions
 }
 
 func NewStepMeta(imports imports.Prefixes, functions Functions) *StepMeta {

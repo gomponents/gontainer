@@ -10,6 +10,10 @@ type Tokenizer interface {
 	Tokenize(pattern string) ([]Token, error)
 }
 
+type Functions interface {
+	RegisterFunction(goImport string, goFunc string, tokenFunc string)
+}
+
 type PatternTokenizer struct {
 	strategies []TokenFactoryStrategy
 	aliases    imports.Aliases
