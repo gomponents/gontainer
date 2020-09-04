@@ -3,6 +3,7 @@ package compiler
 import (
 	"fmt"
 	"github.com/gomponents/gontainer/pkg/arguments"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"testing"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
@@ -180,21 +181,73 @@ func TestStepServices_Do(t *testing.T) {
 		}
 	})
 
-	t.Run("Given error", func(t *testing.T) {
-		argResolver := mockArgResolver{
+	t.Run("Given errors", func(t *testing.T) {
+		resolver := mockArgResolver{
 			error: fmt.Errorf("resolver error"),
 		}
-		i := input.DTO{
-			Services: map[string]input.Service{
-				"db": {
-					Constructor: "NewDB",
-					Args:        []interface{}{"localhost"},
+		aliases := mockAliases{alias: "myAlias"}
+
+		scenarios := []struct {
+			aliases  imports.Aliases
+			resolver arguments.Resolver
+			input    input.DTO
+			error    string
+		}{
+			{
+				resolver: resolver,
+				aliases:  aliases,
+				input: input.DTO{
+					Services: map[string]input.Service{
+						"db": {
+							Constructor: "NewDB",
+							Args:        []interface{}{"localhost"},
+						},
+					},
 				},
+				error: "service `db`: cannot resolve arg0: resolver error",
+			},
+			{
+				resolver: resolver,
+				aliases:  aliases,
+				input: input.DTO{
+					Services: map[string]input.Service{
+						"db": {
+							Constructor: "NewDB",
+							Calls: []input.Call{
+								{Method: "SetHost", Args: []interface{}{"localhost"}},
+							},
+						},
+					},
+				},
+				error: "service `db`: call `SetHost`: cannot resolve arg0: resolver error",
+			},
+			{
+				resolver: resolver,
+				aliases:  aliases,
+				input: input.DTO{
+					Services: map[string]input.Service{
+						"db": {
+							Constructor: "NewDB",
+							Fields: map[string]interface{}{
+								"Port": 3306,
+								"Host": "localhots",
+							},
+						},
+					},
+				},
+				error: "service `db`: field `Host`: resolver error",
 			},
 		}
-		o := compiled.DTO{}
-		err := StepServices{argResolver: argResolver}.Do(&i, &o)
-		assert.EqualError(t, err, "service `db`: cannot resolve arg0: resolver error")
+
+		for i, s := range scenarios {
+			t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+				assert.EqualError(
+					t,
+					NewStepServices(s.aliases, s.resolver).Do(&s.input, &compiled.DTO{}),
+					s.error,
+				)
+			})
+		}
 	})
 }
 

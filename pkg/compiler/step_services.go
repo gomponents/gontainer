@@ -148,7 +148,13 @@ func (ss StepServices) handleServiceCalls(calls []input.Call) ([]compiled.Call, 
 
 func (ss StepServices) handleServiceFields(fields map[string]interface{}) ([]compiled.Field, error) {
 	var res []compiled.Field
-	for n, f := range fields {
+	var names []string
+	for n, _ := range fields {
+		names = append(names, n)
+	}
+	sort.Strings(names)
+	for _, n := range names {
+		f := fields[n]
 		arg, err := ss.argResolver.Resolve(f)
 		if err != nil {
 			return nil, fmt.Errorf("field `%s`: %s", n, err.Error())
