@@ -255,11 +255,68 @@ func TestStepServices_handleServiceFields(t *testing.T) {
 				{Name: "Port", Value: compiledFooParam},
 			},
 		},
+		{
+			input:  nil,
+			output: nil,
+			error:  "",
+		},
 	}
 
 	for i, s := range scenarios {
 		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
 			o, err := StepServices{argResolver: s.resolver}.handleServiceFields(s.input)
+			if s.error != "" {
+				assert.EqualError(t, err, s.error)
+				assert.Nil(t, o)
+				return
+			}
+			assert.Equal(t, s.output, o)
+		})
+	}
+}
+
+func TestStepServices_handleServiceCalls(t *testing.T) {
+	compiledFooParam := compiled.Arg{
+		Code:            `container.GetParam("foo")`,
+		Raw:             "%foo%",
+		DependsOnParams: []string{"foo"},
+	}
+
+	scenarios := []struct {
+		input    []input.Call
+		output   []compiled.Call
+		error    string
+		resolver ArgResolver
+	}{
+		{
+			input:  nil,
+			output: nil,
+			error:  "",
+		},
+		{
+			input: []input.Call{
+				{Method: "SetFoo", Args: []interface{}{"foo"}, Immutable: true},
+				{Method: "SetBar", Args: []interface{}{"bar"}, Immutable: false},
+			},
+			output: []compiled.Call{
+				{Method: "SetFoo", Args: []compiled.Arg{compiledFooParam}, Immutable: true},
+				{Method: "SetBar", Args: []compiled.Arg{compiledFooParam}, Immutable: false},
+			},
+			resolver: mockArgResolver{arg: compiledFooParam},
+		},
+		{
+			input: []input.Call{
+				{Method: "SetFoo", Args: []interface{}{"foo"}, Immutable: true},
+				{Method: "SetBar", Args: []interface{}{"bar"}, Immutable: false},
+			},
+			error:    "call `SetFoo`: cannot resolve arg0: fancy error",
+			resolver: mockArgResolver{error: fmt.Errorf("fancy error")},
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			o, err := StepServices{argResolver: s.resolver}.handleServiceCalls(s.input)
 			if s.error != "" {
 				assert.EqualError(t, err, s.error)
 				assert.Nil(t, o)
