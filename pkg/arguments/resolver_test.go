@@ -15,13 +15,13 @@ func TestNewDefaultResolver(t *testing.T) {
 
 func TestResolver_Resolve(t *testing.T) {
 	scenarios := []struct {
-		resolver *Resolver
+		resolver *ChainResolver
 		input    interface{}
 		output   compiled.Arg
 		error    string
 	}{
 		{
-			resolver: NewResolver(NewServiceResolver()),
+			resolver: NewChainResolver(NewServiceResolver()),
 			input:    "@db",
 			output: compiled.Arg{
 				Code:              `container.MustGet("db")`,
@@ -30,7 +30,7 @@ func TestResolver_Resolve(t *testing.T) {
 			},
 		},
 		{
-			resolver: NewResolver(),
+			resolver: NewChainResolver(),
 			input:    "%name%",
 			error:    "cannot resolve argument `%name%`",
 		},

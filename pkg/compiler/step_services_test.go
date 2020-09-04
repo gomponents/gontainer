@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"fmt"
+	"github.com/gomponents/gontainer/pkg/arguments"
 	"testing"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
@@ -233,7 +234,7 @@ func TestStepServices_handleServiceFields(t *testing.T) {
 		input    map[string]interface{}
 		output   []compiled.Field
 		error    string
-		resolver ArgResolver
+		resolver arguments.Resolver
 	}{
 		{
 			input: map[string]interface{}{
@@ -286,7 +287,7 @@ func TestStepServices_handleServiceCalls(t *testing.T) {
 		input    []input.Call
 		output   []compiled.Call
 		error    string
-		resolver ArgResolver
+		resolver arguments.Resolver
 	}{
 		{
 			input:  nil,

@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"sort"
 
+	"github.com/gomponents/gontainer/pkg/arguments"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
 	"github.com/gomponents/gontainer/pkg/imports"
@@ -19,10 +20,10 @@ var (
 
 type StepServices struct {
 	aliases     imports.Aliases
-	argResolver ArgResolver
+	argResolver arguments.Resolver
 }
 
-func NewStepServices(aliases imports.Aliases, argResolver ArgResolver) *StepServices {
+func NewStepServices(aliases imports.Aliases, argResolver arguments.Resolver) *StepServices {
 	return &StepServices{aliases: aliases, argResolver: argResolver}
 }
 
