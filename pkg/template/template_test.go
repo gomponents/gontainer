@@ -2,6 +2,8 @@ package template
 
 import (
 	"fmt"
+	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"testing"
 
 	"github.com/gomponents/gontainer-helpers/caller"
@@ -61,6 +63,31 @@ func Test_createDefaultFunctions(t *testing.T) {
 			assert.Equal(t, s.output, o[0])
 		})
 	}
+}
+
+func TestSimpleBuilder_Build(t *testing.T) {
+	originalHead := templateHead
+	originalBody := templateBody
+
+	defer func() {
+		templateHead = originalHead
+		templateBody = originalBody
+	}()
+
+	templateHead = "imports\n(...)\n"
+	templateBody = "container(...)"
+
+	o, err := NewSimpleBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
+	assert.NoError(t, err)
+	assert.Equal(t, templateHead+templateBody, o)
+}
+
+type mockCollection struct {
+	imports []imports.Import
+}
+
+func (m mockCollection) GetImports() []imports.Import {
+	return m.imports
 }
 
 type mockAliases struct {

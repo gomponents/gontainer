@@ -28,28 +28,32 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 		"Input":            i,
 	}
 
-	fncs := createDefaultFunctions(s.aliases)
-
-	exec := func(name string, tplBody string) (string, error) {
-		tpl, newErr := template.New("gontainer_" + name).Funcs(fncs).Parse(tplBody)
-		if newErr != nil {
-			return "", newErr
-		}
-		var b bytes.Buffer
-		tplErr := tpl.Execute(&b, data)
-		return b.String(), tplErr
-	}
+	funcs := createDefaultFunctions(s.aliases)
 
 	var (
 		body, head string
 		err        error
 	)
 
-	if body, err = exec("body", templateBody); err != nil {
+	tplBody := tpl{
+		name:  "body",
+		body:  templateBody,
+		vars:  data,
+		funcs: funcs,
+	}
+
+	tplHead := tpl{
+		name:  "head",
+		body:  templateHead,
+		vars:  data,
+		funcs: funcs,
+	}
+
+	if body, err = tplBody.exec(); err != nil {
 		return "", err
 	}
 
-	if head, err = exec("head", templateHead); err != nil {
+	if head, err = tplHead.exec(); err != nil {
 		return "", err
 	}
 
@@ -80,20 +84,19 @@ func createDefaultFunctions(a imports.Aliases) template.FuncMap {
 	}
 }
 
-//// todo
-//type tpl struct {
-//	name  string
-//	body  string
-//	vars  map[string]interface{}
-//	funcs template.FuncMap
-//}
-//
-//func (t tpl) Execute() (string, error) {
-//	tpl, newErr := template.New("gontainer_" + t.name).Funcs(t.funcs).Parse(t.body)
-//	if newErr != nil {
-//		return "", newErr
-//	}
-//	var b bytes.Buffer
-//	tplErr := tpl.Execute(&b, t.vars)
-//	return b.String(), tplErr
-//}
+type tpl struct {
+	name  string
+	body  string
+	vars  map[string]interface{}
+	funcs template.FuncMap
+}
+
+func (t tpl) exec() (string, error) {
+	tpl, newErr := template.New("gontainer_" + t.name).Funcs(t.funcs).Parse(t.body)
+	if newErr != nil {
+		return "", newErr
+	}
+	var b bytes.Buffer
+	tplErr := tpl.Execute(&b, t.vars)
+	return b.String(), tplErr
+}
