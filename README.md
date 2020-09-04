@@ -123,6 +123,7 @@ Fields, arguments of constructors and calls accept the same syntax as parameters
 
 * reference to any other service, e.g.: `@service`
 * reference to group of tagged services, e.g.: `!tagged my.tag`
+* reference to value, e.g.: `!value &pkg.MyStruct{}`
 
 ### Create service using constructor
 
@@ -166,6 +167,51 @@ services:
             Debug: true
 ```
 
+### Inject global variable
+
+```yaml
+services:
+    db:
+        constructor: "pkg.NewDB"
+        args: ['!value "config".GlobalConfig.DB'] # compiler doesn't know whether `config` or `config.GlobalConfig`
+                                                  # is expected import name, to avoid issues, surround import by `"` characters
+
+```
+
+### More about `!value`
+
+GO doesn't really force you to use constructors, this is the reason why **Gontainer** gives you choice,
+you can create service by constructor either by value.
+
+```yaml
+services:
+    db1:
+        contructor: "pkg.NewDB"
+        args: ["localhost", 3306]
+    db2:
+        value: "&pkg.DB"
+        fields:
+            host: "localhost"
+            port: 3306
+```
+
+Sometimes it make sense to use value directly in argument or field, to do it, prefix your value by `!value `, e.g.:
+
+```yaml
+services:
+    httpClient:
+        constructor: "pkg.NewHttpClient"
+        args: ['!value "config".GlobalConfig.HttpClient']
+```
+
+Values allow to use:
+
+* constant or variable: `MyConfig`, `"pkg.config".MyConfig`
+* field of global variable: `"pkg".MyConfig.Some.Field`, `".".MyConfig.Some.Field`
+(is an alias to current package name, it is required in this specific case, otherwise compiler considers `MyConfig` as an import)
+* struct: `MyStruct{}`, `my/import.MyStruct{}`
+* pointers: `&"pkg.config".MyConfig`, `&"pkg".MyConfig.Some.Field`, `&MyStruct{}`, `&my/import.MyStruct{}`
+
 ### Tags
 
 ```yaml
@@ -202,12 +248,4 @@ decorators:
 # if _, ok := svc.(pkg.HttpClient); ok {
 #     svc = pkg.MakeTracedHttpClient(svc.(pkg.HttpClient), container.Get("tracer"))
 # }
-```
-
-**Create service by type**
-
-**!value**
-
-```yaml
-args: ['!value "config".Cfg.Some.Global.Config', "!value &myStruct{}"]
 ```

@@ -45,7 +45,15 @@ func TestStepServices_handleServiceValue(t *testing.T) {
 			output: "MyValue",
 		},
 		{
+			input:  `".".MyValue.Foo`,
+			output: "MyValue.Foo",
+		},
+		{
 			input:  "&MyValue",
+			output: "&MyValue",
+		},
+		{
+			input:  `&".".MyValue`,
 			output: "&MyValue",
 		},
 		{

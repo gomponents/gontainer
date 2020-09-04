@@ -89,7 +89,7 @@ func (ss StepServices) handleServiceType(serviceType string) string {
 	}
 	_, m := regex.Match(regexServiceType, serviceType)
 	t := m["type"]
-	if m["import"] != "" {
+	if m["import"] != "" && m["import"] != `"."` {
 		t = ss.aliases.GetAlias(sanitizeImport(m["import"])) + "." + t
 	}
 	return m["ptr"] + t
@@ -109,7 +109,7 @@ func (ss StepServices) handleServiceConstructor(serviceConstructor string) strin
 	}
 	_, m := regex.Match(regexServiceConstructor, serviceConstructor)
 	r := ""
-	if m["import"] != "" {
+	if m["import"] != "" && m["import"] != `"."` {
 		r = ss.aliases.GetAlias(sanitizeImport(m["import"])) + "."
 	}
 	return r + m["fn"]
