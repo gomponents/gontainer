@@ -32,7 +32,7 @@ func TestStepServices_handleServiceType(t *testing.T) {
 	doTestInputOutput(
 		t,
 		StepServices{
-			aliases: mockImports{alias: "alias"},
+			aliases: mockAliases{alias: "alias"},
 		}.handleServiceType,
 		scenarios...,
 	)
@@ -109,7 +109,7 @@ func TestStepServices_handleServiceValue(t *testing.T) {
 	doTestInputOutput(
 		t,
 		StepServices{
-			aliases: mockImports{alias: "alias"},
+			aliases: mockAliases{alias: "alias"},
 		}.handleServiceValue,
 		scenarios...,
 	)
@@ -138,7 +138,7 @@ func TestStepServices_handleServiceConstructor(t *testing.T) {
 	doTestInputOutput(
 		t,
 		StepServices{
-			aliases: mockImports{alias: "alias"},
+			aliases: mockAliases{alias: "alias"},
 		}.handleServiceConstructor,
 		scenarios...,
 	)
@@ -178,6 +178,23 @@ func TestStepServices_Do(t *testing.T) {
 			})
 		}
 	})
+
+	t.Run("Given error", func(t *testing.T) {
+		argResolver := mockArgResolver{
+			error: fmt.Errorf("resolver error"),
+		}
+		i := input.DTO{
+			Services: map[string]input.Service{
+				"db": {
+					Constructor: "NewDB",
+					Args:        []interface{}{"localhost"},
+				},
+			},
+		}
+		o := compiled.DTO{}
+		err := StepServices{argResolver: argResolver}.Do(&i, &o)
+		assert.EqualError(t, err, "service `db`: cannot resolve arg0: resolver error")
+	})
 }
 
 func TestStepServices_handleServiceTags(t *testing.T) {
@@ -205,15 +222,19 @@ func TestStepServices_handleServiceTags(t *testing.T) {
 	)
 }
 
-type mockImports struct {
+type mockAliases struct {
 	alias string
-	error error
 }
 
-func (m mockImports) GetAlias(string) string {
+func (m mockAliases) GetAlias(string) string {
 	return m.alias
 }
 
-func (m mockImports) RegisterPrefix(shortcut string, path string) error {
-	return m.error
+type mockArgResolver struct {
+	arg   compiled.Arg
+	error error
+}
+
+func (m mockArgResolver) Resolve(interface{}) (compiled.Arg, error) {
+	return m.arg, m.error
 }

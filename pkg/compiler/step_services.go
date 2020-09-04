@@ -2,13 +2,14 @@ package compiler
 
 import (
 	"fmt"
+	"regexp"
+	"sort"
+
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 	"github.com/gomponents/gontainer/pkg/syntax"
-	"regexp"
-	"sort"
 )
 
 var (
