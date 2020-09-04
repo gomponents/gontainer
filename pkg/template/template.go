@@ -13,22 +13,22 @@ import (
 //go:generate go run ../../templater/main.go head.tmpl template templateHead tmpl_head.go
 //go:generate go run ../../templater/main.go body.tmpl template templateBody tmpl_body.go
 
-type SimpleBuilder struct {
+type Builder struct {
 	aliases    imports.Aliases
 	collection imports.Collection
 }
 
-func NewSimpleBuilder(aliases imports.Aliases, collection imports.Collection) *SimpleBuilder {
-	return &SimpleBuilder{aliases: aliases, collection: collection}
+func NewBuilder(aliases imports.Aliases, collection imports.Collection) *Builder {
+	return &Builder{aliases: aliases, collection: collection}
 }
 
-func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
+func (b Builder) Build(i compiled.DTO) (string, error) {
 	data := map[string]interface{}{
-		"ImportCollection": s.collection,
+		"ImportCollection": b.collection,
 		"Input":            i,
 	}
 
-	funcs := createDefaultFunctions(s.aliases)
+	funcs := createDefaultFunctions(b.aliases)
 
 	var (
 		body, head string

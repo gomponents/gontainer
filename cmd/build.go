@@ -56,7 +56,7 @@ func NewBuildCmd() *cobra.Command {
 		compiledInput, ciErr := c.Compile(input)
 		handleErr("Cannot build container", ciErr)
 
-		tpl, tplErr := template.NewSimpleBuilder(imps, imps).Build(compiledInput)
+		tpl, tplErr := template.NewBuilder(imps, imps).Build(compiledInput)
 		handleErr("Unexpected error has occurred during building container", tplErr)
 		of := filepath.Clean(outputFile)
 		fileErr := ioutil.WriteFile(of, []byte(tpl), 0644)

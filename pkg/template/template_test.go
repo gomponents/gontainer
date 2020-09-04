@@ -65,7 +65,7 @@ func Test_createDefaultFunctions(t *testing.T) {
 	}
 }
 
-func TestSimpleBuilder_Build(t *testing.T) {
+func TestBuilder_Build(t *testing.T) {
 	originalHead := templateHead
 	originalBody := templateBody
 
@@ -77,7 +77,7 @@ func TestSimpleBuilder_Build(t *testing.T) {
 	templateHead = "imports\n(...)\n"
 	templateBody = "container(...)"
 
-	o, err := NewSimpleBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
+	o, err := NewBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
 	assert.NoError(t, err)
 	assert.Equal(t, templateHead+templateBody, o)
 }
