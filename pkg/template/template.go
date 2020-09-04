@@ -2,7 +2,6 @@ package template
 
 import (
 	"bytes"
-	"strings"
 	"text/template"
 
 	"github.com/gomponents/gontainer-helpers/exporters"
@@ -29,30 +28,7 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 		"Input":            i,
 	}
 
-	fncs := template.FuncMap{
-		"export": func(input interface{}) string {
-			r, err := exporters.NewDefaultExporter().Export(input)
-			if err != nil {
-				panic(err)
-			}
-			return r
-		},
-		"importAlias": func(i string) string {
-			return s.aliases.GetAlias(i)
-		},
-		"replace": func(input, from, to string) string {
-			return strings.Replace(input, from, to, -1)
-		},
-		"callerAlias": func() string {
-			return s.aliases.GetAlias(consts.GontainerHelperPath + "/caller")
-		},
-		"containerAlias": func() string {
-			return s.aliases.GetAlias(consts.GontainerHelperPath + "/container")
-		},
-		"setterAlias": func() string {
-			return s.aliases.GetAlias(consts.GontainerHelperPath + "/setter")
-		},
-	}
+	fncs := createDefaultFunctions(s.aliases)
 
 	exec := func(name string, tplBody string) (string, error) {
 		tpl, newErr := template.New("gontainer_" + name).Funcs(fncs).Parse(tplBody)
