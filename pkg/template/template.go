@@ -79,3 +79,27 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 
 	return head + body, nil
 }
+
+func createDefaultFunctions(a imports.Aliases) template.FuncMap {
+	return template.FuncMap{
+		"export": func(input interface{}) string {
+			r, err := exporters.NewDefaultExporter().Export(input)
+			if err != nil {
+				panic(err)
+			}
+			return r
+		},
+		"importAlias": func(i string) string {
+			return a.GetAlias(i)
+		},
+		"callerAlias": func() string {
+			return a.GetAlias(consts.GontainerHelperPath + "/caller")
+		},
+		"containerAlias": func() string {
+			return a.GetAlias(consts.GontainerHelperPath + "/container")
+		},
+		"setterAlias": func() string {
+			return a.GetAlias(consts.GontainerHelperPath + "/setter")
+		},
+	}
+}

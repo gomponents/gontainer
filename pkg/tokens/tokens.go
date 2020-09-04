@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
@@ -103,18 +104,14 @@ func (t TokenString) Create(expr string) (Token, error) {
 
 // %env(ENV_VAR)%
 type TokenSimpleFunction struct {
-	importAliasProvider ImportAliasProvider
-	fn                  string
-	goImport            string
-	goFn                string
+	aliases  imports.Aliases
+	fn       string
+	goImport string
+	goFn     string
 }
 
-type ImportAliasProvider interface {
-	GetAlias(string) string
-}
-
-func NewTokenSimpleFunction(imports ImportAliasProvider, fn string, goImport string, goFn string) *TokenSimpleFunction {
-	return &TokenSimpleFunction{importAliasProvider: imports, fn: fn, goImport: goImport, goFn: goFn}
+func NewTokenSimpleFunction(aliases imports.Aliases, fn string, goImport string, goFn string) *TokenSimpleFunction {
+	return &TokenSimpleFunction{aliases: aliases, fn: fn, goImport: goImport, goFn: goFn}
 }
 
 func (t TokenSimpleFunction) Supports(expr string) bool {
@@ -132,7 +129,7 @@ func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 	_, m := regex.Match(regexSimpleFn, e)
 	fn := fmt.Sprintf("%s(%s)", t.goFn, m["params"])
 	if t.goImport != "" {
-		fn = fmt.Sprintf("%s.%s", t.importAliasProvider.GetAlias(t.goImport), fn)
+		fn = fmt.Sprintf("%s.%s", t.aliases.GetAlias(t.goImport), fn)
 	}
 	return Token{
 		Kind: KindCode,
