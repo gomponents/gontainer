@@ -1,5 +1,9 @@
 package input
 
+type Validator interface {
+	Validate(DTO) error
+}
+
 type ChainValidator struct {
 	validators []func(DTO) error
 }

@@ -6,10 +6,10 @@ import (
 )
 
 type StepValidateInput struct {
-	validator InputValidator
+	validator input.Validator
 }
 
-func NewStepValidateInput(validator InputValidator) *StepValidateInput {
+func NewStepValidateInput(validator input.Validator) *StepValidateInput {
 	return &StepValidateInput{validator: validator}
 }
 
