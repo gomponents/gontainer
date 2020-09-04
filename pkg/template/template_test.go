@@ -66,20 +66,49 @@ func Test_createDefaultFunctions(t *testing.T) {
 }
 
 func TestBuilder_Build(t *testing.T) {
-	originalHead := templateHead
-	originalBody := templateBody
+	t.Run("OK", func(t *testing.T) {
+		originalHead := templateHead
+		originalBody := templateBody
 
-	defer func() {
-		templateHead = originalHead
-		templateBody = originalBody
-	}()
+		defer func() {
+			templateHead = originalHead
+			templateBody = originalBody
+		}()
 
-	templateHead = "imports\n(...)\n"
-	templateBody = "container(...)"
+		templateHead = "imports\n(...)\n"
+		templateBody = "container(...)"
 
-	o, err := NewBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
-	assert.NoError(t, err)
-	assert.Equal(t, templateHead+templateBody, o)
+		o, err := NewBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
+		assert.NoError(t, err)
+		assert.Equal(t, templateHead+templateBody, o)
+	})
+	t.Run("Given error in head", func(t *testing.T) {
+		originalHead := templateHead
+
+		defer func() {
+			templateHead = originalHead
+		}()
+
+		templateHead = "{{ missingFunction paramA paramB }}"
+
+		_, err := NewBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
+		assert.EqualError(t, err, `template: gontainer_head:1: function "missingFunction" not defined`)
+	})
+	t.Run("Given error in body", func(t *testing.T) {
+		originalHead := templateHead
+		originalBody := templateBody
+
+		defer func() {
+			templateHead = originalHead
+			templateBody = originalBody
+		}()
+
+		templateHead = "imports\n(...)\n"
+		templateBody = "{{ missingFunction paramA paramB }}"
+
+		_, err := NewBuilder(mockAliases{alias: "alias"}, mockCollection{}).Build(compiled.DTO{})
+		assert.EqualError(t, err, `template: gontainer_body:1: function "missingFunction" not defined`)
+	})
 }
 
 type mockCollection struct {
