@@ -208,7 +208,7 @@ Values allow to use:
 
 * constant or variable: `MyConfig`, `"pkg.config".MyConfig`
 * field of global variable: `"pkg".MyConfig.Some.Field`, `".".MyConfig.Some.Field`
-(is an alias to current package name, it is required in this specific case, otherwise compiler considers `MyConfig` as an import)
+(`"."` is an alias to current package name, it is required in this specific case, otherwise compiler considers `MyConfig` as an import)
 * struct: `MyStruct{}`, `my/import.MyStruct{}`
 * pointers: `&"pkg.config".MyConfig`, `&"pkg".MyConfig.Some.Field`, `&MyStruct{}`, `&my/import.MyStruct{}`
 
