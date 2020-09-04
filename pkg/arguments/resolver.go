@@ -2,6 +2,7 @@ package arguments
 
 import (
 	"fmt"
+	"github.com/gomponents/gontainer/pkg/imports"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/parameters"
@@ -35,10 +36,11 @@ func (s Resolver) Resolve(i interface{}) (compiled.Arg, error) {
 	return compiled.Arg{}, fmt.Errorf("cannot resolve argument `%s`", i)
 }
 
-func NewDefaultResolver(resolver parameters.Resolver) *Resolver {
+func NewDefaultResolver(r parameters.Resolver, a imports.Aliases) *Resolver {
 	return NewResolver(
 		NewServiceResolver(),
 		NewTaggedResolver(),
-		NewParamResolver(resolver),
+		NewValueResolver(a),
+		NewParamResolver(r),
 	)
 }
