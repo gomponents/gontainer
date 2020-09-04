@@ -195,7 +195,7 @@ services:
             port: 3306
 ```
 
-Sometimes it make sense to use value directly in argument or field, to do it, prefix your value by `!value `, e.g.:
+Sometimes it makes sense to use value directly in argument or field, to do it, prefix your value by `!value `, e.g.:
 
 ```yaml
 services:
