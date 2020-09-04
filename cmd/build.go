@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -10,6 +11,22 @@ import (
 	"github.com/gomponents/gontainer/pkg/template"
 	"github.com/spf13/cobra"
 )
+
+type buildRunner struct {
+	patterns   []string
+	outputFile string
+	out        io.Writer
+}
+
+// todo it will allow for functional tests
+func (b buildRunner) Run() error {
+	//reader := pkg.NewDefaultConfigReader(func(s string) {
+	//	_, _ = b.out.Write([]byte(fmt.Sprintf("    %s\n", s)))
+	//})
+	//_, _ = b.out.Write([]byte("Reading files...\n"))
+
+	return nil
+}
 
 func NewBuildCmd() *cobra.Command {
 	var (
