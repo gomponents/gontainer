@@ -2,11 +2,11 @@ package template
 
 import (
 	"fmt"
-	"github.com/gomponents/gontainer/pkg/dto/compiled"
-	"github.com/gomponents/gontainer/pkg/imports"
 	"testing"
 
 	"github.com/gomponents/gontainer-helpers/caller"
+	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/stretchr/testify/assert"
 )
 
