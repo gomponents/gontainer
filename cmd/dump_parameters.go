@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/gomponents/gontainer/pkg"
-	"github.com/gomponents/gontainer/pkg/defaults"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/landoop/tableprinter"
 	"github.com/spf13/cobra"
@@ -15,25 +14,25 @@ const (
 	defaultImportLen = 15
 )
 
-type mockImports struct {
+type fakeImports struct {
 	maxLen int
 }
 
-func (m mockImports) GetAlias(i string) string {
+func (f fakeImports) GetAlias(i string) string {
 	const preffix = "(...)"
 	r := []rune(i)
-	if len(r) > m.maxLen {
-		r = r[len(r)-(m.maxLen-len([]rune(preffix))):]
+	if len(r) > f.maxLen {
+		r = r[len(r)-(f.maxLen-len([]rune(preffix))):]
 		i = preffix + string(r)
 	}
 	return "\"" + i + "\""
 }
 
-func (m mockImports) GetImports() []imports.Import {
+func (f fakeImports) GetImports() []imports.Import {
 	return nil
 }
 
-func (m mockImports) RegisterPrefix(shortcut string, path string) error {
+func (f fakeImports) RegisterPrefix(shortcut string, path string) error {
 	return nil
 }
 
@@ -68,8 +67,8 @@ func NewDumpParamsCmd() *cobra.Command {
 		if l < minImportLen {
 			l = minImportLen
 		}
-		imps := &mockImports{maxLen: int(l)}
-		c := defaults.NewDefaultCompiler(imps)
+		imps := &fakeImports{maxLen: int(l)}
+		c := newDefaultCompiler(imps)
 
 		compiledInput, ciErr := c.Compile(input)
 		handleErr("Cannot build container", ciErr)

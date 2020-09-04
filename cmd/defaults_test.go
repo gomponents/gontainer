@@ -1,4 +1,4 @@
-package defaults
+package cmd
 
 import (
 	"testing"
@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewDefaultCompiler(t *testing.T) {
-	assert.NotEmpty(t, NewDefaultCompiler(mockImports{}))
+func Test_newDefaultCompiler(t *testing.T) {
+	assert.NotEmpty(t, newDefaultCompiler(mockImports{}))
 }
 
 type mockImports struct {
