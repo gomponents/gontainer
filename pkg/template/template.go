@@ -8,27 +8,25 @@ import (
 	"github.com/gomponents/gontainer-helpers/exporters"
 	"github.com/gomponents/gontainer/pkg/consts"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/imports"
 )
 
 //go:generate go run ../../templater/main.go head.tmpl template TemplateHead tmpl_head.go
 //go:generate go run ../../templater/main.go body.tmpl template TemplateBody tmpl_body.go
 
-type Imports interface {
-	GetAlias(string) string
-}
-
 type SimpleBuilder struct {
-	imports Imports
+	aliases    imports.Aliases
+	collection imports.Collection
 }
 
-func NewSimpleBuilder(imports Imports) *SimpleBuilder {
-	return &SimpleBuilder{imports: imports}
+func NewSimpleBuilder(aliases imports.Aliases, collection imports.Collection) *SimpleBuilder {
+	return &SimpleBuilder{aliases: aliases, collection: collection}
 }
 
 func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 	data := map[string]interface{}{
-		"Imports": s.imports,
-		"Input":   i,
+		"ImportCollection": s.collection,
+		"Input":            i,
 	}
 
 	fncs := template.FuncMap{
@@ -40,19 +38,19 @@ func (s SimpleBuilder) Build(i compiled.DTO) (string, error) {
 			return r
 		},
 		"importAlias": func(i string) string {
-			return s.imports.GetAlias(i)
+			return s.aliases.GetAlias(i)
 		},
 		"replace": func(input, from, to string) string {
 			return strings.Replace(input, from, to, -1)
 		},
 		"callerAlias": func() string {
-			return s.imports.GetAlias(consts.GontainerHelperPath + "/caller")
+			return s.aliases.GetAlias(consts.GontainerHelperPath + "/caller")
 		},
 		"containerAlias": func() string {
-			return s.imports.GetAlias(consts.GontainerHelperPath + "/container")
+			return s.aliases.GetAlias(consts.GontainerHelperPath + "/container")
 		},
 		"setterAlias": func() string {
-			return s.imports.GetAlias(consts.GontainerHelperPath + "/setter")
+			return s.aliases.GetAlias(consts.GontainerHelperPath + "/setter")
 		},
 	}
 
