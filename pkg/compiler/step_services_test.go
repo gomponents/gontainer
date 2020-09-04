@@ -222,6 +222,54 @@ func TestStepServices_handleServiceTags(t *testing.T) {
 	)
 }
 
+func TestStepServices_handleServiceFields(t *testing.T) {
+	compiledFooParam := compiled.Arg{
+		Code:            `container.GetParam("foo")`,
+		Raw:             "%foo%",
+		DependsOnParams: []string{"foo"},
+	}
+
+	scenarios := []struct {
+		input    map[string]interface{}
+		output   []compiled.Field
+		error    string
+		resolver ArgResolver
+	}{
+		{
+			input: map[string]interface{}{
+				"Host": "localhost",
+			},
+			error:    "field `Host`: my resolver error",
+			resolver: mockArgResolver{error: fmt.Errorf("my resolver error")},
+		},
+		{
+			input: map[string]interface{}{
+				"Port":  3306,
+				"Host":  "localhot",
+				"Debug": true,
+			},
+			resolver: mockArgResolver{arg: compiledFooParam},
+			output: []compiled.Field{
+				{Name: "Debug", Value: compiledFooParam},
+				{Name: "Host", Value: compiledFooParam},
+				{Name: "Port", Value: compiledFooParam},
+			},
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			o, err := StepServices{argResolver: s.resolver}.handleServiceFields(s.input)
+			if s.error != "" {
+				assert.EqualError(t, err, s.error)
+				assert.Nil(t, o)
+				return
+			}
+			assert.Equal(t, s.output, o)
+		})
+	}
+}
+
 type mockAliases struct {
 	alias string
 }
