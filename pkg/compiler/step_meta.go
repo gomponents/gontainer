@@ -20,7 +20,7 @@ type StepMeta struct {
 	functions tokens.Functions
 }
 
-func NewStepMeta(imports imports.Prefixes, functions Functions) *StepMeta {
+func NewStepMeta(imports imports.Prefixes, functions tokens.Functions) *StepMeta {
 	return &StepMeta{imports: imports, functions: functions}
 }
 
