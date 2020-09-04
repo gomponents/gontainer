@@ -149,7 +149,7 @@ func (ss StepServices) handleServiceCalls(calls []input.Call) ([]compiled.Call, 
 func (ss StepServices) handleServiceFields(fields map[string]interface{}) ([]compiled.Field, error) {
 	var res []compiled.Field
 	var names []string
-	for n, _ := range fields {
+	for n, _ := range fields { //nolint:gosimple
 		names = append(names, n)
 	}
 	sort.Strings(names)
