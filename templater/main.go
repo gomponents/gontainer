@@ -23,7 +23,7 @@ func main() {
 
 	output := `package {{pkg}}
 
-const {{const}} = {{val}}
+var {{const}} = {{val}}
 `
 
 	output = strings.Replace(output, "{{pkg}}", pkg, 1)
