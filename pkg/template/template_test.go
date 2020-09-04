@@ -26,6 +26,18 @@ func Test_createDefaultFunctions(t *testing.T) {
 			input:  []interface{}{"my/package.name"},
 			output: "myAlias",
 		},
+		{
+			fn:     "callerAlias",
+			output: "myAlias",
+		},
+		{
+			fn:     "containerAlias",
+			output: "myAlias",
+		},
+		{
+			fn:     "setterAlias",
+			output: "myAlias",
+		},
 	}
 
 	for i, s := range scenarios {
