@@ -65,7 +65,7 @@ func TestTokenFactoryStrategy(t *testing.T) {
 			supports: false,
 		},
 		{
-			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Getenv"),
+			factory:  NewTokenSimpleFunction(mockAliases{alias: "osAlias"}, "env", "os", "Getenv"),
 			expr:     `%env("FOO")%`,
 			supports: true,
 			token: Token{
@@ -75,7 +75,7 @@ func TestTokenFactoryStrategy(t *testing.T) {
 			},
 		},
 		{
-			factory:  NewTokenSimpleFunction(mockAliasProvider{alias: "osAlias"}, "env", "os", "Getenv"),
+			factory:  NewTokenSimpleFunction(mockAliases{alias: "osAlias"}, "env", "os", "Getenv"),
 			expr:     `lorep ipsum`,
 			supports: false,
 		},

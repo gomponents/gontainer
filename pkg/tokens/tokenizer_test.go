@@ -122,7 +122,7 @@ func TestPatternTokenizer_Tokenize(t *testing.T) {
 }
 
 func TestPatternTokenizer_RegisterFunction(t *testing.T) {
-	tokenizer := NewPatternTokenizer(nil, mockAliasProvider{alias: "myAlias"})
+	tokenizer := NewPatternTokenizer(nil, mockAliases{alias: "myAlias"})
 	assert.Empty(t, tokenizer.strategies)
 	const expr = `%env("VAR")%`
 

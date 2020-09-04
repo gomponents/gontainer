@@ -1,9 +1,9 @@
 package tokens
 
-type mockAliasProvider struct {
+type mockAliases struct {
 	alias string
 }
 
-func (m mockAliasProvider) GetAlias(string) string {
+func (m mockAliases) GetAlias(string) string {
 	return m.alias
 }
