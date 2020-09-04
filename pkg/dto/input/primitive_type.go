@@ -4,8 +4,13 @@ import (
 	"reflect"
 )
 
-var (
-	primitiveKinds = []reflect.Kind{
+func isPrimitiveType(val interface{}) bool {
+	if val == nil {
+		return true
+	}
+
+	switch reflect.TypeOf(val).Kind() {
+	case
 		reflect.String,
 		reflect.Bool,
 		reflect.Int,
@@ -21,21 +26,8 @@ var (
 		reflect.Float32,
 		reflect.Float64,
 		reflect.Complex64,
-		reflect.Complex128,
-	}
-)
-
-func isPrimitiveType(val interface{}) bool {
-	if val == nil {
+		reflect.Complex128:
 		return true
-	}
-
-	t := reflect.TypeOf(val)
-
-	for _, k := range primitiveKinds {
-		if k == t.Kind() {
-			return true
-		}
 	}
 
 	return false
