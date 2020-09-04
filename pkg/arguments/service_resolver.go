@@ -2,10 +2,10 @@ package arguments
 
 import (
 	"fmt"
-	"github.com/gomponents/gontainer/pkg/regex"
 	"regexp"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/regex"
 )
 
 type ServiceResolver struct {
