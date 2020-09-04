@@ -4,17 +4,11 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/gomponents/gontainer-helpers/exporters"
 	"github.com/gomponents/gontainer/pkg/consts"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/tokens"
 )
-
-type Imports interface {
-	GetAlias(string) string
-}
-
-type Exporter interface {
-	Export(interface{}) (string, error)
-}
 
 type Resolver interface {
 	Resolve(interface{}) (Expr, error)
@@ -22,12 +16,12 @@ type Resolver interface {
 
 type SimpleResolver struct {
 	tokenizer tokens.Tokenizer
-	exporter  Exporter
-	imports   Imports
+	exporter  exporters.Exporter
+	aliases   imports.Aliases
 }
 
-func NewSimpleResolver(tokenizer tokens.Tokenizer, exporter Exporter, imports Imports) *SimpleResolver {
-	return &SimpleResolver{tokenizer: tokenizer, exporter: exporter, imports: imports}
+func NewSimpleResolver(tokenizer tokens.Tokenizer, exporter exporters.Exporter, aliases imports.Aliases) *SimpleResolver {
+	return &SimpleResolver{tokenizer: tokenizer, exporter: exporter, aliases: aliases}
 }
 
 type Expr struct {
@@ -106,7 +100,7 @@ func (s SimpleResolver) resolveString(v string) (Expr, error) {
 			return Expr{}, solveErr
 		}
 
-		tmp = s.imports.GetAlias(consts.GontainerHelperPath+"/exporters") + `.MustToString(` + tmp + `)`
+		tmp = s.aliases.GetAlias(consts.GontainerHelperPath+"/exporters") + `.MustToString(` + tmp + `)`
 		codeParts = append(codeParts, tmp)
 	}
 
