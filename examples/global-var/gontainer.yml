@@ -3,3 +3,9 @@ services:
     value: "&runtimeTime"
     getter: "GetTime"
     type: "*time.Time"
+
+  mysqlTime:
+    constructor: "newMysqlTime"
+    args: ["!value &runtimeTime"]
+    getter: "GetMysqlTime"
+    type: "*mysqlTime"
