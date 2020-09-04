@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 	"github.com/gomponents/gontainer/pkg/syntax"
 	"regexp"
@@ -16,11 +17,11 @@ var (
 )
 
 type StepServices struct {
-	aliases     ImportAliases
+	aliases     imports.Aliases
 	argResolver ArgResolver
 }
 
-func NewStepServices(aliases ImportAliases, argResolver ArgResolver) *StepServices {
+func NewStepServices(aliases imports.Aliases, argResolver ArgResolver) *StepServices {
 	return &StepServices{aliases: aliases, argResolver: argResolver}
 }
 

@@ -16,6 +16,18 @@ type Import struct {
 	Alias string
 }
 
+type Aliases interface {
+	GetAlias(string) string
+}
+
+type Collection interface {
+	GetImports() []Import
+}
+
+type Prefixes interface {
+	RegisterPrefix(shortcut string, path string) error
+}
+
 type Imports interface {
 	GetAlias(string) string
 	GetImports() []Import

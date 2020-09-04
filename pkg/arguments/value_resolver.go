@@ -1,23 +1,24 @@
 package arguments
 
 import (
+	"regexp"
+
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 	"github.com/gomponents/gontainer/pkg/syntax"
-	"regexp"
 )
 
 var (
 	argRegex = regexp.MustCompile(`\A` + regex.ArgValue + `\z`)
 )
 
-// todo rename it
-type ImportAliases interface {
-	GetAlias(string) string
+type ValueResolver struct {
+	aliases imports.Aliases
 }
 
-type ValueResolver struct {
-	aliases ImportAliases
+func NewValueResolver(aliases imports.Aliases) *ValueResolver {
+	return &ValueResolver{aliases: aliases}
 }
 
 func (v ValueResolver) Resolve(p interface{}) (compiled.Arg, error) {
