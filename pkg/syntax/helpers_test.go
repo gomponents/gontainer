@@ -49,6 +49,10 @@ func TestCompileServiceValue(t *testing.T) {
 			input:  `&"my/import/path".User{}`,
 			output: "&i0_alias.User{}",
 		},
+		{
+			input:  `".".GlobalConfig.DB`,
+			output: "GlobalConfig.DB",
+		},
 	}
 
 	a := mockAliases{alias: "i0_alias"}
