@@ -21,8 +21,8 @@ func Test_createDefaultFunctions(t *testing.T) {
 	}{
 		{
 			fn:     "export",
-			input:  []interface{}{5},
-			output: "5",
+			input:  []interface{}{"hello"},
+			output: `"hello"`,
 		},
 		{
 			fn:    "export",
