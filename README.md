@@ -161,7 +161,7 @@ services:
 
 Constructor must return 1 or 2 values. Second (optional) value must be an instance of error.
 
-**Examples**
+**Sample constructors**
 
 ```go
 type Server struct {
