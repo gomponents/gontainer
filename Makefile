@@ -18,8 +18,9 @@ code-coverage:
 build: export DATETIME = $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 build: export GITHASH = $(shell git rev-parse HEAD)
 build: export VERSION = dev-$(shell git rev-parse --abbrev-ref HEAD)
+build: export DIRTY_SUFFIX = $(shell git diff --quiet || echo '-dirty')
 build: clean gogenerate
-	go build -v -ldflags="-X 'main.date=${DATETIME}' -X 'main.commit=${GITHASH}' -X 'main.version=${VERSION}'" -o app.bin main.go
+	go build -v -ldflags="-X 'main.date=${DATETIME}' -X 'main.commit=${GITHASH}${DIRTY_SUFFIX}' -X 'main.version=${VERSION}'" -o app.bin main.go
 
 mv-to-bin-dir:
 	mv app.bin /usr/local/bin/gontainer
