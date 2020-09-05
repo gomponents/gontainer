@@ -27,4 +27,16 @@ func TestSimpleImports_RegisterPrefix(t *testing.T) {
 		assert.Equal(t, expectedRemote, i.GetAlias(shortcut+"/remote"))
 		assert.Equal(t, expectedRemote, i.GetAlias(viperPkg+"/remote"))
 	})
+
+	t.Run("Given error", func(t *testing.T) {
+		i := NewSimpleImports()
+		if !assert.NoError(t, i.RegisterPrefix("viper", viperPkg)) {
+			return
+		}
+		assert.EqualError(
+			t,
+			i.RegisterPrefix("viper", viperPkg),
+			"shortcut `viper` is already registered",
+		)
+	})
 }
