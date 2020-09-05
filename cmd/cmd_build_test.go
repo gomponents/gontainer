@@ -77,6 +77,14 @@ Error: open /: is a directory
 				"Error: error has occurred during parsing yaml file `testdata/invalid.yml`: yaml: line 2: did not find expected node content\n",
 			error: "error has occurred during parsing yaml file `testdata/invalid.yml`: yaml: line 2: did not find expected node content",
 		},
+		{ // todo do not print regex in cli
+			cmd:  newCmd(),
+			args: "-i testdata/invalid-constructor.yml -o /dev/null",
+			out: "Reading files...\n" +
+				"    testdata/invalid-constructor.yml\n" +
+				"Error: service `db`: constructor must match `\\A((?P<import>(([A-Za-z](\\/?[A-Z-a-z0-9._-])*)|(\"[A-Za-z](\\/?[A-Z-a-z0-9._-])*\")|\"\\.\"))\\.)?(?P<fn>[A-Za-z][A-Za-z0-9_]*)\\z`, `New DB` given\n",
+			error: "service `db`: constructor must match `\\A((?P<import>(([A-Za-z](\\/?[A-Z-a-z0-9._-])*)|(\"[A-Za-z](\\/?[A-Z-a-z0-9._-])*\")|\"\\.\"))\\.)?(?P<fn>[A-Za-z][A-Za-z0-9_]*)\\z`, `New DB` given",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
