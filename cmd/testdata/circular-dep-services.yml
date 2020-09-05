@@ -1,0 +1,7 @@
+services:
+    db:
+        constructor: "NewDB"
+        args: ["@storage"]
+    storage:
+        constructor: "NewStorage"
+        args: ["@db"]
