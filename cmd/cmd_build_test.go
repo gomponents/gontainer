@@ -61,6 +61,14 @@ Error: open /: is a directory
 `,
 			error: "open /: is a directory",
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i / -o /dev/null",
+			out: "Reading files...\n" +
+				"    /\n" +
+				"Error: error has occurred during opening file `/`: read /: is a directory\n",
+			error: "error has occurred during opening file `/`: read /: is a directory",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
