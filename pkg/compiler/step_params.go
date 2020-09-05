@@ -27,7 +27,7 @@ func (s StepParams) Do(i input.DTO, r *compiled.DTO) error {
 		v := i.Params[n]
 		param, err := s.paramResolver.Resolve(v)
 		if err != nil {
-			return fmt.Errorf("cannot resolve param `%s`", n)
+			return fmt.Errorf("cannot resolve param `%s`: %s", n, err.Error())
 		}
 		r.Params = append(
 			r.Params,
