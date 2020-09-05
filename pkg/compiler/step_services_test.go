@@ -2,12 +2,12 @@ package compiler
 
 import (
 	"fmt"
-	"github.com/gomponents/gontainer/pkg/arguments"
-	"github.com/gomponents/gontainer/pkg/imports"
 	"testing"
 
+	"github.com/gomponents/gontainer/pkg/arguments"
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
+	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -248,6 +248,37 @@ func TestStepServices_Do(t *testing.T) {
 				)
 			})
 		}
+	})
+
+	t.Run("Given valid scenario", func(t *testing.T) {
+		i := input.DTO{
+			Services: map[string]input.Service{
+				"db": {
+					Getter:     "GetDb",
+					Type:       "*pkg.Db",
+					Value:      "&pkg.Db{}",
+					Tags:       []input.Tag{{Name: "db", Priority: 50}},
+					Disposable: true,
+				},
+			},
+		}
+		expected := compiled.DTO{
+			Services: []compiled.Service{
+				{
+					Name:       "db",
+					Getter:     "GetDb",
+					Type:       "*alias.Db",
+					Value:      "&alias.Db{}",
+					Tags:       []compiled.Tag{{Name: "db", Priority: 50}},
+					Disposable: true,
+				},
+			},
+		}
+
+		o := compiled.DTO{}
+		ss := NewStepServices(mockAliases{alias: "alias"}, mockArgResolver{error: fmt.Errorf("my error")})
+		assert.NoError(t, ss.Do(i, &o))
+		assert.Equal(t, expected, o)
 	})
 }
 
