@@ -159,6 +159,29 @@ services:
         args: ["%host%", "%port%"]
 ```
 
+Constructor must return 1 or 2 values. Second (optional) value must be an instance of error.
+
+**Examples**
+
+```go
+type Server struct {
+    Port int
+}
+
+// NewServer is just a constructor.
+func NewServer(port int) *Server {
+    return &Server{Port: port}
+}
+
+// NewServerWithError is a constructor, but returns an error whenever port is equal to 0.
+func NewServerWithError(port int) (*Server, error) {
+    if port == 0 {
+        return nil, fmt.Errorf("port cannot be equal to 0")
+    }
+    return NewServer(port), nil
+}
+```
+
 ### Setter injection
 
 ```yaml
