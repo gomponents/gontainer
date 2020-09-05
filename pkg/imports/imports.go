@@ -17,14 +17,20 @@ type Import struct {
 }
 
 type Aliases interface {
+	// GetAlias returns alias for given import, e.g. "github.com/spf13/viper" => "i0_viper".
 	GetAlias(string) string
 }
 
 type Collection interface {
+	// GetImports returns collection of imports.
 	GetImports() []Import
 }
 
 type Prefixes interface {
+	// RegisterPrefix allows to register prefix.
+	// imports.RegisterPrefix("viper", "github.com/spf13/viper")
+	// imports.GetAlias("viper") // should return alias for package "github.com/spf13/viper"
+	// imports.GetAlias("viper/remote") // should return alias for package "github.com/spf13/viper/remote"
 	RegisterPrefix(shortcut string, path string) error
 }
 
