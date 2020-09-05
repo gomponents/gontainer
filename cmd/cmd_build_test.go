@@ -44,4 +44,13 @@ Error: circular dependency in services: db -> storage -> db
 `,
 		"syntax error in pattern",
 	)
+
+	assertCmd(
+		t,
+		newCmd(),
+		strings.Split("-i foo/bar/*.yml -o /dev/null", " "),
+		`Error: cannot find any configuration file
+`,
+		"cannot find any configuration file",
+	)
 }
