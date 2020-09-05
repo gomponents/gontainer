@@ -1,5 +1,6 @@
 clean:
 	rm -rf pkg/template/tmpl_*.go
+	rm -rf cmd/license_var.go
 	rm -rf app.bin
 
 templates: clean
