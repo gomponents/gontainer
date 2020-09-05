@@ -29,6 +29,15 @@ func TestNewDumpParamsCmd(t *testing.T) {
   port     │ int(80)                                                      
 `,
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/empty.yml",
+			out: `Reading files...
+    testdata/empty.yml
+Could not find any parameters
+`,
+			error: "",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
