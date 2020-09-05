@@ -52,6 +52,15 @@ Error: circular dependency in services: db -> storage -> db
 				"Successfully generated container to file: `/dev/null`\n",
 			error: "",
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i ../examples/library/container/gontainer.yml -o /",
+			out: `Reading files...
+    ../examples/library/container/gontainer.yml
+Error: open /: is a directory
+`,
+			error: "open /: is a directory",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
