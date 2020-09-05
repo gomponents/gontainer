@@ -1,0 +1,4 @@
+parameters:
+    host: "localhost"
+    port: 80
+    hostport: "%host%:%port%"

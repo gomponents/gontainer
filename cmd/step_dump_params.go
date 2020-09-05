@@ -1,10 +1,11 @@
 package cmd
 
 import (
+	"io"
+
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
 	"github.com/landoop/tableprinter"
-	"io"
 )
 
 type paramRow struct {
