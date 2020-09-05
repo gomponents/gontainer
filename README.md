@@ -214,6 +214,7 @@ services:
 
 ```yaml
 services:
+    # db := pkg.NewDB(config.GlobalConfig.DB)
     db:
         constructor: "pkg.NewDB"
         args: ['!value "config".GlobalConfig.DB'] # compiler doesn't know whether `config` or `config.GlobalConfig`
