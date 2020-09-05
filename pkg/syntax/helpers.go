@@ -16,6 +16,7 @@ func SanitizeImport(i string) string {
 	return strings.Trim(i, `"`)
 }
 
+// CompileServiceValue expects correct expr, validation must be done earlier
 func CompileServiceValue(a imports.Aliases, expr string) string {
 	_, m := regex.Match(regexServiceValue, expr)
 

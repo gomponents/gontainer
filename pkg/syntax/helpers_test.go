@@ -27,3 +27,43 @@ func TestSanitizeImport(t *testing.T) {
 		})
 	}
 }
+
+func TestCompileServiceValue(t *testing.T) {
+	scenarios := []struct {
+		input  string
+		output string
+	}{
+		{
+			input:  "Variable",
+			output: "Variable",
+		},
+		{
+			input:  "pkg.Variable",
+			output: "i0_alias.Variable",
+		},
+		{
+			input:  "&User{}",
+			output: "&User{}",
+		},
+		{
+			input:  `&"my/import/path".User{}`,
+			output: "&i0_alias.User{}",
+		},
+	}
+
+	a := mockAliases{alias: "i0_alias"}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			assert.Equal(t, s.output, CompileServiceValue(a, s.input))
+		})
+	}
+}
+
+type mockAliases struct {
+	alias string
+}
+
+func (m mockAliases) GetAlias(string) string {
+	return m.alias
+}
