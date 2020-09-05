@@ -1,23 +1,22 @@
 package cmd
 
 import (
-	"bytes"
-	"io/ioutil"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestNewVersionCmd(t *testing.T) {
-	cmd := NewVersionCmd("my-version", "my-commit", "my-date")
-	b := bytes.NewBufferString("")
-	cmd.SetOut(b)
-	if !assert.NoError(t, cmd.Execute()) {
-		return
-	}
-	contents, readErr := ioutil.ReadAll(b)
-	if !assert.NoError(t, readErr) {
-		return
-	}
-	assert.Equal(t, "gontainer has version my-version built from my-commit on my-date\n", string(contents))
+	assertCmd(
+		t,
+		NewVersionCmd("my-version", "my-commit", "my-date"),
+		nil,
+		"gontainer has version my-version built from my-commit on my-date\n",
+		"",
+	)
+	assertCmd(
+		t,
+		NewVersionCmd("my-version2", "my-commit2", "my-date2"),
+		nil,
+		"gontainer has version my-version2 built from my-commit2 on my-date2\n",
+		"",
+	)
 }
