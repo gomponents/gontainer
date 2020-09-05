@@ -29,9 +29,9 @@ type Prefixes interface {
 }
 
 type Imports interface {
-	GetAlias(string) string
-	GetImports() []Import
-	RegisterPrefix(shortcut string, path string) error
+	Aliases
+	Collection
+	Prefixes
 }
 
 type SimpleImports struct {
