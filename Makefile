@@ -52,4 +52,4 @@ run-example-global-var: build
 
 tests: tests-unit lint
 
-.DEFAULT_GOAL := tests
+.DEFAULT_GOAL := build
