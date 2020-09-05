@@ -282,13 +282,5 @@ decorators:
       decorator: myImport/pkg.MakeTracedHttpClient
       args: [@tracer]
 
-# svc := pkg.MakeTracedHttpClient(svc, container.Get("tracer"))
-
-    - instanceof: myImport/pkg.HttpClient
-      decorator: myImport/pkg.MakeTracedHttpClient
-      args: [@tracer]
-
-# if _, ok := svc.(pkg.HttpClient); ok {
-#     svc = pkg.MakeTracedHttpClient(svc.(pkg.HttpClient), container.Get("tracer"))
-# }
+# svc := pkg.MakeTracedHttpClient(svc, serviceName, container.Get("tracer"))
 ```
