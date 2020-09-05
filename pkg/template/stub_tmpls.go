@@ -1,4 +1,4 @@
-// +build stubtemplate
+// +build stubfile
 
 package template
 
