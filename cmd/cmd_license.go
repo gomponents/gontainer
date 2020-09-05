@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// go:generate go run ../templater/main.go ../LICENSE cmd license license_var.go
+//go:generate go run ../templater/main.go ../LICENSE cmd license license_var.go
 
 func NewLicenseCmd() *cobra.Command {
 	return &cobra.Command{

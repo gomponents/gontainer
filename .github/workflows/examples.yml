@@ -31,7 +31,7 @@ jobs:
       run: go mod download
 
     - name: Globally
-      run: sudo make globally
+      run: make build && sudo make mv-to-bin-dir
 
     - name: Example "Environment variables"
       run: make run-example-env

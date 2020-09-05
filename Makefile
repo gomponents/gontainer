@@ -20,8 +20,10 @@ build: export VERSION = dev-$(shell git rev-parse --abbrev-ref HEAD)
 build: clean templates
 	go build -v -ldflags="-X 'main.date=${DATETIME}' -X 'main.commit=${GITHASH}' -X 'main.version=${VERSION}'" -o app.bin main.go
 
-globally: build
+mv-to-bin-dir:
 	mv app.bin /usr/local/bin/gontainer
+
+globally: build mv-to-bin-dir
 
 upgrade-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
 upgrade-helpers:
