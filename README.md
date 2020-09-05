@@ -54,6 +54,26 @@ Files are being processed from the left to the right, it means in the above exam
 at first `container.yml` will be parsed, then values from `container_dev.yml`
 will override already loaded values.
 
+## Brief
+
+**Gontainer** builds DI container based on input YAML files.
+Code is generated automatically, but internally it uses [reflect](https://golang.org/pkg/reflect/).
+Whenever docs shows source code, given code is just an equivalent what is really going on inside to make docs easier to understand.
+
+**Example**
+
+```yaml
+services:
+    # db := db.NewDB(container.GetParameter("db.host"), ...
+    db:
+        constructor: "pkg/db.NewDB"
+        args: ["%host%", "%port%"]
+```
+
+In the above example, generated code will differ than `db := db.NewDB(container.GetParameter("db.host"), ...`,
+because internally it uses reflection (GO is statically typed and conversion of parameter is required),
+however result will work as described using GO code.
+
 ## Schema
 
 ```yaml
