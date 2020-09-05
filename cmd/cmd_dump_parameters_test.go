@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/stretchr/testify/assert"
 	"testing"
 
 	"github.com/spf13/cobra"
@@ -41,4 +42,12 @@ Could not find any parameters
 	}
 
 	runCmdScenarios(t, scenarios...)
+}
+
+func Test_fakeImports_GetImports(t *testing.T) {
+	assert.Nil(t, fakeImports{}.GetImports())
+}
+
+func Test_fakeImports_RegisterPrefix(t *testing.T) {
+	assert.NoError(t, fakeImports{}.RegisterPrefix("pkg", "my/repo/pkg"))
 }
