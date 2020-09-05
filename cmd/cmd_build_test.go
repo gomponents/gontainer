@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/spf13/cobra"
@@ -14,43 +13,38 @@ func TestNewBuildCmd(t *testing.T) {
 		return cmd
 	}
 
-	assertCmd(
-		t,
-		newCmd(),
-		strings.Split("-i testdata/circular-dep-params.yml -o /dev/null", " "),
-		`Reading files...
+	scenarios := []cmdScenario{
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/circular-dep-params.yml -o /dev/null",
+			out: `Reading files...
     testdata/circular-dep-params.yml
 Error: circular dependency in params: firstname -> name -> firstname
 `,
-		"circular dependency in params: firstname -> name -> firstname",
-	)
-
-	assertCmd(
-		t,
-		newCmd(),
-		strings.Split("-i testdata/circular-dep-services.yml -o /dev/null", " "),
-		`Reading files...
+			error: "circular dependency in params: firstname -> name -> firstname",
+		},
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/circular-dep-services.yml -o /dev/null",
+			out: `Reading files...
     testdata/circular-dep-services.yml
 Error: circular dependency in services: db -> storage -> db
 `,
-		"circular dependency in services: db -> storage -> db",
-	)
+			error: "circular dependency in services: db -> storage -> db",
+		},
+		{
+			cmd:   newCmd(),
+			args:  "-i [] -o /dev/null",
+			out:   "Error: syntax error in pattern\n",
+			error: "syntax error in pattern",
+		},
+		{
+			cmd:   newCmd(),
+			args:  "-i foo/bar/*.yml -o /dev/null",
+			out:   "Error: cannot find any configuration file\n",
+			error: "cannot find any configuration file",
+		},
+	}
 
-	assertCmd(
-		t,
-		newCmd(),
-		strings.Split("-i [] -o /dev/null", " "),
-		`Error: syntax error in pattern
-`,
-		"syntax error in pattern",
-	)
-
-	assertCmd(
-		t,
-		newCmd(),
-		strings.Split("-i foo/bar/*.yml -o /dev/null", " "),
-		`Error: cannot find any configuration file
-`,
-		"cannot find any configuration file",
-	)
+	runCmdScenarios(t, scenarios...)
 }

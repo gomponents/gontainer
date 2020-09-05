@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
+	"strings"
 	"testing"
 
 	"github.com/spf13/cobra"
@@ -32,4 +34,29 @@ func assertCmd(t *testing.T, cmd *cobra.Command, args []string, out string, err 
 	}
 
 	assert.Equal(t, out, string(cmdOut))
+}
+
+type cmdScenario struct {
+	cmd   *cobra.Command
+	args  string
+	out   string
+	error string
+}
+
+func runCmdScenarios(t *testing.T, scenarios ...cmdScenario) {
+	for i, s := range scenarios {
+		var args []string
+		if s.args != "" {
+			args = strings.Split(s.args, " ")
+		}
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			assertCmd(
+				t,
+				s.cmd,
+				args,
+				s.out,
+				s.error,
+			)
+		})
+	}
 }

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/spf13/cobra"
@@ -14,21 +13,23 @@ func TestNewDumpParamsCmd(t *testing.T) {
 		return cmd
 	}
 
-	assertCmd(
-		t,
-		newCmd(),
-		strings.Split("-i testdata/params.yml", " "),
-		`Reading files...
+	scenarios := []cmdScenario{
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/params.yml -l 10",
+			out: `Reading files...
     testdata/params.yml
 
-  NAME     │ PARAM                                                           
- ────────── ──────────────────────────────────────────────────────────────── 
-  host     │ "localhost"                                                     
-  hostport │ "(...)/exporters".MustToString(container.MustGetParam("host"))  
-           │ + "(...)/exporters".MustToString(":") +                         
-           │ "(...)/exporters".MustToString(container.MustGetParam("port"))  
-  port     │ int(80)                                                         
+  NAME     │ PARAM                                                        
+ ────────── ───────────────────────────────────────────────────────────── 
+  host     │ "localhost"                                                  
+  hostport │ "(...)rters".MustToString(container.MustGetParam("host")) +  
+           │ "(...)rters".MustToString(":") +                             
+           │ "(...)rters".MustToString(container.MustGetParam("port"))    
+  port     │ int(80)                                                      
 `,
-		"",
-	)
+		},
+	}
+
+	runCmdScenarios(t, scenarios...)
 }
