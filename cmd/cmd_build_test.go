@@ -35,4 +35,13 @@ Error: circular dependency in services: db -> storage -> db
 `,
 		"circular dependency in services: db -> storage -> db",
 	)
+
+	assertCmd(
+		t,
+		newCmd(),
+		strings.Split("-i [] -o /dev/null", " "),
+		`Error: syntax error in pattern
+`,
+		"syntax error in pattern",
+	)
 }
