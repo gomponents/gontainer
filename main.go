@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/gomponents/gontainer/cmd"
@@ -31,7 +30,6 @@ Re-use dependencies whenever you need and forget about dependency hell in main.g
 	)
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 }
