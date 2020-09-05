@@ -35,8 +35,8 @@ Error: circular dependency in services: db -> storage -> db
 		{
 			cmd:   newCmd(),
 			args:  "-i [] -o /dev/null",
-			out:   "Error: syntax error in pattern\n",
-			error: "syntax error in pattern",
+			out:   "Error: pattern: `[]`: syntax error in pattern\n",
+			error: "pattern: `[]`: syntax error in pattern",
 		},
 		{
 			cmd:   newCmd(),

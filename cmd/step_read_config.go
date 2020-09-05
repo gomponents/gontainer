@@ -53,7 +53,7 @@ func findFiles(patterns []string) ([]string, error) {
 	for _, p := range patterns {
 		matches, err := filepath.Glob(p)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("pattern: `%s`: %s", p, err.Error())
 		}
 		for i, m := range matches {
 			matches[i] = filepath.Clean(m)
