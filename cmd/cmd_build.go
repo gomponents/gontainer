@@ -21,7 +21,7 @@ func NewBuildCmd() *cobra.Command {
 			runner := newStepRunner(
 				newReadConfig(cmd.OutOrStdout(), inputFiles),
 				newCompile(newDefaultCompiler(imps)),
-				newTemplatePrinter(imps, imps, outputFile),
+				newTemplatePrinter(cmd.OutOrStdout(), imps, imps, outputFile),
 			)
 			return runner.run()
 		},

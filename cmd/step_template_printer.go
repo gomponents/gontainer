@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"path/filepath"
 
@@ -12,13 +13,24 @@ import (
 )
 
 type templatePrinter struct {
+	printer
 	aliases    imports.Aliases
 	collection imports.Collection
 	outputFile string
 }
 
-func newTemplatePrinter(aliases imports.Aliases, collection imports.Collection, outputFile string) *templatePrinter {
-	return &templatePrinter{aliases: aliases, collection: collection, outputFile: outputFile}
+func newTemplatePrinter(
+	w io.Writer,
+	aliases imports.Aliases,
+	collection imports.Collection,
+	outputFile string,
+) *templatePrinter {
+	return &templatePrinter{
+		printer:    printer{w: w},
+		aliases:    aliases,
+		collection: collection,
+		outputFile: outputFile,
+	}
 }
 
 func (t templatePrinter) run(_ *input.DTO, o *compiled.DTO) error {
@@ -28,5 +40,11 @@ func (t templatePrinter) run(_ *input.DTO, o *compiled.DTO) error {
 	}
 	of := filepath.Clean(t.outputFile)
 
-	return ioutil.WriteFile(of, []byte(tpl), 0644)
+	if err := ioutil.WriteFile(of, []byte(tpl), 0644); err != nil {
+		return err
+	}
+
+	t.printf("Successfully generated container to file: `%s`\n", of)
+
+	return nil
 }

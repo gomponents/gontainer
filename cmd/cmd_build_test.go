@@ -44,6 +44,14 @@ Error: circular dependency in services: db -> storage -> db
 			out:   "Error: cannot find any configuration file\n",
 			error: "cannot find any configuration file",
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i ../examples/library/container/gontainer.yml -o /dev/null",
+			out: "Reading files...\n" +
+				"    ../examples/library/container/gontainer.yml\n" +
+				"Successfully generated container to file: `/dev/null`\n",
+			error: "",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
