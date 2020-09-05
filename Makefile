@@ -3,15 +3,12 @@ clean:
 	rm -rf app.bin
 
 templates: clean
-	go generate pkg/template/template.go
-
-fake-templates: clean
-	cp pkg/template/fake_tmpl_all.go.txt pkg/template/tmpl_all.go
+	go generate ./pkg/... ./cmd/...
 
 tests-unit: templates
 	go test -coverprofile=coverage.out ./cmd/... ./pkg/...
 
-lint: templates
+lint:
 	golangci-lint run
 
 code-coverage:
