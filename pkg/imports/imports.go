@@ -56,6 +56,9 @@ func (s *SimpleImports) RegisterPrefix(shortcut string, path string) error {
 	return nil
 }
 
+// GetAlias generates alias for given path and adds path to collection of all imports.
+// see Collection
+// see SimpleImports.GetImports
 func (s *SimpleImports) GetAlias(path string) string {
 	path = s.decorateImport(path)
 

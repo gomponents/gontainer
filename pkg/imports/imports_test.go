@@ -6,9 +6,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSimpleImports_RegisterPrefix(t *testing.T) {
-	const viperPkg = "github.com/spf13/viper"
+const viperPkg = "github.com/spf13/viper"
 
+func TestSimpleImports_RegisterPrefix(t *testing.T) {
 	t.Run("Given scenario", func(t *testing.T) {
 		i := NewSimpleImports()
 		shortcut := "viper"
@@ -39,4 +39,10 @@ func TestSimpleImports_RegisterPrefix(t *testing.T) {
 			"shortcut `viper` is already registered",
 		)
 	})
+}
+
+func TestSimpleImports_GetImports(t *testing.T) {
+	i := NewSimpleImports()
+	i.GetAlias(viperPkg)
+	assert.Equal(t, i.importsSlice, i.GetImports())
 }
