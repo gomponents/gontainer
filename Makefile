@@ -1,6 +1,6 @@
 clean:
 	rm -rf pkg/template/tmpl_*.go
-	rm -rf cmd/license_var.go
+	rm -rf cmd/license_const.go
 	rm -rf app.bin
 
 gogenerate: clean
@@ -9,7 +9,7 @@ gogenerate: clean
 tests-unit: gogenerate
 	go test -coverprofile=coverage.out ./cmd/... ./pkg/...
 
-lint:
+lint: gogenerate
 	golangci-lint run
 
 code-coverage:

@@ -9,14 +9,15 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	if len(args) < 4 {
-		panic("Provide 3 arguments [cmd inputFile package varName outputFile]")
+	if len(args) < 5 {
+		panic("Provide 5 arguments [inputFile package (var|const) varName outputFile]")
 	}
 
 	inputFile := args[0]
 	pkg := args[1]
-	varName := args[2]
-	outputFile := args[3]
+	declaration := args[2]
+	varName := args[3]
+	outputFile := args[4]
 
 	body, bodyErr := ioutil.ReadFile(inputFile)
 	handleErr(bodyErr)
@@ -27,10 +28,11 @@ func main() {
 
 package {{pkg}}
 
-var {{var}} = {{val}}
+{{declaration}} {{var}} = {{val}}
 `
 
 	output = strings.Replace(output, "{{pkg}}", pkg, 1)
+	output = strings.Replace(output, "{{declaration}}", declaration, 1)
 	output = strings.Replace(output, "{{var}}", varName, 1)
 	output = strings.Replace(output, "{{val}}", fmt.Sprintf("%+q", string(body)), 1)
 
