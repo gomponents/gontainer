@@ -69,6 +69,14 @@ Error: open /: is a directory
 				"Error: error has occurred during opening file `/`: read /: is a directory\n",
 			error: "error has occurred during opening file `/`: read /: is a directory",
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/invalid.yml -o /dev/null",
+			out: "Reading files...\n" +
+				"    testdata/invalid.yml\n" +
+				"Error: error has occurred during parsing yaml file `testdata/invalid.yml`: yaml: line 2: did not find expected node content\n",
+			error: "error has occurred during parsing yaml file `testdata/invalid.yml`: yaml: line 2: did not find expected node content",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
