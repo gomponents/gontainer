@@ -1,11 +1,7 @@
 package cmd
 
 import (
-	"os"
-
-	"github.com/gomponents/gontainer/pkg"
 	"github.com/gomponents/gontainer/pkg/imports"
-	"github.com/landoop/tableprinter"
 	"github.com/spf13/cobra"
 )
 
@@ -36,11 +32,6 @@ func (f fakeImports) RegisterPrefix(shortcut string, path string) error {
 	return nil
 }
 
-type paramRow struct {
-	Name    string `header:"Name"`
-	Pattern string `header:"Param"`
-}
-
 func NewDumpParamsCmd() *cobra.Command {
 	var (
 		inputFiles []string
@@ -48,56 +39,22 @@ func NewDumpParamsCmd() *cobra.Command {
 		cmd        *cobra.Command
 	)
 
-	handleErr := func(h string, err error) {
-		if err == nil {
-			return
-		}
-		cmd.PrintErrf("%s: %s\n", h, err.Error())
-		os.Exit(1)
-	}
-
-	callback := func(cmd *cobra.Command, args []string) {
-		reader := pkg.NewDefaultConfigReader(func(s string) {
-			cmd.Printf("    %s\n", s)
-		})
-		cmd.Printf("Reading files...\n")
-		input, rErr := reader.Read(inputFiles)
-		handleErr("Configuration error", rErr)
-
-		if l < minImportLen {
-			l = minImportLen
-		}
-		imps := &fakeImports{maxLen: int(l)}
-		c := newDefaultCompiler(imps)
-
-		compiledInput, ciErr := c.Compile(input)
-		handleErr("Cannot build container", ciErr)
-
-		var rows []paramRow
-		for _, p := range compiledInput.Params {
-			rows = append(rows, paramRow{
-				Name:    p.Name,
-				Pattern: p.Code,
-			})
-		}
-
-		if len(rows) == 0 {
-			cmd.Println("Could not find any parameters")
-			return
-		}
-
-		p := tableprinter.New(cmd.OutOrStdout())
-		p.ColumnSeparator = "│"
-		p.RowSeparator = "─"
-		cmd.Println()
-		p.Print(rows)
-	}
-
 	cmd = &cobra.Command{
 		Use:   "dump-params",
 		Short: "Dump parameters",
 		Long:  "",
-		Run:   callback,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if l < minImportLen {
+				l = minImportLen
+			}
+			imps := &fakeImports{maxLen: int(l)}
+			runner := newStepRunner(
+				newReadConfig(cmd.OutOrStdout(), inputFiles),
+				newCompile(newDefaultCompiler(imps)),
+				newDumpParams(cmd.OutOrStdout()),
+			)
+			return runner.run()
+		},
 	}
 
 	cmd.Flags().StringArrayVarP(&inputFiles, "input", "i", nil, "input name (required)")
