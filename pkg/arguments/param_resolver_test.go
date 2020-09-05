@@ -14,6 +14,8 @@ func TestParamResolver_Supports(t *testing.T) {
 }
 
 func TestParamResolver_Resolve(t *testing.T) {
+	a := complex128(0.588 + 0i)
+	fmt.Println(a)
 	expectedErr := fmt.Errorf("test error")
 	m := mockResolver{
 		expr: parameters.Expr{

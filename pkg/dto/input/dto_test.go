@@ -157,31 +157,3 @@ priority: 100
 		)
 	})
 }
-
-func TestDTO_Clone(t *testing.T) {
-	t.Run("Shallow copy", func(t *testing.T) {
-		d := DTO{}
-		d.Params = map[string]interface{}{
-			"name": "Mary",
-		}
-
-		cp := d
-		cp.Params["name"] = "Jane"
-
-		assert.Equal(t, d.Params["name"], "Jane")
-		assert.Equal(t, cp.Params["name"], "Jane")
-	})
-
-	t.Run("Deep copy", func(t *testing.T) {
-		d := DTO{}
-		d.Params = map[string]interface{}{
-			"name": "Mary",
-		}
-
-		cp := d.Clone()
-		cp.Params["name"] = "Jane"
-
-		assert.Equal(t, d.Params["name"], "Mary")
-		assert.Equal(t, cp.Params["name"], "Jane")
-	})
-}

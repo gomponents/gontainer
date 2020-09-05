@@ -12,11 +12,11 @@ import (
 func TestStepValidateOutput_Do(t *testing.T) {
 	t.Run("Given error", func(t *testing.T) {
 		s := NewStepValidateOutput(mockCompiledValidator{error: fmt.Errorf("compiler error")})
-		assert.EqualError(t, s.Do(&input.DTO{}, &compiled.DTO{}), "compiler error")
+		assert.EqualError(t, s.Do(input.DTO{}, &compiled.DTO{}), "compiler error")
 	})
 	t.Run("No errors", func(t *testing.T) {
 		s := NewStepValidateOutput(mockCompiledValidator{error: nil})
-		assert.NoError(t, s.Do(&input.DTO{}, &compiled.DTO{}))
+		assert.NoError(t, s.Do(input.DTO{}, &compiled.DTO{}))
 	})
 }
 

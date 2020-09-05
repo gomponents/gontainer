@@ -27,7 +27,7 @@ func NewStepServices(aliases imports.Aliases, argResolver arguments.Resolver) *S
 	return &StepServices{aliases: aliases, argResolver: argResolver}
 }
 
-func (ss StepServices) Do(i *input.DTO, r *compiled.DTO) error {
+func (ss StepServices) Do(i input.DTO, r *compiled.DTO) error {
 	var names []string
 	for n, _ := range i.Services { //nolint:gosimple
 		names = append(names, n)

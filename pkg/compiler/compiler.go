@@ -6,7 +6,7 @@ import (
 )
 
 type Step interface {
-	Do(*input.DTO, *compiled.DTO) error
+	Do(input.DTO, *compiled.DTO) error
 }
 
 type Compiler struct {
@@ -19,12 +19,10 @@ func NewCompiler(steps ...Step) *Compiler {
 
 func (c Compiler) Compile(i input.DTO) (compiled.DTO, error) {
 	r := compiled.DTO{}
-	cpInput := i.Clone()
 	for _, s := range c.steps {
-		if err := s.Do(&cpInput, &r); err != nil {
+		if err := s.Do(i, &r); err != nil {
 			return compiled.DTO{}, err
 		}
 	}
 	return r, nil
 }
-

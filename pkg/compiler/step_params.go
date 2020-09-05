@@ -17,7 +17,7 @@ func NewStepParams(paramResolver parameters.Resolver) *StepParams {
 	return &StepParams{paramResolver: paramResolver}
 }
 
-func (s StepParams) Do(i *input.DTO, r *compiled.DTO) error {
+func (s StepParams) Do(i input.DTO, r *compiled.DTO) error {
 	var names []string
 	for n, _ := range i.Params { //nolint:gosimple
 		names = append(names, n)

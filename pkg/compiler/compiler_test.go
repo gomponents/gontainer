@@ -26,6 +26,6 @@ type stepMock struct {
 	error error
 }
 
-func (s stepMock) Do(*input.DTO, *compiled.DTO) error {
+func (s stepMock) Do(input.DTO, *compiled.DTO) error {
 	return s.error
 }

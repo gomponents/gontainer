@@ -174,7 +174,7 @@ func TestStepServices_Do(t *testing.T) {
 			t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
 				i := input.DTO{Services: s.input}
 				o := compiled.DTO{}
-				err := StepServices{}.Do(&i, &o)
+				err := StepServices{}.Do(i, &o)
 				assert.NoError(t, err)
 				assert.Equal(t, s.output, o.Services)
 			})
@@ -243,7 +243,7 @@ func TestStepServices_Do(t *testing.T) {
 			t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
 				assert.EqualError(
 					t,
-					NewStepServices(s.aliases, s.resolver).Do(&s.input, &compiled.DTO{}),
+					NewStepServices(s.aliases, s.resolver).Do(s.input, &compiled.DTO{}),
 					s.error,
 				)
 			})

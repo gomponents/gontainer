@@ -13,6 +13,6 @@ func NewStepValidateInput(validator input.Validator) *StepValidateInput {
 	return &StepValidateInput{validator: validator}
 }
 
-func (s StepValidateInput) Do(i *input.DTO, _ *compiled.DTO) error {
-	return s.validator.Validate(*i)
+func (s StepValidateInput) Do(i input.DTO, _ *compiled.DTO) error {
+	return s.validator.Validate(i)
 }
