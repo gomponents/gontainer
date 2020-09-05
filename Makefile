@@ -3,10 +3,10 @@ clean:
 	rm -rf cmd/license_var.go
 	rm -rf app.bin
 
-templates: clean
+gogenerate: clean
 	go generate ./pkg/... ./cmd/...
 
-tests-unit: templates
+tests-unit: gogenerate
 	go test -coverprofile=coverage.out ./cmd/... ./pkg/...
 
 lint:
@@ -18,7 +18,7 @@ code-coverage:
 build: export DATETIME = $(shell date -u +'%Y-%m-%dT%H:%M:%SZ')
 build: export GITHASH = $(shell git rev-parse HEAD)
 build: export VERSION = dev-$(shell git rev-parse --abbrev-ref HEAD)
-build: clean templates
+build: clean gogenerate
 	go build -v -ldflags="-X 'main.date=${DATETIME}' -X 'main.commit=${GITHASH}' -X 'main.version=${VERSION}'" -o app.bin main.go
 
 mv-to-bin-dir:
