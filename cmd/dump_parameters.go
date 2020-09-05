@@ -58,7 +58,7 @@ func NewDumpParamsCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringArrayVarP(&inputFiles, "input", "i", nil, "input name (required)")
-	cmd.Flags().UintVarP(&l, "import-maxLen", "l", defaultImportLen, "maximum length of import path")
+	cmd.Flags().UintVarP(&l, "import-max-len", "l", defaultImportLen, "maximum length of import path")
 	_ = cmd.MarkFlagRequired("input")
 
 	return cmd
