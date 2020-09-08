@@ -11,6 +11,7 @@ func TestNewDumpParamsCmd(t *testing.T) {
 	newCmd := func() *cobra.Command {
 		cmd := NewDumpParamsCmd()
 		cmd.SilenceUsage = true
+		cmd.SilenceErrors = true
 		return cmd
 	}
 
