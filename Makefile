@@ -27,8 +27,8 @@ mv-to-bin-dir:
 
 globally: build mv-to-bin-dir
 
-upgrade-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
-upgrade-helpers:
+update-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
+update-helpers:
 	go get -u ${HELPERS_PATH}
 	cd examples/env && go get -u ${HELPERS_PATH}
 	cd examples/global-var && go get -u ${HELPERS_PATH}

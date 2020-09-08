@@ -7,10 +7,10 @@ import (
 	"github.com/gomponents/gontainer/pkg/consts"
 )
 
-func TestNewGetUpgradeCmd(t *testing.T) {
+func TestNewGetUpdateCmd(t *testing.T) {
 	assertCmd(
 		t,
-		NewGetUpgradeCmd(),
+		NewGetUpdateCmd(),
 		nil,
 		fmt.Sprintf("go get -u %s\n", consts.GontainerHelperPath),
 		"",

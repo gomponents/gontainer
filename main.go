@@ -49,6 +49,7 @@ Re-use dependencies whenever you need and forget about dependency hell in main.g
 		cmd.NewBuildCmd(),
 		cmd.NewDumpParamsCmd(),
 		cmd.NewLicenseCmd(),
+		cmd.NewGetUpdateCmd(),
 		cmd.NewVersionCmd(version, commit, date),
 	)
 
