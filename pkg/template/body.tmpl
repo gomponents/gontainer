@@ -97,7 +97,7 @@ func NewContainer() *{{$containerType}} {
     baseContainer := {{containerAlias}}.NewBaseContainer(getters)
     baseTaggedContainer := {{containerAlias}}.NewBaseTaggedContainer(baseContainer)
     {{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
-    baseTaggedContainer.OverrideTagService({{ export $tag.Name }}, {{ export $service.Name }}, {{ export $tag.Priority }})
+    baseTaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
     {{- end }}{{ end }}
 	container = &{{$containerType}}{
 	    BaseContainer:       baseContainer,

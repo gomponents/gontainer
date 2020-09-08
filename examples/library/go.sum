@@ -10,6 +10,8 @@ github.com/gomponents/gontainer-helpers v0.0.0-20200905094455-51a94a4a3635 h1:Rx
 github.com/gomponents/gontainer-helpers v0.0.0-20200905094455-51a94a4a3635/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.0.0-20200906083223-2fe7017e8428 h1:XhJhyZ6QJwe9KowMjCxXdOhFtyBrSDGaoV8/8XzXswM=
 github.com/gomponents/gontainer-helpers v0.0.0-20200906083223-2fe7017e8428/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20200908214029-9a1dcefa6855 h1:rekj7CiiFpqxflITCuTw6sH165FpLgLHIVSLQaJ2uSU=
+github.com/gomponents/gontainer-helpers v0.0.0-20200908214029-9a1dcefa6855/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/kataras/tablewriter v0.0.0-20180708051242-e063d29b7c23 h1:M8exrBzuhWcU6aoHJlHWPe4qFjVKzkMGRal78f5jRRU=
 github.com/kataras/tablewriter v0.0.0-20180708051242-e063d29b7c23/go.mod h1:kBSna6b0/RzsOcOZf515vAXwSsXYusl2U7SA0XP09yI=
 github.com/landoop/tableprinter v0.0.0-20200805134727-ea32388e35c1 h1:xUwSaTDYl+Ib5OoFxWJnqYFG9N31++qfeNXzTZ1cc8o=
