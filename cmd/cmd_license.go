@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//go:generate go run ../embed-file/main.go ../LICENSE cmd const license license_const.go
+//go:generate go run ../embed-file/main.go cmd const license ../LICENSE license_const.go
 
 func NewLicenseCmd() *cobra.Command {
 	return &cobra.Command{

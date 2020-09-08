@@ -10,8 +10,8 @@ import (
 	"github.com/gomponents/gontainer/pkg/imports"
 )
 
-//go:generate go run ../../embed-file/main.go head.tmpl template var templateHead tmpl_head.go
-//go:generate go run ../../embed-file/main.go body.tmpl template var templateBody tmpl_body.go
+//go:generate go run ../../embed-file/main.go template var templateHead head.tmpl tmpl_head.go
+//go:generate go run ../../embed-file/main.go template var templateBody body.tmpl tmpl_body.go
 
 type Builder struct {
 	aliases    imports.Aliases

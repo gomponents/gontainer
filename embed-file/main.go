@@ -10,13 +10,13 @@ import (
 func main() {
 	args := os.Args[1:]
 	if len(args) < 5 {
-		panic("Provide 5 arguments [inputFile package (var|const) varName outputFile]")
+		panic("Provide 5 arguments [package (var|const) varName inputFile outputFile]")
 	}
 
-	inputFile := args[0]
-	pkg := args[1]
-	declaration := args[2]
-	varName := args[3]
+	pkg := args[0]
+	declaration := args[1]
+	varName := args[2]
+	inputFile := args[3]
 	outputFile := args[4]
 
 	body, bodyErr := ioutil.ReadFile(inputFile)
