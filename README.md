@@ -121,7 +121,7 @@ Gontainer has 3 default functions:
 * `%env("HOST", "localhost")%` - returns value of environment variable `HOST`,
 if variable doesn't exist return `"localhost"` (second argument is optional).
 * `%envInt("PORT", 80)%` - returns converted to int value of environment variable `PORT`,
-if variable doesn't exist return `80` (second argument is optional)..
+if variable doesn't exist return `80` (second argument is optional).
 * `%todo()%` - fake parameter, can be used during development to avoid compiler errors (e.g. `service "db" requires param "db.host", but it does not exist`).
 
 You can override all parameters in runtime (`container.OverrideParam`), it can be useful when combined with `%todo()%`.
