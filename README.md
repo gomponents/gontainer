@@ -58,7 +58,7 @@ will override already loaded values.
 
 **Gontainer** builds DI container based on input YAML files.
 Code is generated automatically, but internally it uses [reflect](https://golang.org/pkg/reflect/).
-Whenever docs shows source code, given code is just an equivalent what is really going on inside to make docs easier to understand.
+Whenever docs show source code, given code is just an equivalent what is really going on inside to make docs easier to understand.
 
 **Example**
 
