@@ -122,9 +122,9 @@ func CreateDefaultDTO() DTO {
 	result.Meta.Pkg = defaultPkg
 	result.Meta.ContainerType = defaultContainerType
 	result.Meta.Functions = map[string]string{
-		"env":    "os.Getenv",
+		"env":    consts.GontainerHelperPath + "/env.MustGet",
 		"envInt": consts.GontainerHelperPath + "/env.MustGetInt",
-		"todo":   consts.GontainerHelperPath + "/std.GetMissingParameter",
+		"todo":   consts.GontainerHelperPath + "/std.ParameterTodo",
 	}
 	return result
 }
