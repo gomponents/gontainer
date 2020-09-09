@@ -139,6 +139,27 @@ parameters:
 
 will be compiled to `pkg.Sum(1, 2, 3)`.
 
+### Custom functions
+
+**Gontainer** allows for registering custom functions for parameters.
+Function must return only one value and can accepts any number of arguments.
+If you want to report error in function do panic.
+
+**Sample function**
+
+```go
+func MustGet(key string, def ...string) string {
+	val, ok := os.LookupEnv(key)
+	if !ok {
+		if len(def) > 0 {
+			return def[0]
+		}
+		panic(fmt.Sprintf("environment variable `%s` does not exist", key))
+	}
+	return val
+}
+```
+
 ## Services
 
 Fields, arguments of constructors and calls accept the same syntax as parameters and in addition:
