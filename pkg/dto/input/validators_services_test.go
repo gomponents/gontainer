@@ -18,11 +18,11 @@ func TestValidateServiceName(t *testing.T) {
 		},
 		{
 			name:  "my..service",
-			error: "service name must match pattern `" + regexServiceName.String() + "`, `my..service` given",
+			error: "invalid service name `my..service`",
 		},
 		{
 			name:  "%service%",
-			error: "service name must match pattern `" + regexServiceName.String() + "`, `%service%` given",
+			error: "invalid service name `%service%`",
 		},
 	}
 
@@ -104,12 +104,12 @@ func TestValidateServiceGetter(t *testing.T) {
 		},
 		{
 			getter: "0getName",
-			error:  "getter must match `" + regexServiceGetter.String() + "`, `0getName` given",
+			error:  "invalid getter `0getName`",
 			type_:  "MyType",
 		},
 		{
 			getter: "Get Name",
-			error:  "getter must match `" + regexServiceGetter.String() + "`, `Get Name` given",
+			error:  "invalid getter `Get Name`",
 			type_:  "MyType",
 		},
 	}
@@ -147,7 +147,7 @@ func TestValidateServiceType(t *testing.T) {
 		{
 			type_:  "**my/import/foo.Bar",
 			getter: "GetBar",
-			error:  "type must match `" + regexServiceType.String() + "`, `**my/import/foo.Bar` given",
+			error:  "invalid type `**my/import/foo.Bar`",
 		},
 		{
 			type_:  "foo.Bar",
@@ -182,11 +182,11 @@ func TestValidateServiceValue(t *testing.T) {
 		},
 		{
 			val:   "my/import/foo",
-			error: "value must match `" + regexServiceValue.String() + "`, `my/import/foo` given",
+			error: "invalid value `my/import/foo`",
 		},
 		{
 			val:   "*my/import/foo.Bar",
-			error: "value must match `" + regexServiceValue.String() + "`, `*my/import/foo.Bar` given",
+			error: "invalid value `*my/import/foo.Bar`",
 		},
 	}
 
@@ -295,7 +295,7 @@ func TestValidateServiceCalls(t *testing.T) {
 					Method: "Incorrect method name",
 				},
 			},
-			error: "method name (call 0) must match `" + regexServiceCallName.String() + "`, `Incorrect method name` given",
+			error: "invalid method name (call 0) `Incorrect method name`",
 		},
 		{
 			calls: []Call{
@@ -333,7 +333,7 @@ func TestValidateServiceFields(t *testing.T) {
 			fields: map[string]interface{}{
 				"Incorrect field name": "bar",
 			},
-			error: "field must match `" + regexServiceFieldName.String() + "`, `Incorrect field name` given",
+			error: "invalid field `Incorrect field name`",
 		},
 		{
 			fields: map[string]interface{}{
@@ -393,7 +393,7 @@ func TestValidateServiceTags(t *testing.T) {
 					Priority: 0,
 				},
 			},
-			error: "tag must match `" + regexServiceTag.String() + "`, `white space` given",
+			error: "invalid tag `white space`",
 		},
 	}
 
@@ -417,7 +417,7 @@ func TestValidateServices(t *testing.T) {
 			},
 		}
 		err := ValidateServices(d)
-		assert.EqualError(t, err, "service name must match pattern `"+regexServiceName.String()+"`, `white space` given")
+		assert.EqualError(t, err, "invalid service name `white space`")
 	})
 	t.Run("Given incorrect type", func(t *testing.T) {
 		d := DTO{
@@ -425,7 +425,7 @@ func TestValidateServices(t *testing.T) {
 				"db": {Type: "@!#$", Getter: "GetDB", Constructor: "pkg.NewDB"},
 			},
 		}
-		assert.EqualError(t, ValidateServices(d), "service `db`: type must match `"+regexServiceType.String()+"`, `@!#$` given")
+		assert.EqualError(t, ValidateServices(d), "service `db`: invalid type `@!#$`")
 	})
 	t.Run("Given todo", func(t *testing.T) {
 		d := DTO{

@@ -62,8 +62,7 @@ func ValidateServices(d DTO) error {
 func ValidateServiceName(n string) error {
 	if !regexServiceName.MatchString(n) {
 		return fmt.Errorf(
-			"service name must match pattern `%s`, `%s` given",
-			regexServiceName.String(),
+			"invalid service name `%s`",
 			n,
 		)
 	}
@@ -168,7 +167,7 @@ func validateRegexField(field string, value string, expr *regexp.Regexp, optiona
 		return nil
 	}
 	if !expr.MatchString(value) {
-		return fmt.Errorf("%s must match `%s`, `%s` given", field, expr.String(), value)
+		return fmt.Errorf("invalid %s `%s`", field, value)
 	}
 	return nil
 }
