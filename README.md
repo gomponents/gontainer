@@ -31,7 +31,7 @@ services:
     storage:
         constructor: "pkg.NewStorage"
         args: ["@db"]
-        getter: "GetStorage"
+        getter: "Storage"
         type: "*pkg.Storage"
 ```
 
@@ -39,7 +39,7 @@ services:
 
 ```go
 c := NewContainer()
-s, err := c.GetStorage()
+s, err := c.Storage()
 ```
 
 ## Command
@@ -110,7 +110,7 @@ Content between percent signs is a `%reference%` to another parameter or a `%fun
 
 ```yaml
 parameters:
-    env: '%env("ENVIRONMENT")%' # os.Get("ENVIRONMENT")
+    env: '%env("ENVIRONMENT")%' # os.Getenv("ENVIRONMENT")
     host: "localhost"           # "localhost"
     port: 80                    # 80
     hostport: "%host%:%port%"   # "localhost:80" // ToString(container.GetParam("host")) + ":" + ToString(container.GetParam("port"))
