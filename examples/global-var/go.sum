@@ -11,6 +11,8 @@ github.com/gomponents/gontainer-helpers v0.0.0-20200908214748-fc7e3147f1d6 h1:eJ
 github.com/gomponents/gontainer-helpers v0.0.0-20200908214748-fc7e3147f1d6/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.0.0-20200909154150-9eecaeeea218 h1:GhrOwlV2yk9jDJCXwEFhr1ScXWm0qe/tt1DRHlci4Vo=
 github.com/gomponents/gontainer-helpers v0.0.0-20200909154150-9eecaeeea218/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20200910183748-91f6264a4815 h1:KAOXTcxjS9UbULGBNpb3/GH9Amv4zSAkruYdhN1riBQ=
+github.com/gomponents/gontainer-helpers v0.0.0-20200910183748-91f6264a4815/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=

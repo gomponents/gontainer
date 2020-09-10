@@ -128,7 +128,7 @@ func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 	e, _ := toExpr(expr)
 	_, m := regex.Match(regexSimpleFn, e)
 	fn := fmt.Sprintf("%s(%s)", t.goFn, m["params"])
-	if t.goImport != "" {
+	if t.goImport != "" && t.goImport != `"."` {
 		fn = fmt.Sprintf("%s.%s", t.aliases.GetAlias(t.goImport), fn)
 	}
 	return Token{
