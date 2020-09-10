@@ -45,6 +45,13 @@ type Service struct {
 	Todo        bool
 }
 
+// todo
+type Decorator struct {
+	Tag       string
+	Decorator string
+	Args      []Arg
+}
+
 type DTO struct {
 	Meta struct {
 		Pkg                  string

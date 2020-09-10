@@ -10,6 +10,7 @@ type {{$containerType}} struct {
 	*{{containerAlias}}.BaseContainer
 	*{{containerAlias}}.BaseParamContainer
 	*{{containerAlias}}.BaseTaggedContainer
+	tagMapping map[string]map[string]bool // tagMapping["tag"]["service"] = true
 }
 
 func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
@@ -27,6 +28,11 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 
 func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	container := &{{$containerType}}{}
+
+	decorate := func(i interface{}, n string) interface{} {
+	    // todo
+	    return i
+	}
 
 	getters := make(map[string]{{containerAlias}}.ServiceDefinition)
 	getters["serviceContainer"] = {{containerAlias}}.ServiceDefinition{
@@ -78,6 +84,8 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
             {{ setterAlias }}.MustSet(&service, {{ export $field.Name }}, {{ $field.Value.Code }})
 			{{- end }}
 
+			service = decorate(service, {{ export $service.Name }})
+
             return
 		},
 		Disposable: {{$service.Disposable}},
@@ -104,7 +112,16 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	    BaseContainer:       baseContainer,
 	    BaseParamContainer:  newParamContainer(),
 	    BaseTaggedContainer: baseTaggedContainer,
+	    tagMapping:          make(map[string]map[string]bool),
 	}
+
+    // tags
+    {{ range $service := .Input.Services -}}{{ range $tag := $service.Tags -}}
+    if _, exists := container.tagMapping[{{ export $tag.Name }}]; !exists {
+        container.tagMapping[{{ export $tag.Name }}] = make(map[string]bool)
+    }
+    container.tagMapping[{{ export $tag.Name }}][{{ export $service.Name }}] = true
+    {{ end }}{{ end }}
 	return container
 }
 
