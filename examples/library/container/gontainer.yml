@@ -1,5 +1,6 @@
 meta:
   pkg: container
+  container_type: "LibraryContainer"
   container_constructor: "NewLibraryContainer"
 
 parameters:
