@@ -31,6 +31,7 @@ func DefaultServicesValidators() []func(DTO) error {
 }
 
 func ValidateServices(d DTO) error {
+	// todo validate uniqueness of getters
 	validators := []ValidateService{
 		ValidateConstructorType,
 		ValidateServiceGetter,
