@@ -77,6 +77,13 @@ func TestNewBuildCmd(t *testing.T) {
 				"    testdata/invalid-constructor.yml\n",
 			error: "service `db`: invalid constructor `New DB`",
 		},
+		{
+			cmd:  newCmd(),
+			args: "-i testdata/invalid-container-constructor.yml -o /dev/null",
+			out: "Reading files...\n" +
+				"    testdata/invalid-container-constructor.yml\n",
+			error: "invalid meta.container_constructor, `New Container` given",
+		},
 	}
 
 	runCmdScenarios(t, scenarios...)
