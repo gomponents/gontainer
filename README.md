@@ -91,17 +91,19 @@ services:
 
 ```yaml
 meta:
-    pkg: "main"                          # Package name, default "main".
+    pkg: "main"                           # Package name, default "main".
 
-    container_type: "Gontainer"          # Type of declared container, default "Gontainer".
+    container_type: "Gontainer"           # Type of declared container, default "Gontainer".
+  
+    container_constructor: "NewContainer" # Name of constructor of container, default "NewContainer"
 
-    imports:                             # List of aliases.
-        viper: github.com/spf13/viper"   # It allows to use shorter syntax in service definition,
-                                         # e.g.: "viper.New" instead of "github.com/spf13/viper.New".
+    imports:                              # List of aliases.
+        viper: github.com/spf13/viper"    # It allows to use shorter syntax in service definition,
+                                          # e.g.: "viper.New" instead of "github.com/spf13/viper.New".
 
-    functions:                           # List of functions to use in parameters.
-        env: "os.Getenv"                 # It allows to inject values calculated in runtime,
-                                         # e.g.: 'env("ENVIRONMENT")'.
+    functions:                            # List of functions to use in parameters.
+        env: "os.Getenv"                  # It allows to inject values calculated in runtime,
+                                          # e.g.: 'env("ENVIRONMENT")'.
 ```
 
 ## Parameters

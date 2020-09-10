@@ -47,8 +47,9 @@ type Service struct {
 
 type DTO struct {
 	Meta struct {
-		Pkg           string
-		ContainerType string
+		Pkg                  string
+		ContainerType        string
+		ContainerConstructor string
 	}
 	Params   []Param
 	Services []Service

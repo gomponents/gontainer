@@ -11,7 +11,7 @@ import (
 //go:generate gontainer build -i container/gontainer.yml -o container/container.go
 
 func main() {
-	c := container.NewContainer()
+	c := container.NewLibraryContainer()
 	l, _ := c.GetLibrary()
 	printLibrary(l)
 }

@@ -7,12 +7,13 @@ const (
 	YamlToken  = `[A-Za-z](\.?[A-Za-z0-9_])*`
 	GoFunc     = `((?P<import>` + Import + `)\.)?(?P<fn>` + GoToken + `)`
 
-	MetaPkg           = GoToken
-	MetaContainerType = GoToken
-	MetaImport        = Import
-	MetaImportAlias   = YamlToken
-	MetaFn            = GoToken
-	MetaGoFn          = GoFunc
+	MetaPkg                  = GoToken
+	MetaContainerType        = GoToken
+	MetaContainerConstructor = GoToken
+	MetaImport               = Import
+	MetaImportAlias          = YamlToken
+	MetaFn                   = GoToken
+	MetaGoFn                 = GoFunc
 
 	ParamName = YamlToken
 

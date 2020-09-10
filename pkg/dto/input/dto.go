@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	defaultPkg           = "main"
-	defaultContainerType = "Gontainer"
+	defaultPkg                  = "main"
+	defaultContainerType        = "Gontainer"
+	defaultContainerConstructor = "NewContainer"
 )
 
 type Call struct {
@@ -115,10 +116,11 @@ type Decorator struct {
 
 type DTO struct {
 	Meta struct {
-		Pkg           string            `yaml:"pkg"`            // default "main"
-		ContainerType string            `yaml:"container_type"` // default "Gontainer"
-		Imports       map[string]string `yaml:"imports"`        // [["alias": "my/long/path"], ...]
-		Functions     map[string]string `yaml:"functions"`      // [["env": "os.Getenv"], ...]
+		Pkg                  string            `yaml:"pkg"`                   // default "main"
+		ContainerType        string            `yaml:"container_type"`        // default "Gontainer"
+		ContainerConstructor string            `yaml:"container_constructor"` // default "NewContainer"
+		Imports              map[string]string `yaml:"imports"`               // [["alias": "my/long/path"], ...]
+		Functions            map[string]string `yaml:"functions"`             // [["env": "os.Getenv"], ...]
 	} `yaml:"meta"`
 	Params     map[string]interface{} `yaml:"parameters"`
 	Services   map[string]Service     `yaml:"services"`
@@ -129,6 +131,7 @@ func CreateDefaultDTO() DTO {
 	result := DTO{}
 	result.Meta.Pkg = defaultPkg
 	result.Meta.ContainerType = defaultContainerType
+	result.Meta.ContainerConstructor = defaultContainerConstructor
 	result.Meta.Functions = map[string]string{
 		"env":    consts.GontainerHelperPath + "/env.MustGet",
 		"envInt": consts.GontainerHelperPath + "/env.MustGetInt",

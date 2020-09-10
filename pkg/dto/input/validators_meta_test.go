@@ -73,6 +73,39 @@ func TestValidateMetaContainerType(t *testing.T) {
 	}
 }
 
+func TestValidateMetaContainerConstructor(t *testing.T) {
+	scenarios := []struct {
+		containerConstructor string
+		error                string
+	}{
+		{
+			containerConstructor: "",
+			error:                "invalid meta.container_constructor, `` given",
+		},
+		{
+			containerConstructor: "NewContainer123",
+		},
+		{
+			containerConstructor: "0newContainer",
+			error:                "invalid meta.container_constructor, `0newContainer` given",
+		},
+	}
+
+	for i, s := range scenarios {
+		t.Run(fmt.Sprintf("Scenario #%d", i), func(t *testing.T) {
+			dto := DTO{}
+			dto.Meta.ContainerConstructor = s.containerConstructor
+			err := ValidateMetaContainerConstructor(dto)
+			if s.error == "" {
+				assert.NoError(t, err)
+				return
+			}
+
+			assert.EqualError(t, err, s.error)
+		})
+	}
+}
+
 func TestValidateMetaImports(t *testing.T) {
 	scenarios := []struct {
 		import_ string

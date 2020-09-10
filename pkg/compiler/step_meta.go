@@ -28,6 +28,7 @@ func NewStepMeta(imports imports.Prefixes, functions tokens.Functions) *StepMeta
 func (s StepMeta) Do(i input.DTO, result *compiled.DTO) error {
 	result.Meta.Pkg = i.Meta.Pkg
 	result.Meta.ContainerType = i.Meta.ContainerType
+	result.Meta.ContainerConstructor = i.Meta.ContainerConstructor
 
 	if err := s.handleImports(i, result); err != nil {
 		return err

@@ -8,12 +8,13 @@ import (
 )
 
 var (
-	regexpMetaPkg           = regexp.MustCompile(`\A` + regex.MetaPkg + `\z`)
-	regexpMetaContainerType = regexp.MustCompile(`\A` + regex.MetaContainerType + `\z`)
-	regexMetaImport         = regexp.MustCompile(`\A` + regex.MetaImport + `\z`)
-	regexMetaImportAlias    = regexp.MustCompile(`\A` + regex.MetaImportAlias + `\z`)
-	regexMetaFn             = regexp.MustCompile(`\A` + regex.MetaFn + `\z`)
-	regexMetaGoFn           = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
+	regexpMetaPkg                  = regexp.MustCompile(`\A` + regex.MetaPkg + `\z`)
+	regexpMetaContainerType        = regexp.MustCompile(`\A` + regex.MetaContainerType + `\z`)
+	regexpMetaContainerConstructor = regexp.MustCompile(`\A` + regex.MetaContainerConstructor + `\z`)
+	regexMetaImport                = regexp.MustCompile(`\A` + regex.MetaImport + `\z`)
+	regexMetaImportAlias           = regexp.MustCompile(`\A` + regex.MetaImportAlias + `\z`)
+	regexMetaFn                    = regexp.MustCompile(`\A` + regex.MetaFn + `\z`)
+	regexMetaGoFn                  = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
 )
 
 // DefaultMetaValidators returns validators for DTO.Meta struct.
@@ -22,6 +23,7 @@ func DefaultMetaValidators() []func(DTO) error {
 		ValidateMetaPkg,
 		ValidateMetaImports,
 		ValidateMetaContainerType,
+		ValidateMetaContainerConstructor,
 		ValidateMetaFunctions,
 	}
 }
@@ -46,6 +48,16 @@ func ValidateMetaContainerType(d DTO) error {
 		return fmt.Errorf(
 			"invalid meta.container_type, `%s` given",
 			d.Meta.ContainerType,
+		)
+	}
+	return nil
+}
+
+func ValidateMetaContainerConstructor(d DTO) error {
+	if !regexpMetaContainerConstructor.MatchString(d.Meta.ContainerConstructor) {
+		return fmt.Errorf(
+			"invalid meta.container_constructor, `%s` given",
+			d.Meta.ContainerConstructor,
 		)
 	}
 	return nil

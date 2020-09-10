@@ -1,5 +1,6 @@
 meta:
   pkg: container
+  container_constructor: "NewLibraryContainer"
 
 parameters:
   brandonSanderson: "Brandon Sanderson"

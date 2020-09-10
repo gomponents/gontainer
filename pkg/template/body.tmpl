@@ -25,7 +25,7 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 	return
 }
 
-func NewContainer() *{{$containerType}} {
+func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	container := &{{$containerType}}{}
 
 	getters := make(map[string]{{containerAlias}}.ServiceDefinition)
