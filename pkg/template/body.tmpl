@@ -25,17 +25,6 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 	return
 }
 
-func NewParamContainer() *{{containerAlias}}.BaseParamContainer {
-	container := {{containerAlias}}.NewBaseParamContainer(nil)
-{{- range $param := .Input.Params}}
-    container.OverrideParam({{ export $param.Name }}, func() interface{} {
-        // {{ export $param.Raw }}
-        return {{$param.Code}}
-    })
-{{- end}}
-	return container
-}
-
 func NewContainer() *{{$containerType}} {
 	container := &{{$containerType}}{}
 
@@ -99,9 +88,21 @@ func NewContainer() *{{$containerType}} {
     {{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
     baseTaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
     {{- end }}{{ end }}
+
+    newParamContainer := func() *{{containerAlias}}.BaseParamContainer {
+    	container := {{containerAlias}}.NewBaseParamContainer(nil)
+    {{- range $param := .Input.Params}}
+        container.OverrideParam({{ export $param.Name }}, func() interface{} {
+            // {{ export $param.Raw }}
+            return {{$param.Code}}
+        })
+    {{- end}}
+    	return container
+    }
+
 	container = &{{$containerType}}{
 	    BaseContainer:       baseContainer,
-	    BaseParamContainer:  NewParamContainer(),
+	    BaseParamContainer:  newParamContainer(),
 	    BaseTaggedContainer: baseTaggedContainer,
 	}
 	return container
