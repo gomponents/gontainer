@@ -112,6 +112,11 @@ func TestValidateServiceGetter(t *testing.T) {
 			error:  "invalid getter `Get Name`",
 			type_:  "MyType",
 		},
+		{
+			getter: "GetByTag",
+			type_:  "MyType",
+			error:  "invalid getter, `GetByTag` is reserved",
+		},
 	}
 
 	for i, s := range scenarios {

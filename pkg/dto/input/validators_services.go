@@ -2,9 +2,11 @@ package input
 
 import (
 	"fmt"
+	"reflect"
 	"regexp"
 	"sort"
 
+	"github.com/gomponents/gontainer-helpers/container"
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
@@ -86,6 +88,23 @@ func ValidateConstructorType(s Service) error {
 }
 
 func ValidateServiceGetter(s Service) error {
+	reserved := []string{"ValidateAllServices"}
+	c := struct {
+		*container.BaseContainer
+		*container.BaseParamContainer
+		*container.BaseTaggedContainer
+	}{}
+	r := reflect.TypeOf(c)
+	for i := 0; i < r.NumMethod(); i++ {
+		reserved = append(reserved, r.Method(i).Name)
+	}
+
+	for _, r := range reserved {
+		if s.Getter == r {
+			return fmt.Errorf("invalid getter, `%s` is reserved", r)
+		}
+	}
+
 	if s.Getter != "" && s.Type == "" {
 		return fmt.Errorf("getter is given, but type is missing")
 	}
