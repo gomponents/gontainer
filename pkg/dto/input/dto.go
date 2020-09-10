@@ -106,6 +106,13 @@ type Service struct {
 	Todo        bool                   `yaml:"todo"`        // if true skips validation and returns error whenever users asks container for a service
 }
 
+// todo
+type Decorator struct {
+	Tag       string        `yaml:"string"` // http-client
+	Decorator string        `yaml:"string"` // myImport/pkg.MakeTracedHttpClient
+	Args      []interface{} `yaml:"args"`   // ["@logger"]
+}
+
 type DTO struct {
 	Meta struct {
 		Pkg           string            `yaml:"pkg"`            // default "main"
@@ -113,8 +120,9 @@ type DTO struct {
 		Imports       map[string]string `yaml:"imports"`        // [["alias": "my/long/path"], ...]
 		Functions     map[string]string `yaml:"functions"`      // [["env": "os.Getenv"], ...]
 	} `yaml:"meta"`
-	Params   map[string]interface{} `yaml:"parameters"`
-	Services map[string]Service     `yaml:"services"`
+	Params     map[string]interface{} `yaml:"parameters"`
+	Services   map[string]Service     `yaml:"services"`
+	Decorators []Decorator
 }
 
 func CreateDefaultDTO() DTO {
