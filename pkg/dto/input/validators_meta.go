@@ -33,8 +33,7 @@ func ValidateMetaPkg(d DTO) error {
 
 	if !regexpMetaPkg.MatchString(d.Meta.Pkg) {
 		return fmt.Errorf(
-			"meta.pkg must match %s, `%s` given",
-			regexpMetaPkg.String(),
+			"invalid meta.pkg, `%s` given",
 			d.Meta.Pkg,
 		)
 	}
@@ -45,8 +44,7 @@ func ValidateMetaPkg(d DTO) error {
 func ValidateMetaContainerType(d DTO) error {
 	if !regexpMetaContainerType.MatchString(d.Meta.ContainerType) {
 		return fmt.Errorf(
-			"meta.container_type must match %s, `%s` given",
-			regexpMetaContainerType,
+			"invalid meta.container_type, `%s` given",
 			d.Meta.ContainerType,
 		)
 	}
@@ -56,10 +54,10 @@ func ValidateMetaContainerType(d DTO) error {
 func ValidateMetaImports(d DTO) error {
 	for a, i := range d.Meta.Imports {
 		if !regexMetaImport.MatchString(i) {
-			return fmt.Errorf("invalid import `%s`, must match `%s`", i, regexMetaImport.String())
+			return fmt.Errorf("invalid import `%s`", i)
 		}
 		if !regexMetaImportAlias.MatchString(a) {
-			return fmt.Errorf("invalid alias `%s`, must match `%s`", a, regexMetaImportAlias.String())
+			return fmt.Errorf("invalid alias `%s`", a)
 		}
 	}
 	return nil
@@ -68,11 +66,11 @@ func ValidateMetaImports(d DTO) error {
 func ValidateMetaFunctions(d DTO) error {
 	for fn, goFn := range d.Meta.Functions {
 		if !regexMetaFn.MatchString(fn) {
-			return fmt.Errorf("invalid function `%s`, must match `%s`", fn, regexMetaFn.String())
+			return fmt.Errorf("invalid function `%s`", fn)
 		}
 
 		if !regexMetaGoFn.MatchString(goFn) {
-			return fmt.Errorf("invalid go function `%s`, must match `%s`", goFn, regexMetaGoFn.String())
+			return fmt.Errorf("invalid go function `%s`", goFn)
 		}
 	}
 	return nil

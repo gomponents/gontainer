@@ -28,7 +28,7 @@ func ValidateParams(d DTO) error {
 
 	for _, n := range names {
 		if !regexParamName.MatchString(n) {
-			return fmt.Errorf("parameter name should match `%s`, `%s` given", regexParamName.String(), n)
+			return fmt.Errorf("invalid parameter name `%s`", n)
 		}
 
 		v := d.Params[n]

@@ -21,7 +21,7 @@ func TestValidateMetaPkg(t *testing.T) {
 		},
 		{
 			pkg:   "123",
-			error: "meta.pkg must match " + regexpMetaPkg.String() + ", `123` given",
+			error: "invalid meta.pkg, `123` given",
 		},
 	}
 
@@ -47,14 +47,14 @@ func TestValidateMetaContainerType(t *testing.T) {
 	}{
 		{
 			containerType: "",
-			error:         "meta.container_type must match " + regexpMetaContainerType.String() + ", `` given",
+			error:         "invalid meta.container_type, `` given",
 		},
 		{
 			containerType: "myContainer123",
 		},
 		{
 			containerType: "0MyContainer",
-			error:         "meta.container_type must match " + regexpMetaContainerType.String() + ", `0MyContainer` given",
+			error:         "invalid meta.container_type, `0MyContainer` given",
 		},
 	}
 
@@ -86,17 +86,17 @@ func TestValidateMetaImports(t *testing.T) {
 		{
 			import_: "github.com/stretchr/testify/assert/",
 			alias:   "assert",
-			error:   "invalid import `github.com/stretchr/testify/assert/`, must match `" + regexMetaImport.String() + "`",
+			error:   "invalid import `github.com/stretchr/testify/assert/`",
 		},
 		{
 			import_: "oneTwoThree",
 			alias:   "$123",
-			error:   "invalid alias `$123`, must match `" + regexMetaImportAlias.String() + "`",
+			error:   "invalid alias `$123`",
 		},
 		{
 			import_: "!!!",
 			alias:   "alias",
-			error:   "invalid import `!!!`, must match `" + regexMetaImport.String() + "`",
+			error:   "invalid import `!!!`",
 		},
 	}
 
@@ -136,12 +136,12 @@ func TestValidateMetaFunctions(t *testing.T) {
 		{
 			alias: "$fn",
 			goFn:  "os.Getenv",
-			error: "invalid function `$fn`, must match `" + regexMetaFn.String() + "`",
+			error: "invalid function `$fn`",
 		},
 		{
 			alias: "env",
 			goFn:  "os.1Getenv",
-			error: "invalid go function `os.1Getenv`, must match `" + regexMetaGoFn.String() + "`",
+			error: "invalid go function `os.1Getenv`",
 		},
 	}
 	for i, s := range scenarios {
