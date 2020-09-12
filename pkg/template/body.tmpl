@@ -138,7 +138,7 @@ func (c *{{$containerType}}) {{ $service.Getter }}() (result {{ $service.Type }}
 	}
 
 	if result, ok = object.({{ $service.Type }}); !ok {
-		err = {{ importAlias "fmt" }}.Errorf("cannot create %s, because cannot cast %T to %T", {{ export $service.Name }}, object, result)
+		err = {{ importAlias "fmt" }}.Errorf("%s.%s: cannot cast `%T` to `%T`", {{ export $containerType }}, {{ export $service.Getter }}, object, result)
 	}
 
 	return
