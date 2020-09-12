@@ -4,9 +4,9 @@ import (
 	"regexp"
 )
 
-// MustCompileAz wraps input by `\A` and `\z` and compiles into regexp.Regexp struct.
+// MustCompileAz wraps input by `\A(` and `)\z` and compiles into regexp.Regexp struct.
 func MustCompileAz(r string) *regexp.Regexp {
-	return regexp.MustCompile(`\A` + r + `\z`)
+	return regexp.MustCompile(`\A(` + r + `)\z`)
 }
 
 func Match(r *regexp.Regexp, s string) (bool, map[string]string) {
