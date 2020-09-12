@@ -3,7 +3,7 @@
 The following interfaces are not declared, given piece of code is prepared for docs purposes.
 
 > Talk is cheap. Show me the code.
-> -- <cite>Linus Torvalds</cite>
+-- <cite>Linus Torvalds</cite>
 
 ```go
 package main
