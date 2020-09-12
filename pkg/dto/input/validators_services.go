@@ -11,14 +11,14 @@ import (
 )
 
 var (
-	regexServiceName        = regex.MustCompileWrapped(regex.ServiceName)
-	regexServiceGetter      = regex.MustCompileWrapped(regex.ServiceGetter)
-	regexServiceType        = regex.MustCompileWrapped(regex.ServiceType)
-	regexServiceValue       = regex.MustCompileWrapped(regex.ServiceValue)
-	regexServiceConstructor = regex.MustCompileWrapped(regex.ServiceConstructor)
-	regexServiceCallName    = regex.MustCompileWrapped(regex.ServiceCallName)
-	regexServiceFieldName   = regex.MustCompileWrapped(regex.ServiceFieldName)
-	regexServiceTag         = regex.MustCompileWrapped(regex.ServiceTag)
+	regexServiceName        = regex.MustCompileAz(regex.ServiceName)
+	regexServiceGetter      = regex.MustCompileAz(regex.ServiceGetter)
+	regexServiceType        = regex.MustCompileAz(regex.ServiceType)
+	regexServiceValue       = regex.MustCompileAz(regex.ServiceValue)
+	regexServiceConstructor = regex.MustCompileAz(regex.ServiceConstructor)
+	regexServiceCallName    = regex.MustCompileAz(regex.ServiceCallName)
+	regexServiceFieldName   = regex.MustCompileAz(regex.ServiceFieldName)
+	regexServiceTag         = regex.MustCompileAz(regex.ServiceTag)
 )
 
 type ValidateService func(Service) error

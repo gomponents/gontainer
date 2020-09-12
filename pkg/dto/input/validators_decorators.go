@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	regexDecoratorsTag = regex.MustCompileWrapped(regex.DecoratorTag)
+	regexDecoratorsTag = regex.MustCompileAz(regex.DecoratorTag)
 )
 
 // DefaultMetaValidators returns validators for DTO.Decorators.

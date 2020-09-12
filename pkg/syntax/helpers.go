@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	regexServiceValue = regex.MustCompileWrapped(regex.ServiceValue)
+	regexServiceValue = regex.MustCompileAz(regex.ServiceValue)
 )
 
 func SanitizeImport(i string) string {

@@ -25,7 +25,7 @@ func (s ServiceResolver) Resolve(v interface{}) (compiled.Arg, error) {
 }
 
 var (
-	serviceNameRegex = regex.MustCompileWrapped(regex.ServiceName)
+	serviceNameRegex = regex.MustCompileAz(regex.ServiceName)
 )
 
 func (s ServiceResolver) Supports(v interface{}) bool {

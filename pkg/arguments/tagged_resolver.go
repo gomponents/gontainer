@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	taggedRegex = regex.MustCompileWrapped(regex.ArgTagged)
+	taggedRegex = regex.MustCompileAz(regex.ArgTagged)
 )
 
 type TaggedResolver struct {

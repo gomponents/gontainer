@@ -6,13 +6,13 @@ import (
 )
 
 var (
-	regexpMetaPkg                  = regex.MustCompileWrapped(regex.MetaPkg)
-	regexpMetaContainerType        = regex.MustCompileWrapped(regex.MetaContainerType)
-	regexpMetaContainerConstructor = regex.MustCompileWrapped(regex.MetaContainerConstructor)
-	regexMetaImport                = regex.MustCompileWrapped(regex.MetaImport)
-	regexMetaImportAlias           = regex.MustCompileWrapped(regex.MetaImportAlias)
-	regexMetaFn                    = regex.MustCompileWrapped(regex.MetaFn)
-	regexMetaGoFn                  = regex.MustCompileWrapped(regex.MetaGoFn)
+	regexpMetaPkg                  = regex.MustCompileAz(regex.MetaPkg)
+	regexpMetaContainerType        = regex.MustCompileAz(regex.MetaContainerType)
+	regexpMetaContainerConstructor = regex.MustCompileAz(regex.MetaContainerConstructor)
+	regexMetaImport                = regex.MustCompileAz(regex.MetaImport)
+	regexMetaImportAlias           = regex.MustCompileAz(regex.MetaImportAlias)
+	regexMetaFn                    = regex.MustCompileAz(regex.MetaFn)
+	regexMetaGoFn                  = regex.MustCompileAz(regex.MetaGoFn)
 )
 
 // DefaultMetaValidators returns validators for DTO.Meta struct.

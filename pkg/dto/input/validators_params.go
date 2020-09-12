@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	regexParamName = regex.MustCompileWrapped(regex.ParamName)
+	regexParamName = regex.MustCompileAz(regex.ParamName)
 )
 
 // DefaultParamsValidators returns validators for DTO.Params.

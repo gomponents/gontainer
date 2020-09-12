@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	regexServiceType        = regex.MustCompileWrapped(regex.ServiceType)
-	regexServiceConstructor = regex.MustCompileWrapped(regex.ServiceConstructor)
+	regexServiceType        = regex.MustCompileAz(regex.ServiceType)
+	regexServiceConstructor = regex.MustCompileAz(regex.ServiceConstructor)
 )
 
 type StepServices struct {

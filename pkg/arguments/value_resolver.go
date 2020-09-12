@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	argRegex = regex.MustCompileWrapped(regex.ArgValue)
+	argRegex = regex.MustCompileAz(regex.ArgValue)
 )
 
 type ValueResolver struct {

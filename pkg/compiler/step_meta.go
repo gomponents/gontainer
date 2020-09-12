@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	regexMetaGoFn = regex.MustCompileWrapped(regex.MetaGoFn)
+	regexMetaGoFn = regex.MustCompileAz(regex.MetaGoFn)
 )
 
 type StepMeta struct {
