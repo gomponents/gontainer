@@ -74,6 +74,10 @@ In the above example, generated code will differ than `db := db.NewDB(container.
 because internally it uses reflection (GO is statically typed and conversion of parameter is required),
 however result will work as described using GO code.
 
+## API
+
+Compiled container implements [the following interface](docs/API.md).
+
 ## Schema
 
 ```yaml
