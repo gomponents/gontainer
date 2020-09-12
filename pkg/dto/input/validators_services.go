@@ -127,6 +127,7 @@ func ValidateServiceConstructor(s Service) error {
 }
 
 func ValidateServiceArgs(s Service) error {
+	// todo one common method for validating all args
 	for i, a := range s.Args {
 		if !isPrimitiveType(a) {
 			return fmt.Errorf("unsupported type `%T` of arg%d", a, i)
