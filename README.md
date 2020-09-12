@@ -85,6 +85,9 @@ parameters:
 
 services:
 # list of services
+
+decorators:
+# list of decorators
 ```
 
 ## Meta
