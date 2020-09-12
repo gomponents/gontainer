@@ -109,9 +109,9 @@ type Service struct {
 
 // todo
 type Decorator struct {
-	Tag       string        `yaml:"string"` // http-client
-	Decorator string        `yaml:"string"` // myImport/pkg.MakeTracedHttpClient
-	Args      []interface{} `yaml:"args"`   // ["@logger"]
+	Tag       string        `yaml:"tag"`       // http-client
+	Decorator string        `yaml:"decorator"` // myImport/pkg.MakeTracedHttpClient
+	Args      []interface{} `yaml:"args"`      // ["@logger"]
 }
 
 type DTO struct {

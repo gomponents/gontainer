@@ -1,0 +1,15 @@
+meta:
+  pkg: "container"
+  imports:
+    pkg: "decorators/pkg"
+
+services:
+  CoolGreeter:
+    value: "&pkg.Greeter{}"
+    getter: "GetCoolGreeter"
+    type: "*pkg.CoolGreeter"
+    tags: ["cool.greeter"]
+
+decorators:
+  - tag: "cool.greeter"
+    decorator: "pkg.NewCoolGreeter"

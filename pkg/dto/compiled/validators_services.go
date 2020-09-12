@@ -30,6 +30,7 @@ func ValidateServicesReqServicesExist(d DTO) error {
 	return nil
 }
 
+// todo decorators
 func ValidateServicesCircularDeps(d DTO) error {
 	taggedMapping := make(map[string][]string)
 	serviceMapping := make(map[string]Service)

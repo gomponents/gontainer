@@ -33,6 +33,7 @@ update-helpers:
 	cd examples/env && go get -u ${HELPERS_PATH}
 	cd examples/global-var && go get -u ${HELPERS_PATH}
 	cd examples/library && go get -u ${HELPERS_PATH}
+	cd examples/decorators && go get -u ${HELPERS_PATH}
 
 run-example-library:
 	cd examples/library && go generate && go run main.go
@@ -50,6 +51,10 @@ run-example-params:
 run-example-global-var: build
 	./app.bin build -i examples/global-var/gontainer.yml -o examples/global-var/container.go
 	cd examples/global-var && go run .
+
+run-example-decorators: build
+	./app.bin build -i examples/decorators/container/gontainer.yml -o examples/decorators/container/container.go
+	cd examples/decorators && go run .
 
 tests: tests-unit lint
 
