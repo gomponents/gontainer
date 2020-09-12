@@ -328,6 +328,4 @@ decorators:
     - tag: "doer-step"
       decorator: "pkg.OpenTracingStep"
       args: ["@openTracing"]
-
-# svc := pkg.MakeTracedHttpClient(svc, serviceName, container.Get("tracer"))
 ```
