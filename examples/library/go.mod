@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
-	github.com/gomponents/gontainer-helpers v0.0.0-20200910225703-68ec423e5bbe
+	github.com/gomponents/gontainer-helpers v0.0.0-20200912133726-c777dc4a3d72
 	github.com/kataras/tablewriter v0.0.0-20180708051242-e063d29b7c23 // indirect
 	github.com/landoop/tableprinter v0.0.0-20200805134727-ea32388e35c1
 	github.com/mattn/go-runewidth v0.0.9 // indirect
