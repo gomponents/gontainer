@@ -2,8 +2,6 @@ package tokens
 
 import (
 	"fmt"
-	"regexp"
-
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 )
@@ -17,14 +15,12 @@ const (
 )
 
 const (
-	TokenDelimiter      = "%"
-	RegexTokenReference = `^[a-zA-Z][a-zA-Z0-9_]*((\.)[a-zA-Z0-9_]+)*$`
-	RegexSimpleFn       = `^(?P<fn>[a-zA-Z][a-zA-Z0-9_]*((\.)[a-zA-Z0-9_]+)*)\((?P<params>.*)\)$`
+	TokenDelimiter = "%"
 )
 
 var (
-	regexTokenRef = regexp.MustCompile(RegexTokenReference)
-	regexSimpleFn = regexp.MustCompile(RegexSimpleFn)
+	regexTokenRef = regex.MustCompileAz(`[a-zA-Z][a-zA-Z0-9_]*((\.)[a-zA-Z0-9_]+)*`)
+	regexSimpleFn = regex.MustCompileAz(`(?P<fn>[a-zA-Z][a-zA-Z0-9_]*((\.)[a-zA-Z0-9_]+)*)\((?P<params>.*)\)`)
 )
 
 type Token struct {
