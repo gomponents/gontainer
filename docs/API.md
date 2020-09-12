@@ -37,5 +37,11 @@ type Container interface {
     // ValidateAllServices tries to fetch all registered services and returns map of all errors which have been occurred.
     // Key of given map is an ID of a service.
     ValidateAllServices() (errors map[string]error)
+
+    // GetParam returns parameter by id.
+    GetParam(id string) (interface{}, error)
+
+    // MustGetParam returns parameter by id.
+    MustGetParam(id string) interface{}
 }
 ```
