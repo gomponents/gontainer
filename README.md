@@ -301,6 +301,13 @@ services:
 
 ## Decorators
 
+Decorators allow to decorate group of objects within one declaration. Decorator is called once object is instantiated.
+Decorator is a function which must accept at least two arguments and returns one or two values.
+First argument must be a string, it is a named of decorated service.
+Second Second argument is the given service. If your function requires more arguments, use `args` to define them.
+First returning value is decorated service. Second returning value must be an instance of error,
+second value is optional when your function cannot return any error.
+
 ```yaml
 services:
     # doer := pkg.NewDoer()
@@ -325,7 +332,7 @@ services:
         todo: true
 
 decorators:
-    - tag: "doer-step"
+    - tag: "doer-step" # you can use "*" to decorate all objects in container
       decorator: "pkg.OpenTracingStep"
       args: ["@openTracing"]
 ```
