@@ -30,3 +30,7 @@ services:
 decorators:
   - tag: "doer.step"
     decorator: "pkg.NewDecoratedSimpleDoer"
+
+  - tag: "*"
+    decorator: "pkg.ServiceLogger"
+    args: ["!value pkg.BasicLogger{}"]
