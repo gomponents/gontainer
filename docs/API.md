@@ -12,7 +12,6 @@ import (
     "github.com/gomponents/gontainer-helpers/container"
 )
 
-
 type Container interface {
     // Get returns service by id.
     Get(id string) (interface{}, error)
