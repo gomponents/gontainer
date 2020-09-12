@@ -2,7 +2,6 @@ package arguments
 
 import (
 	"fmt"
-	"regexp"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/regex"
@@ -26,7 +25,7 @@ func (s ServiceResolver) Resolve(v interface{}) (compiled.Arg, error) {
 }
 
 var (
-	serviceNameRegex = regexp.MustCompile(`\A` + regex.ServiceName + `\z`)
+	serviceNameRegex = regex.MustCompileWrapped(regex.ServiceName)
 )
 
 func (s ServiceResolver) Supports(v interface{}) bool {

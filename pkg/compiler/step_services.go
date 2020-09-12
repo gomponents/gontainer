@@ -2,7 +2,6 @@ package compiler
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 
 	"github.com/gomponents/gontainer/pkg/arguments"
@@ -14,8 +13,8 @@ import (
 )
 
 var (
-	regexServiceType        = regexp.MustCompile(`\A` + regex.ServiceType + `\z`)
-	regexServiceConstructor = regexp.MustCompile(`\A` + regex.ServiceConstructor + `\z`)
+	regexServiceType        = regex.MustCompileWrapped(regex.ServiceType)
+	regexServiceConstructor = regex.MustCompileWrapped(regex.ServiceConstructor)
 )
 
 type StepServices struct {

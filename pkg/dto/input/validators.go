@@ -26,5 +26,6 @@ func NewDefaultValidator() *ChainValidator {
 	validators = append(validators, DefaultMetaValidators()...)
 	validators = append(validators, DefaultParamsValidators()...)
 	validators = append(validators, DefaultServicesValidators()...)
+	validators = append(validators, DefaultDecoratorsValidators()...)
 	return NewChainValidator(validators...)
 }

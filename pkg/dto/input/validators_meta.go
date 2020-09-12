@@ -2,19 +2,17 @@ package input
 
 import (
 	"fmt"
-	"regexp"
-
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
 var (
-	regexpMetaPkg                  = regexp.MustCompile(`\A` + regex.MetaPkg + `\z`)
-	regexpMetaContainerType        = regexp.MustCompile(`\A` + regex.MetaContainerType + `\z`)
-	regexpMetaContainerConstructor = regexp.MustCompile(`\A` + regex.MetaContainerConstructor + `\z`)
-	regexMetaImport                = regexp.MustCompile(`\A` + regex.MetaImport + `\z`)
-	regexMetaImportAlias           = regexp.MustCompile(`\A` + regex.MetaImportAlias + `\z`)
-	regexMetaFn                    = regexp.MustCompile(`\A` + regex.MetaFn + `\z`)
-	regexMetaGoFn                  = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
+	regexpMetaPkg                  = regex.MustCompileWrapped(regex.MetaPkg)
+	regexpMetaContainerType        = regex.MustCompileWrapped(regex.MetaContainerType)
+	regexpMetaContainerConstructor = regex.MustCompileWrapped(regex.MetaContainerConstructor)
+	regexMetaImport                = regex.MustCompileWrapped(regex.MetaImport)
+	regexMetaImportAlias           = regex.MustCompileWrapped(regex.MetaImportAlias)
+	regexMetaFn                    = regex.MustCompileWrapped(regex.MetaFn)
+	regexMetaGoFn                  = regex.MustCompileWrapped(regex.MetaGoFn)
 )
 
 // DefaultMetaValidators returns validators for DTO.Meta struct.

@@ -58,6 +58,7 @@ type DTO struct {
 		ContainerType        string
 		ContainerConstructor string
 	}
-	Params   []Param
-	Services []Service
+	Params     []Param
+	Services   []Service
+	Decorators []Decorator
 }

@@ -1,8 +1,6 @@
 package arguments
 
 import (
-	"regexp"
-
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
@@ -10,7 +8,7 @@ import (
 )
 
 var (
-	argRegex = regexp.MustCompile(`\A` + regex.ArgValue + `\z`)
+	argRegex = regex.MustCompileWrapped(regex.ArgValue)
 )
 
 type ValueResolver struct {

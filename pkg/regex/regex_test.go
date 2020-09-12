@@ -43,3 +43,16 @@ func TestMatch(t *testing.T) {
 		})
 	}
 }
+
+func TestMustCompileWrapped(t *testing.T) {
+	t.Run("Given scenario", func(t *testing.T) {
+		r := MustCompileWrapped(".*")
+		assert.Equal(t, `\A.*\z`, r.String())
+	})
+	t.Run("Given error", func(t *testing.T) {
+		defer func() {
+			assert.NotNil(t, recover())
+		}()
+		MustCompileWrapped(`[A-z`)
+	})
+}

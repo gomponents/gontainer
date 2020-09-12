@@ -115,8 +115,14 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	    tagMapping:          make(map[string]map[string]bool),
 	}
 
+	{{ range $decorator := .Input.Decorators -}}
+	container.RegisterDecorator(func(_ string, i interface{}) (interface{}, error) {
+
+	})
+	{{ end }}
+
     // tags
-    {{ range $service := .Input.Services -}}{{ range $tag := $service.Tags -}}
+    {{ range $service := .Input.Services }}{{ range $tag := $service.Tags -}}
     if _, exists := container.tagMapping[{{ export $tag.Name }}]; !exists {
         container.tagMapping[{{ export $tag.Name }}] = make(map[string]bool)
     }

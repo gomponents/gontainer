@@ -1,7 +1,6 @@
 package syntax
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/gomponents/gontainer/pkg/imports"
@@ -9,7 +8,7 @@ import (
 )
 
 var (
-	regexServiceValue = regexp.MustCompile(`\A` + regex.ServiceValue + `\z`)
+	regexServiceValue = regex.MustCompileWrapped(regex.ServiceValue)
 )
 
 func SanitizeImport(i string) string {

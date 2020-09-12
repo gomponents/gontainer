@@ -2,14 +2,13 @@ package arguments
 
 import (
 	"fmt"
-	"regexp"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
 var (
-	taggedRegex = regexp.MustCompile(`\A` + regex.ArgTagged + `\z`)
+	taggedRegex = regex.MustCompileWrapped(regex.ArgTagged)
 )
 
 type TaggedResolver struct {

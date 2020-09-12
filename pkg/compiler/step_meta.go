@@ -2,18 +2,17 @@ package compiler
 
 import (
 	"fmt"
-	"github.com/gomponents/gontainer/pkg/syntax"
-	"regexp"
 
 	"github.com/gomponents/gontainer/pkg/dto/compiled"
 	"github.com/gomponents/gontainer/pkg/dto/input"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
+	"github.com/gomponents/gontainer/pkg/syntax"
 	"github.com/gomponents/gontainer/pkg/tokens"
 )
 
 var (
-	regexMetaGoFn = regexp.MustCompile(`\A` + regex.MetaGoFn + `\z`)
+	regexMetaGoFn = regex.MustCompileWrapped(regex.MetaGoFn)
 )
 
 type StepMeta struct {

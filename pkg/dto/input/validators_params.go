@@ -2,14 +2,13 @@ package input
 
 import (
 	"fmt"
-	"regexp"
 	"sort"
 
 	"github.com/gomponents/gontainer/pkg/regex"
 )
 
 var (
-	regexParamName = regexp.MustCompile(`\A` + regex.ParamName + `\z`)
+	regexParamName = regex.MustCompileWrapped(regex.ParamName)
 )
 
 // DefaultParamsValidators returns validators for DTO.Params.
