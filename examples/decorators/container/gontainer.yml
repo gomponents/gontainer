@@ -1,5 +1,6 @@
 meta:
   pkg: "container"
+  container_constructor: "New"
   imports:
     pkg: "decorators/pkg"
 

@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	c := container.NewContainer()
+	c := container.New()
 	doer, _ := c.GetChainDoer()
 	doer.Do()
 }
