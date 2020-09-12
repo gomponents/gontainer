@@ -134,6 +134,7 @@ func (c *{{$containerType}}) {{ $service.Getter }}() (result {{ $service.Type }}
 	object, err = c.Get({{ export $service.Name }})
 
 	if err != nil {
+	    err = {{ importAlias "fmt" }}.Errorf("%s.%s: %s", {{ export $containerType }}, {{ export $service.Getter }}, err.Error())
 		return
 	}
 
