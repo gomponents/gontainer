@@ -302,7 +302,7 @@ services:
 ## Decorators
 
 Decorators allow to decorate group of objects within one declaration. Decorator is called once object is instantiated.
-Decorator is a function which must accept at least two arguments and returns one or two values.
+Decorator is a function which must accept at least two arguments and must return one or two values.
 First argument must be a string, it is a named of decorated service.
 Second Second argument is the given service. If your function requires more arguments, use `args` to define them.
 First returning value is decorated service. Second returning value must be an instance of error,
