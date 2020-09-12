@@ -4,12 +4,28 @@ meta:
     pkg: "decorators/pkg"
 
 services:
-  CoolGreeter:
-    value: "&pkg.Greeter{}"
-    getter: "GetCoolGreeter"
-    type: "*pkg.CoolGreeter"
-    tags: ["cool.greeter"]
+  chainDoer:
+    value: "&pkg.ChainDoer{}"
+    fields:
+      doers: "!tagged doer"
+    getter: "GetChainDoer"
+    type: "*pkg.ChainDoer"
+
+  doer1:
+    constructor: "pkg.NewSimpleDoer"
+    args: [1]
+    tags: ["doer"]
+
+  doer2:
+    constructor: "pkg.NewSimpleDoer"
+    args: [2]
+    tags: ["doer"]
+
+  doer3:
+    constructor: "pkg.NewSimpleDoer"
+    args: [3]
+    tags: [{name: "doer", priority: 100}]
 
 decorators:
-  - tag: "cool.greeter"
-    decorator: "pkg.NewCoolGreeter"
+  - tag: "doer"
+    decorator: "pkg.NewDecoratedSimpleDoer"

@@ -40,6 +40,6 @@ const (
 	ArgTagged = "!tagged +(?P<tag>" + YamlToken + ")"
 	ArgValue  = "!value +(?P<argval>" + ServiceValue + ")"
 
-	DecoratorTag    = `\*|(` + ServiceTag + `)`
+	DecoratorTag    = `(\*|(` + ServiceTag + `))`
 	DecoratorMethod = GoFunc
 )
