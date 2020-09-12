@@ -7,7 +7,7 @@
 // -----------------------------------------------------------------------------
 {{end}}
 type {{$containerType}} struct {
-	*{{containerAlias}}.BaseContainer
+	*{{containerAlias}}.AtomicBaseContainer
 	*{{containerAlias}}.BaseParamContainer
 	*{{containerAlias}}.BaseTaggedContainer
 }
@@ -100,7 +100,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
     }
 
 	container = &{{$containerType}}{
-	    BaseContainer:       baseContainer,
+	    AtomicBaseContainer: {{containerAlias}}.NewAtomicBaseContainer(baseContainer),
 	    BaseParamContainer:  newParamContainer(),
 	    BaseTaggedContainer: baseTaggedContainer,
 	}
