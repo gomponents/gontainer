@@ -299,14 +299,35 @@ services:
         args: ["!tagged handler"]
 ```
 
-## TODO
+## Decorators
 
-**Decorators**
 ```yaml
+services:
+    # doer := pkg.NewDoer()
+    # doer.Steps = []pkg.Step{
+    #   pkg.OpenTracingStep("firstStep", container.Get("firstStep"), container.Get("openTracing")),
+    #   pkg.OpenTracingStep("secondStep", container.Get("secondStep"), container.Get("openTracing")),
+    # }
+    doer:
+        constructor: "pkg.NewDoer"
+        fields:
+            Steps: ["!tagged doer.step"]
+
+    firstStep:
+        value: "!value &pkg.FirstStep{}"
+        tags: ["doer.step"]
+
+    secondStep:
+        value: "!value &pkg.SecondStep{}"
+        tags: ["doer.step"]
+
+    openTracing:
+        todo: true
+
 decorators:
-    - tag: http-client
-      decorator: myImport/pkg.MakeTracedHttpClient
-      args: [@tracer]
+    - tag: "doer-step"
+      decorator: "pkg.OpenTracingStep"
+      args: ["@openTracing"]
 
 # svc := pkg.MakeTracedHttpClient(svc, serviceName, container.Get("tracer"))
 ```
