@@ -90,7 +90,7 @@ func ValidateConstructorType(s Service) error {
 func ValidateServiceGetter(s Service) error {
 	reserved := []string{"ValidateAllServices"}
 	c := struct {
-		*container.BaseContainer
+		*container.AtomicContainer
 		*container.BaseParamContainer
 		*container.BaseTaggedContainer
 	}{}

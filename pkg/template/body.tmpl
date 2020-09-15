@@ -7,7 +7,7 @@
 // -----------------------------------------------------------------------------
 {{end}}
 type {{$containerType}} struct {
-	*{{containerAlias}}.AtomicBaseContainer
+	*{{containerAlias}}.AtomicContainer
 	*{{containerAlias}}.BaseParamContainer
 	*{{containerAlias}}.BaseTaggedContainer
 }
@@ -26,7 +26,11 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 }
 
 func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
-	container := &{{$containerType}}{}
+	var container struct{
+	    *{{containerAlias}}.Container
+	    *{{containerAlias}}.BaseTaggedContainer
+	    *{{containerAlias}}.BaseParamContainer
+	}
 	getters := make(map[string]{{containerAlias}}.ServiceDefinition)
 	getters["serviceContainer"] = {{containerAlias}}.ServiceDefinition{
 		Provider: func() (interface{}, error) {
@@ -82,10 +86,10 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 		Disposable: {{$service.Disposable}},
 	}
 {{end}}
-    baseContainer := {{containerAlias}}.NewBaseContainer(getters)
-    baseTaggedContainer := {{containerAlias}}.NewBaseTaggedContainer(baseContainer)
+    container.Container = {{containerAlias}}.NewContainer(getters)
+    container.BaseTaggedContainer = {{containerAlias}}.NewBaseTaggedContainer(container.Container)
     {{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
-    baseTaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
+    container.BaseTaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
     {{- end }}{{ end }}
 
     newParamContainer := func() *{{containerAlias}}.BaseParamContainer {
@@ -98,30 +102,30 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
     {{- end}}
     	return container
     }
+    container.BaseParamContainer = newParamContainer()
 
-	container = &{{$containerType}}{
-	    AtomicBaseContainer: {{containerAlias}}.NewAtomicBaseContainer(baseContainer),
-	    BaseParamContainer:  newParamContainer(),
-	    BaseTaggedContainer: baseTaggedContainer,
-	}
-
-	{{ range $decorator := .Input.Decorators -}}
-	container.RegisterDecorator(func(id string, i interface{}) (interface{}, error) {
-	    {{ if ne "*" $decorator.Tag }}if !container.IsTaggedBy(id, {{ export $decorator.Tag }}) {
-	        return i, nil
-	    }{{ end }}
-	    return {{ callerAlias }}.CallDecorator(
-	        {{ $decorator.Decorator }},
-	        id,
-	        i,
+    {{ range $decorator := .Input.Decorators -}}
+    container.RegisterDecorator(func(id string, i interface{}) (interface{}, error) {
+        {{ if ne "*" $decorator.Tag }}if !container.IsTaggedBy(id, {{ export $decorator.Tag }}) {
+            return i, nil
+        }{{ end }}
+        return {{ callerAlias }}.CallDecorator(
+            {{ $decorator.Decorator }},
+            id,
+            i,
             {{- range $arg := $decorator.Args }}
             // {{ export $arg.Raw }}
             {{ $arg.Code }},
             {{- end }}
-	    )
-	})
-	{{ end }}
-	return container
+        )
+    })
+    {{ end }}
+
+	return &{{$containerType}}{
+	    AtomicContainer:     {{containerAlias}}.NewAtomicContainer(container.Container),
+	    BaseParamContainer:  container.BaseParamContainer,
+	    BaseTaggedContainer: container.BaseTaggedContainer,
+	}
 }
 
 {{- range $service := .Input.Services -}}
