@@ -87,19 +87,23 @@ func ValidateConstructorType(s Service) error {
 	return nil
 }
 
-func ValidateServiceGetter(s Service) error {
-	reserved := []string{"ValidateAllServices"}
+var reservedGetters []string
+
+func init() {
+	reservedGetters = []string{"ValidateAllServices"}
 	c := struct {
 		*container.AtomicContainer
-		*container.BaseParamContainer
-		*container.BaseTaggedContainer
+		*container.AtomicParamContainer
+		*container.AtomicTaggedContainer
 	}{}
 	r := reflect.TypeOf(c)
 	for i := 0; i < r.NumMethod(); i++ {
-		reserved = append(reserved, r.Method(i).Name)
+		reservedGetters = append(reservedGetters, r.Method(i).Name)
 	}
+}
 
-	for _, r := range reserved {
+func ValidateServiceGetter(s Service) error {
+	for _, r := range reservedGetters {
 		if s.Getter == r {
 			return fmt.Errorf("invalid getter, `%s` is reserved", r)
 		}

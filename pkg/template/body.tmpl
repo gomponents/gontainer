@@ -8,8 +8,8 @@
 {{end}}
 type {{$containerType}} struct {
 	*{{containerAlias}}.AtomicContainer
-	*{{containerAlias}}.BaseParamContainer
-	*{{containerAlias}}.BaseTaggedContainer
+	*{{containerAlias}}.AtomicParamContainer
+	*{{containerAlias}}.AtomicTaggedContainer
 }
 
 func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
@@ -28,8 +28,8 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	var container struct{
 	    *{{containerAlias}}.Container
-	    *{{containerAlias}}.BaseTaggedContainer
-	    *{{containerAlias}}.BaseParamContainer
+	    *{{containerAlias}}.TaggedContainer
+	    *{{containerAlias}}.ParamContainer
 	}
 	getters := make(map[string]{{containerAlias}}.ServiceDefinition)
 	getters["serviceContainer"] = {{containerAlias}}.ServiceDefinition{
@@ -87,22 +87,25 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	}
 {{end}}
     container.Container = {{containerAlias}}.NewContainer(getters)
-    container.BaseTaggedContainer = {{containerAlias}}.NewBaseTaggedContainer(container.Container)
+    container.TaggedContainer = {{containerAlias}}.NewTaggedContainer(container.Container)
     {{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
-    container.BaseTaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
+    container.TaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
     {{- end }}{{ end }}
 
-    newParamContainer := func() *{{containerAlias}}.BaseParamContainer {
-    	container := {{containerAlias}}.NewBaseParamContainer(nil)
+    newParamContainer := func() *{{containerAlias}}.ParamContainer {
+    	container := {{containerAlias}}.NewParamContainer(nil)
     {{- range $param := .Input.Params}}
-        container.OverrideParam({{ export $param.Name }}, func() interface{} {
-            // {{ export $param.Raw }}
-            return {{$param.Code}}
+        container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
+            Disposable: false,
+            Provider: func() interface{} {
+              // {{ export $param.Raw }}
+              return {{$param.Code}}
+            },
         })
     {{- end}}
     	return container
     }
-    container.BaseParamContainer = newParamContainer()
+    container.ParamContainer = newParamContainer()
 
     {{ range $decorator := .Input.Decorators -}}
     container.RegisterDecorator(func(id string, i interface{}) (interface{}, error) {
@@ -122,9 +125,9 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
     {{ end }}
 
 	return &{{$containerType}}{
-	    AtomicContainer:     {{containerAlias}}.NewAtomicContainer(container.Container),
-	    BaseParamContainer:  container.BaseParamContainer,
-	    BaseTaggedContainer: container.BaseTaggedContainer,
+	    AtomicContainer:       {{containerAlias}}.NewAtomicContainer(container.Container),
+	    AtomicParamContainer:  {{containerAlias}}.NewAtomicParamContainer(container.ParamContainer),
+	    AtomicTaggedContainer: {{containerAlias}}.NewAtomicTaggedContainer(container.TaggedContainer),
 	}
 }
 

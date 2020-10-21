@@ -9,6 +9,16 @@ github.com/gomponents/gontainer-helpers v0.0.0-20200912233450-c7e998d664dc h1:FT
 github.com/gomponents/gontainer-helpers v0.0.0-20200912233450-c7e998d664dc/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.0.0-20200915011932-a9c41e0e21bf h1:7tZz3UZ2P0xXCBYT79WSDrXIkcjCggZzYX/3DXjlwm4=
 github.com/gomponents/gontainer-helpers v0.0.0-20200915011932-a9c41e0e21bf/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20200928131540-557300d009d7 h1:YiiWMduIqd+qAk5+QpWxz6Nml5gua9YwF8UqtdcHjq4=
+github.com/gomponents/gontainer-helpers v0.0.0-20200928131540-557300d009d7/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20200928131848-85a9d370b808 h1:SIlFDkeejhi0rOvm9pXxT2lzToefkRNR99ELhHV7ezQ=
+github.com/gomponents/gontainer-helpers v0.0.0-20200928131848-85a9d370b808/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021152604-0a376b8aca46 h1:viBz5Qex5X1KmmMelKTgNarQZZr9BnitjcLdoy9rzNQ=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021152604-0a376b8aca46/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021155806-9f355b5cf11a h1:bRikqxf89+54dB6JFEMGBCUe6bmX89bNqMiE/kTG0v4=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021155806-9f355b5cf11a/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021164634-eba99d32dbdc h1:FIrY9SzAz03gGwgBwG2hC9TSZIAdicW0JEtPGQdx1Sk=
+github.com/gomponents/gontainer-helpers v0.0.0-20201021164634-eba99d32dbdc/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
