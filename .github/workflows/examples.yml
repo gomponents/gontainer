@@ -48,5 +48,8 @@ jobs:
     - name: Example "Global variable"
       run: make run-example-global-var
 
-    - name: Example "Decoratorss"
+    - name: Example "Decorators"
       run: make run-example-decorators
+
+    - name: Example "Disposable parameters"
+      run: make run-example-disposable-params

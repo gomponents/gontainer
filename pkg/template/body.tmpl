@@ -92,11 +92,12 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
     container.TaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
     {{- end }}{{ end }}
 
+    {{- $cacheParams := .Input.Meta.CacheParams }}
     newParamContainer := func() *{{containerAlias}}.ParamContainer {
     	container := {{containerAlias}}.NewParamContainer(nil)
     {{- range $param := .Input.Params}}
         container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
-            Disposable: {{ export not .Input.Meta.CacheParams }},
+            Disposable: {{ export (not $cacheParams) }},
             Provider: func() interface{} {
               // {{ export $param.Raw }}
               return {{$param.Code}}

@@ -1,4 +1,4 @@
-module env
+module disposable-params
 
 go 1.13
 

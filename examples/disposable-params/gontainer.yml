@@ -1,0 +1,7 @@
+meta:
+  cache_params: false
+  functions:
+    rand: '"math/rand".Intn'
+
+parameters:
+  rand: "%rand(100)%"

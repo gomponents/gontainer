@@ -34,6 +34,7 @@ update-helpers:
 	cd examples/global-var && go get -u ${HELPERS_PATH}
 	cd examples/library && go get -u ${HELPERS_PATH}
 	cd examples/decorators && go get -u ${HELPERS_PATH}
+	cd examples/disposable-params && go get -u ${HELPERS_PATH}
 
 run-example-library:
 	cd examples/library && go generate && go run main.go
@@ -55,6 +56,10 @@ run-example-global-var: build
 run-example-decorators: build
 	./app.bin build -i examples/decorators/container/gontainer.yml -o examples/decorators/container/container.go
 	cd examples/decorators && go run .
+
+run-example-disposable-params: build
+	./app.bin build -i examples/disposable-params/gontainer.yml -o examples/disposable-params/container.go
+	cd examples/disposable-params && go run .
 
 tests: tests-unit lint
 
