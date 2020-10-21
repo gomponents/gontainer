@@ -300,7 +300,10 @@ services:
         constructor: "pkg.NewHandler2"
         tags: [{"name": "handler", "priority": 100}]
 
-    # handlerCollection := pkg.NewHandlerCollection(container.MustGetByTag("handler"))
+    # handlerCollection := pkg.NewHandlerCollection([]pkg.Handler{
+    #     container.Get("handlerTwo"),
+    #     container.Get("handlerOne"),
+    # })
     handlerCollection:
         constructor: "pkg.NewHandlerCollection"
         args: ["!tagged handler"]
