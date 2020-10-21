@@ -27,9 +27,9 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 
 func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	var container struct {
-	    *{{containerAlias}}.Container
-	    *{{containerAlias}}.TaggedContainer
-	    *{{containerAlias}}.ParamContainer
+		*{{containerAlias}}.Container
+		*{{containerAlias}}.TaggedContainer
+		*{{containerAlias}}.ParamContainer
 	}
 	getters := make(map[string]{{containerAlias}}.ServiceDefinition)
 	getters["serviceContainer"] = {{containerAlias}}.ServiceDefinition{
@@ -52,83 +52,82 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 
 			{{- if ne $service.Constructor "" }}
 			service, err = {{ callerAlias }}.CallProvider(
-			    {{$service.Constructor}},
+				{{$service.Constructor}},
 				{{- range $arg := $service.Args }}
 				// {{ export $arg.Raw }}
 				{{ $arg.Code }},
 				{{- end }}
 			)
 			if err != nil {
-			    return
+				return
 			}
-            {{- else if ne $service.Value "" }}
-            service = {{ $service.Value }}
+			{{- else if ne $service.Value "" }}
+			service = {{ $service.Value }}
 			{{- end -}}
 
 			{{- range $call := $service.Calls }}
-            {{ if eq $call.Immutable true }}service = {{ end }}{{ callerAlias }}.{{ if eq $call.Immutable true }}MustCallWitherByName{{ else }}MustCallByName{{ end }}(
-                &service,
-                {{ export $call.Method }},
+			{{ if eq $call.Immutable true }}service = {{ end }}{{ callerAlias }}.{{ if eq $call.Immutable true }}MustCallWitherByName{{ else }}MustCallByName{{ end }}(
+				&service,
+				{{ export $call.Method }},
 				{{- range $arg := $call.Args }}
 				// {{ export $arg.Raw }}
 				{{ $arg.Code }},
 				{{- end }}
-            )
+			)
 			{{- end -}}
 
 			{{- range $field := $service.Fields }}
 			// {{ export $field.Value.Raw }}
-            {{ setterAlias }}.MustSet(&service, {{ export $field.Name }}, {{ $field.Value.Code }})
+			{{ setterAlias }}.MustSet(&service, {{ export $field.Name }}, {{ $field.Value.Code }})
 			{{- end }}
 
-            return
+			return
 		},
 		Disposable: {{$service.Disposable}},
 	}
 {{end}}
-    container.Container = {{containerAlias}}.NewContainer(getters)
-    container.TaggedContainer = {{containerAlias}}.NewTaggedContainer(container.Container)
-    {{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
-    container.TaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
-    {{- end }}{{ end }}
+	container.Container = {{containerAlias}}.NewContainer(getters)
+	container.TaggedContainer = {{containerAlias}}.NewTaggedContainer(container.Container)
+	{{- range $service := .Input.Services }}{{ range $tag := $service.Tags }}
+	container.TaggedContainer.OverrideTagService({{ export $service.Name }}, {{ export $tag.Name }}, {{ export $tag.Priority }})
+	{{- end }}{{ end }}
 
-    {{- $cacheParams := .Input.Meta.CacheParams }}
-    newParamContainer := func() *{{containerAlias}}.ParamContainer {
-    	container := {{containerAlias}}.NewParamContainer(nil)
-    {{- range $param := .Input.Params}}
-        container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
-            Disposable: {{ export (not $cacheParams) }},
-            Provider: func() interface{} {
-              // {{ export $param.Raw }}
-              return {{$param.Code}}
-            },
-        })
-    {{- end}}
-    	return container
-    }
-    container.ParamContainer = newParamContainer()
+	{{- $cacheParams := .Input.Meta.CacheParams }}
+	container.ParamContainer = func() *{{containerAlias}}.ParamContainer {
+		container := {{containerAlias}}.NewParamContainer(nil)
+	{{- range $param := .Input.Params}}
+		container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
+			Disposable: {{ export (not $cacheParams) }},
+			Provider: func() interface{} {
+				// {{ export $param.Raw }}
+				return {{$param.Code}}
+			},
+		})
+	{{- end}}
+		return container
+	}()
 
-    {{ range $decorator := .Input.Decorators -}}
-    container.RegisterDecorator(func(id string, i interface{}) (interface{}, error) {
-        {{ if ne "*" $decorator.Tag }}if !container.IsTaggedBy(id, {{ export $decorator.Tag }}) {
-            return i, nil
-        }{{ end }}
-        return {{ callerAlias }}.CallDecorator(
-            {{ $decorator.Decorator }},
-            id,
-            i,
-            {{- range $arg := $decorator.Args }}
-            // {{ export $arg.Raw }}
-            {{ $arg.Code }},
-            {{- end }}
-        )
-    })
-    {{ end }}
+	{{ range $decorator := .Input.Decorators -}}
+	container.RegisterDecorator(func(id string, i interface{}) (interface{}, error) {
+		{{ if ne "*" $decorator.Tag }}if !container.IsTaggedBy(id, {{ export $decorator.Tag }}) {
+			return i, nil
+		}{{ end }}
+		return {{ callerAlias }}.CallDecorator(
+			{{ $decorator.Decorator }},
+			id,
+			i,
+			{{- range $arg := $decorator.Args }}
+			// {{ export $arg.Raw }}
+			{{ $arg.Code }},
+			{{- end }}
+		)
+	})
+	{{ end }}
 
 	return &{{$containerType}}{
-	    AtomicContainer:       {{containerAlias}}.NewAtomicContainer(container.Container),
-	    AtomicParamContainer:  {{containerAlias}}.NewAtomicParamContainer(container.ParamContainer),
-	    AtomicTaggedContainer: {{containerAlias}}.NewAtomicTaggedContainer(container.TaggedContainer),
+		AtomicContainer:       {{containerAlias}}.NewAtomicContainer(container.Container),
+		AtomicParamContainer:  {{containerAlias}}.NewAtomicParamContainer(container.ParamContainer),
+		AtomicTaggedContainer: {{containerAlias}}.NewAtomicTaggedContainer(container.TaggedContainer),
 	}
 }
 
@@ -142,7 +141,7 @@ func (c *{{$containerType}}) {{ $service.Getter }}() (result {{ $service.Type }}
 	object, err = c.Get({{ export $service.Name }})
 
 	if err != nil {
-	    err = {{ importAlias "fmt" }}.Errorf("%s.%s: %s", {{ export $containerType }}, {{ export $service.Getter }}, err.Error())
+		err = {{ importAlias "fmt" }}.Errorf("%s.%s: %s", {{ export $containerType }}, {{ export $service.Getter }}, err.Error())
 		return
 	}
 
