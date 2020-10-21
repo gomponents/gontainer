@@ -67,3 +67,37 @@ type Container interface {
     TaggedContainer
 }
 ```
+
+## Issues
+
+All functions lock internal semaphore. To avoid deadlocks do not use container inside the container's callbacks.
+
+### Deadlocks
+
+In the following example `c.MustGet("foobar")` locks internal mutex.
+`c.MustGet("foo")` tries to acquire the lock on the same, already locked mutex, which finally causes deadlock.
+
+```go
+c := container.NewAtomicContainer(container.NewContainer(nil))
+// ...
+c.Override("foobar", container.ServiceDefinition{
+    Provider: func() (i interface{}, e error) {
+        return c.MustGet("foo").(string) + "bar", nil
+    },
+})
+c.MustGet("foobar")
+```
+
+To solve the above issue move `c.MustGet("foo")` out of the scope of the callback.
+
+```go
+c := container.NewAtomicContainer(container.NewContainer(nil))
+// ...
+foo := c.MustGet("foo").(string)
+c.Override("foobar", container.ServiceDefinition{
+    Provider: func() (i interface{}, e error) {
+        return foo + "bar", nil
+    },
+})
+c.MustGet("foobar")
+```
