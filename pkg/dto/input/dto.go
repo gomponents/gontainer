@@ -6,12 +6,6 @@ import (
 	"github.com/gomponents/gontainer/pkg/consts"
 )
 
-const (
-	defaultPkg                  = "main"
-	defaultContainerType        = "Gontainer"
-	defaultContainerConstructor = "NewContainer"
-)
-
 type Call struct {
 	Method    string
 	Args      []interface{}
@@ -119,6 +113,8 @@ type DTO struct {
 		Pkg                  string            `yaml:"pkg"`                   // default "main"
 		ContainerType        string            `yaml:"container_type"`        // default "Gontainer"
 		ContainerConstructor string            `yaml:"container_constructor"` // default "NewContainer"
+		CacheParams          bool              `yaml:"cache_params"`          // default true
+		CacheServices        bool              `yaml:"cache_services"`        // default true
 		Imports              map[string]string `yaml:"imports"`               // [["alias": "my/long/path"], ...]
 		Functions            map[string]string `yaml:"functions"`             // [["env": "os.Getenv"], ...]
 	} `yaml:"meta"`
@@ -127,11 +123,21 @@ type DTO struct {
 	Decorators []Decorator
 }
 
+const (
+	defaultPkg                  = "main"
+	defaultContainerType        = "Gontainer"
+	defaultContainerConstructor = "NewContainer"
+	defaultCacheParams          = true // todo
+	defaultCacheServices        = true // todo
+)
+
 func CreateDefaultDTO() DTO {
 	result := DTO{}
 	result.Meta.Pkg = defaultPkg
 	result.Meta.ContainerType = defaultContainerType
 	result.Meta.ContainerConstructor = defaultContainerConstructor
+	result.Meta.CacheParams = defaultCacheParams
+	result.Meta.CacheServices = defaultCacheServices
 	result.Meta.Functions = map[string]string{
 		"env":    consts.GontainerHelperPath + "/env.MustGet",
 		"envInt": consts.GontainerHelperPath + "/env.MustGetInt",
