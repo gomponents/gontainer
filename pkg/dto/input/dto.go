@@ -97,7 +97,7 @@ type Service struct {
 	Calls       []Call                 `yaml:"calls"`       // [["SetLogger", ["@logger"]], ...]
 	Fields      map[string]interface{} `yaml:"fields"`      // Field: "%value%"
 	Tags        []Tag                  `yaml:"tags"`        // ["service_decorator", ...]
-	Disposable  bool                   `yaml:"disposable"`  // if true container creates new instance of given service always, otherwise service is cached
+	Disposable  *bool                  `yaml:"disposable"`  // if true container creates new instance of given service always, otherwise service is cached, for nil value use DTO.Meta.CacheServices
 	Todo        bool                   `yaml:"todo"`        // if true skips validation and returns error whenever users asks container for a service
 }
 
@@ -113,8 +113,8 @@ type DTO struct {
 		Pkg                  string            `yaml:"pkg"`                   // default "main"
 		ContainerType        string            `yaml:"container_type"`        // default "Gontainer"
 		ContainerConstructor string            `yaml:"container_constructor"` // default "NewContainer"
-		CacheParams          bool              `yaml:"cache_params"`          // default true
-		CacheServices        bool              `yaml:"cache_services"`        // default true
+		CacheParams          bool              `yaml:"cache_params"`          // default true todo add to README
+		CacheServices        bool              `yaml:"cache_services"`        // default true todo add to README
 		Imports              map[string]string `yaml:"imports"`               // [["alias": "my/long/path"], ...]
 		Functions            map[string]string `yaml:"functions"`             // [["env": "os.Getenv"], ...]
 	} `yaml:"meta"`

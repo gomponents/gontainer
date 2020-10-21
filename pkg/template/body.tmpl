@@ -96,7 +96,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
     	container := {{containerAlias}}.NewParamContainer(nil)
     {{- range $param := .Input.Params}}
         container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
-            Disposable: false,
+            Disposable: {{ export not .Input.Meta.CacheParams }},
             Provider: func() interface{} {
               // {{ export $param.Raw }}
               return {{$param.Code}}

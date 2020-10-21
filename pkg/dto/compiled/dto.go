@@ -57,6 +57,7 @@ type DTO struct {
 		Pkg                  string
 		ContainerType        string
 		ContainerConstructor string
+		CacheParams          bool
 	}
 	Params     []Param
 	Services   []Service

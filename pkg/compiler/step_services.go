@@ -34,7 +34,7 @@ func (ss StepServices) Do(i input.DTO, r *compiled.DTO) error {
 	sort.Strings(names)
 	for _, n := range names {
 		s := i.Services[n]
-		c, err := ss.handleService(n, s)
+		c, err := ss.handleService(n, s, i.Meta.CacheServices)
 		if err != nil {
 			return fmt.Errorf("service `%s`: %s", n, err.Error())
 		}
@@ -49,7 +49,7 @@ func (ss StepServices) Do(i input.DTO, r *compiled.DTO) error {
 	return nil
 }
 
-func (ss StepServices) handleService(name string, s input.Service) (compiled.Service, error) {
+func (ss StepServices) handleService(name string, s input.Service, cache bool) (compiled.Service, error) {
 	if s.Todo {
 		return compiled.Service{
 			Name: name,
@@ -78,7 +78,11 @@ func (ss StepServices) handleService(name string, s input.Service) (compiled.Ser
 		return compiled.Service{}, err
 	}
 	r.Tags = ss.handleServiceTags(s.Tags)
-	r.Disposable = s.Disposable
+	if s.Disposable == nil {
+		r.Disposable = !cache
+	} else {
+		r.Disposable = *s.Disposable
+	}
 	r.Todo = false
 
 	return r, nil

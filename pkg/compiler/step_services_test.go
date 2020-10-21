@@ -258,10 +258,12 @@ func TestStepServices_Do(t *testing.T) {
 					Type:       "*pkg.Db",
 					Value:      "&pkg.Db{}",
 					Tags:       []input.Tag{{Name: "db", Priority: 50}},
-					Disposable: true,
+					Disposable: nil,
 				},
 			},
 		}
+		// todo add test for false
+		i.Meta.CacheServices = true
 		expected := compiled.DTO{
 			Services: []compiled.Service{
 				{
@@ -270,7 +272,7 @@ func TestStepServices_Do(t *testing.T) {
 					Type:       "*alias.Db",
 					Value:      "&alias.Db{}",
 					Tags:       []compiled.Tag{{Name: "db", Priority: 50}},
-					Disposable: true,
+					Disposable: false,
 				},
 			},
 		}
