@@ -137,14 +137,13 @@ func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 	fn += ")"
 
 	// todo handle err
-	ee, _ := exporters.Export(expr)
+	ee, _ := exporters.Export(fmt.Sprintf("cannot execute %s", expr))
 
-	// todo replace by helper
 	fn = fmt.Sprintf(
-		`func() interface{} { const expr = %s; defer func() { r := recover(); if r == nil { return }; panic(%s.Sprintf("cannot execute %%s: %%s", expr, r)) }(); return %s }()`,
-		ee,
-		t.aliases.GetAlias("fmt"),
+		"%s.WrapGetter(func() interface{} { return %s }, %s)",
+		t.aliases.GetAlias(consts.GontainerHelperPath+"/panics"),
 		fn,
+		ee,
 	)
 
 	return Token{
