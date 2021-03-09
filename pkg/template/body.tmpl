@@ -112,7 +112,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 		{{ if ne "*" $decorator.Tag }}if !container.IsTaggedBy(id, {{ export $decorator.Tag }}) {
 			return i, nil
 		}{{ end }}
-		return {{ callerAlias }}.CallDecorator(
+		return {{ callerAlias }}.CallProvider(
 			{{ $decorator.Decorator }},
 			id,
 			i,
