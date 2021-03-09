@@ -11,6 +11,10 @@ type Person struct {
 
 func main() {
 	c := NewContainer()
-	p, _ := c.GetPerson()
+	p, err := c.GetPerson()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	fmt.Printf("%s is %d years old\n", p.Name, p.Age)
 }

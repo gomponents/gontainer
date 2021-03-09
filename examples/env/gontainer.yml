@@ -8,4 +8,4 @@ services:
     value: "Person{}"
     fields:
       Name: "%name%"
-      Age: '%envInt("PERSON_AGE")%'
+      Age: '%envInt("PERSON_AGE", 11)%'

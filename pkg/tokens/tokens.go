@@ -2,6 +2,9 @@ package tokens
 
 import (
 	"fmt"
+
+	"github.com/gomponents/gontainer-helpers/exporters"
+	"github.com/gomponents/gontainer/pkg/consts"
 	"github.com/gomponents/gontainer/pkg/imports"
 	"github.com/gomponents/gontainer/pkg/regex"
 )
@@ -123,10 +126,27 @@ func (t TokenSimpleFunction) Supports(expr string) bool {
 func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 	e, _ := toExpr(expr)
 	_, m := regex.Match(regexSimpleFn, e)
-	fn := fmt.Sprintf("%s(%s)", t.goFn, m["params"])
+	goFn := t.goFn
 	if t.goImport != "" && t.goImport != `"."` {
-		fn = fmt.Sprintf("%s.%s", t.aliases.GetAlias(t.goImport), fn)
+		goFn = fmt.Sprintf("%s.%s", t.aliases.GetAlias(t.goImport), goFn)
 	}
+	fn := fmt.Sprintf("%s.MustCallProvider(%s", t.aliases.GetAlias(consts.GontainerHelperPath+"/caller"), goFn)
+	if m["params"] != "" {
+		fn += fmt.Sprintf(", %s", m["params"])
+	}
+	fn += ")"
+
+	// todo handle err
+	ee, _ := exporters.Export(expr)
+
+	// todo replace by helper
+	fn = fmt.Sprintf(
+		`func() interface{} { const expr = %s; defer func() { r := recover(); if r == nil { return }; panic(%s.Sprintf("cannot execute %%s: %%s", expr, r)) }(); return %s }()`,
+		ee,
+		t.aliases.GetAlias("fmt"),
+		fn,
+	)
+
 	return Token{
 		Kind: KindCode,
 		Raw:  expr,
