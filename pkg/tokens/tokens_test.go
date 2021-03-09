@@ -71,7 +71,7 @@ func TestTokenFactoryStrategy(t *testing.T) {
 			token: Token{
 				Kind: KindCode,
 				Raw:  `%env("FOO")%`,
-				Code: `osAlias.Getenv("FOO")`,
+				Code: `osAlias.WrapGetter(func() interface{} { return osAlias.MustCallProvider(osAlias.Getenv, "FOO") }, "cannot execute %env(\"FOO\")%")`,
 			},
 		},
 		{
