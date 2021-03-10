@@ -76,7 +76,7 @@ func TestTokenFactoryStrategy(t *testing.T) {
 		},
 		{
 			factory:  NewTokenSimpleFunction(mockAliases{alias: "osAlias"}, "env", "os", "Getenv"),
-			expr:     `lorep ipsum`,
+			expr:     `lorem ipsum`,
 			supports: false,
 		},
 	}
