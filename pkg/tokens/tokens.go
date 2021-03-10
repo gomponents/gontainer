@@ -130,21 +130,19 @@ func (t TokenSimpleFunction) Create(expr string) (Token, error) {
 	if t.goImport != "" && t.goImport != `"."` {
 		goFn = fmt.Sprintf("%s.%s", t.aliases.GetAlias(t.goImport), goFn)
 	}
-	fn := fmt.Sprintf("%s.MustCallProvider(%s", t.aliases.GetAlias(consts.GontainerHelperPath+"/caller"), goFn)
+
+	ee := exporters.MustExport(fmt.Sprintf("cannot execute %s", expr))
+
+	fn := fmt.Sprintf(
+		"%s.WrapMustCallProvider(%s, %s",
+		t.aliases.GetAlias(consts.GontainerHelperPath+"/caller"),
+		ee,
+		goFn,
+	)
 	if m["params"] != "" {
 		fn += fmt.Sprintf(", %s", m["params"])
 	}
 	fn += ")"
-
-	// todo handle err
-	ee, _ := exporters.Export(fmt.Sprintf("cannot execute %s", expr))
-
-	fn = fmt.Sprintf(
-		"%s.WrapGetter(func() interface{} { return %s }, %s)",
-		t.aliases.GetAlias(consts.GontainerHelperPath+"/panics"),
-		fn,
-		ee,
-	)
 
 	return Token{
 		Kind: KindCode,
