@@ -1,5 +1,4 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gomponents/gontainer-helpers v0.0.0-20210310090839-8822feeff05d/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.0.0-20210310120908-8d4ba692ead4 h1:9ebugNjxPDMKfwNHLSegds/NMh3p4azq07Lz3Zpp4A4=
 github.com/gomponents/gontainer-helpers v0.0.0-20210310120908-8d4ba692ead4/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
