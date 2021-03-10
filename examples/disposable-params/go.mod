@@ -2,4 +2,4 @@ module disposable-params
 
 go 1.13
 
-require github.com/gomponents/gontainer-helpers v0.0.0-20210310074324-709962bb790e
+require github.com/gomponents/gontainer-helpers v0.0.0-20210310090010-a315a34df4b7

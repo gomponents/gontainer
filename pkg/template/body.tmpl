@@ -78,7 +78,13 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 
 			{{- range $field := $service.Fields }}
 			// {{ export $field.Value.Raw }}
-			{{ setterAlias }}.MustSet(&service, {{ export $field.Name }}, {{ $field.Value.Code }})
+			{{ callerAlias }}.WrapMustCall(
+			    {{ importAlias "fmt" }}.Sprintf("cannot set field `%s`.`%s`", {{ export $service.Name }}, {{ export $field.Name }}),
+			    {{ setterAlias }}.MustSet,
+			    &service,
+			    {{ export $field.Name }},
+			    {{ $field.Value.Code }},
+			)
 			{{- end }}
 
 			return
