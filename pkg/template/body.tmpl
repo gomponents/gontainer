@@ -26,6 +26,17 @@ func (c *{{$containerType}}) ValidateAllServices() (errors map[string]error) {
 }
 
 func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
+    must := func(msg string, f func()) {
+        defer func() {
+            r := recover()
+            if r == nil {
+                return
+            }
+            panic({{ importAlias "fmt" }}.Sprintf("%s: %s", msg, r))
+        }()
+        f()
+    }
+
 	var container struct {
 		*{{containerAlias}}.Container
 		*{{containerAlias}}.TaggedContainer
@@ -66,6 +77,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			{{- end -}}
 
 			{{- range $call := $service.Calls }}
+			// todo must(...
 			{{ if eq $call.Immutable true }}service = {{ end }}{{ callerAlias }}.{{ if eq $call.Immutable true }}MustCallWitherByName{{ else }}MustCallByName{{ end }}(
 				&service,
 				{{ export $call.Method }},
@@ -78,12 +90,11 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 
 			{{- range $field := $service.Fields }}
 			// {{ export $field.Value.Raw }}
-			{{ callerAlias }}.WrapMustCall(
+			must(
 			    {{ importAlias "fmt" }}.Sprintf("cannot set field `%s`.`%s`", {{ export $service.Name }}, {{ export $field.Name }}),
-			    {{ setterAlias }}.MustSet,
-			    &service,
-			    {{ export $field.Name }},
-			    {{ $field.Value.Code }},
+			    func() {
+			        {{ setterAlias }}.MustSet(&service, {{ export $field.Name }}, {{ $field.Value.Code }})
+			    },
 			)
 			{{- end }}
 
