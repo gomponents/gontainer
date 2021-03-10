@@ -27,7 +27,17 @@ mv-to-bin-dir:
 
 globally: build mv-to-bin-dir
 
+clean-up-go-sum:
+	rm go.sum || true
+	cd examples/env && rm go.sum || true
+	cd examples/global-var && rm go.sum || true
+	cd examples/library && rm go.sum || true
+	cd examples/decorators && rm go.sum || true
+	cd examples/disposable-params && rm go.sum || true
+	find . -name 'go.sum' | grep --invert "vendor" | xargs git add
+
 update-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
+update-helpers: clean-up-go-sum
 update-helpers:
 	go get -u ${HELPERS_PATH}
 	cd examples/env && go get -u ${HELPERS_PATH}

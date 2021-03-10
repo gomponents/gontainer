@@ -1,5 +1,5 @@
 parameters:
-  name: '%env("PERSON_NAME")%'
+  name: '%env("PERSON_NAM")%'
 
 services:
   person:
