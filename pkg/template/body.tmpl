@@ -52,7 +52,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 		Disposable: false,
 	}
 {{range $service := .Input.Services}}	getters[{{ export $service.Name }}] = {{containerAlias}}.ServiceDefinition{
-		Provider: func() (service interface{}, err error) {
+		Provider: func() (result interface{}, err error) {
 			defer func() {
 				if r := recover(); r != nil {
 					err = {{ importAlias "fmt" }}.Errorf("%s", r)
@@ -61,33 +61,51 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 
 			{{- if eq $service.Todo true }}
 			err = {{ importAlias "fmt" }}.Errorf("todo")
+			return
+			{{ else }}{{/* todo */}}
+
+			{{ if ne $service.Value "" }}
+			{{/* todo explain why we try to have explicit type and we call reflect.Copy (issue with calls, first prepare tests in gontainer-helpers repo) */}}
+			service := {{ $service.Value }}
+			{{ else if ne $service.Type "" }}
+			var service {{ $service.Type }}
+			{{ else }}
+			var service interface
 			{{ end }}
 
 			{{- if ne $service.Constructor "" }}
-			service, err = {{ callerAlias }}.CallProvider(
+			var tmpService interface{}
+			tmpService, err = {{ callerAlias }}.CallProvider(
 				{{$service.Constructor}},
 				{{- range $arg := $service.Args }}
 				// {{ export $arg.Raw }}
 				{{ $arg.Code }},
 				{{- end }}
 			)
+			{{ reflectAlias }}.Copy(tmpService, &service)
+
 			if err != nil {
 				return
 			}
-			{{- else if ne $service.Value "" }}
-			service = {{ $service.Value }}
+			{{/* todo not required anymore {{- else if ne $service.Value "" }}
+			service = {{ $service.Value */}}
 			{{- end -}}
 
 			{{- range $call := $service.Calls }}
-			// todo must(...
-			{{ if eq $call.Immutable true }}service = {{ end }}{{ callerAlias }}.{{ if eq $call.Immutable true }}MustCallWitherByName{{ else }}MustCallByName{{ end }}(
-				&service,
-				{{ export $call.Method }},
-				{{- range $arg := $call.Args }}
-				// {{ export $arg.Raw }}
-				{{ $arg.Code }},
-				{{- end }}
-			)
+			must(
+			    {{ importAlias "fmt" }}.Sprintf("cannot call `%s`.`%s`", {{ export $service.Name }}, {{ export $call.Method }}),
+			    func() {
+                    {{ if eq $call.Immutable true }}tmpService := {{ end }}{{ callerAlias }}.{{ if eq $call.Immutable true }}MustCallWitherByName{{ else }}MustCallByName{{ end }}(
+                        &service,
+                        {{ export $call.Method }},
+                        {{- range $arg := $call.Args }}
+                        // {{ export $arg.Raw }}
+                        {{ $arg.Code }},
+                        {{- end }}
+                    )
+                    {{ if eq $call.Immutable true }}{{ reflectAlias }}.Copy(tmpService, &service){{ end }}
+                },
+            )
 			{{- end -}}
 
 			{{- range $field := $service.Fields }}
@@ -100,7 +118,9 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			)
 			{{- end }}
 
+            result = service
 			return
+			{{ end }}{{/* todo */}}
 		},
 		Disposable: {{$service.Disposable}},
 	}

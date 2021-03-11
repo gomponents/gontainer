@@ -81,6 +81,9 @@ func createDefaultFunctions(a imports.Aliases) template.FuncMap {
 		"setterAlias": func() string {
 			return a.GetAlias(consts.GontainerHelperPath + "/setter")
 		},
+		"reflectAlias": func() string {
+			return a.GetAlias(consts.GontainerHelperPath + "/reflect")
+		},
 	}
 }
 

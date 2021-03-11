@@ -2,4 +2,4 @@ module global-var
 
 go 1.13
 
-require github.com/gomponents/gontainer-helpers v0.0.0-20210310120908-8d4ba692ead4 // indirect
+require github.com/gomponents/gontainer-helpers v0.0.0-20210311065740-76e02965f6ca // indirect

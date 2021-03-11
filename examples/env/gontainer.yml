@@ -2,10 +2,16 @@ parameters:
   name: '%env("PERSON_NAME")%'
 
 services:
+  yolo:
+    todo: true
+
   person:
     getter: "GetPerson"
-    type: "Person"
-    value: "Person{}"
+    type: "*Person"
+    value: "&Person{}"
     fields:
       Name: "%name%"
       Age: '%envInt("PERSON_AGE", 11)%'
+    calls:
+      - ["SetEyesColor", ["green"]]
+      - ["WithMotherName", ["Lily"], true]
