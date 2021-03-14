@@ -32,8 +32,8 @@ github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef/go.mod h1:cIg4er
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
-github.com/gomponents/gontainer-helpers v0.0.0-20210314164756-6944cbbc6c6e/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
-github.com/gomponents/gontainer-helpers v0.1.1-0.20210314173146-aca98018b9fd h1:Jpq8Xmvu/pAO762QTJ3Tx/Ve55dDks+SaeJDgWxI4cs=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83 h1:dHvduyQNKhNkmS2w0bjAHEuKM1TUraq4w8lvcuXiq0M=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.1.1-0.20210314173146-aca98018b9fd/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/google/btree v1.0.0/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
 github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=

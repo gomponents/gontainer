@@ -1,6 +1,6 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gomponents/gontainer-helpers v0.0.0-20210314164756-6944cbbc6c6e/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
-github.com/gomponents/gontainer-helpers v0.1.1-0.20210314173146-aca98018b9fd h1:Jpq8Xmvu/pAO762QTJ3Tx/Ve55dDks+SaeJDgWxI4cs=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83 h1:dHvduyQNKhNkmS2w0bjAHEuKM1TUraq4w8lvcuXiq0M=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/gomponents/gontainer-helpers v0.1.1-0.20210314173146-aca98018b9fd/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
