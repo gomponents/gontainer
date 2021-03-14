@@ -1,8 +1,8 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
-github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
-github.com/gomponents/gontainer-helpers v0.0.0-20210314193833-eac88d542ec1 h1:ktjxcsXvAg5lAPx2uVd895IHPxTrwKzgy87rCL/oOdk=
 github.com/gomponents/gontainer-helpers v0.0.0-20210314193833-eac88d542ec1/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314204430-0c9bba5a4239 h1:DSJFgof5gvIkuu+x67n2wuzD/xVBjh4Emx2Yq5s0ivc=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314204430-0c9bba5a4239/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/kataras/tablewriter v0.0.0-20180708051242-e063d29b7c23/go.mod h1:kBSna6b0/RzsOcOZf515vAXwSsXYusl2U7SA0XP09yI=
 github.com/landoop/tableprinter v0.0.0-20200805134727-ea32388e35c1/go.mod h1:f0X1c0za3TbET/rl5ThtCSel0+G3/yZ8iuU9BxnyVK0=
 github.com/mattn/go-runewidth v0.0.9/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
