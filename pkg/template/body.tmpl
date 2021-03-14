@@ -98,8 +98,6 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			if err != nil {
 				return
 			}
-			{{/* todo not required anymore {{- else if ne $service.Value "" }}
-			service = {{ $service.Value */}}
 			{{- end -}}
 
 			{{- range $call := $service.Calls }}
