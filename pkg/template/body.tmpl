@@ -146,9 +146,9 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 	{{- range $param := .Input.Params}}
 		container.OverrideParam({{ export $param.Name }}, {{containerAlias}}.ParamDefinition{
 			Disposable: {{ export (not $cacheParams) }},
-			Provider: func() interface{} {
+			Provider: func() (interface{}, error) {
 				// {{ export $param.Raw }}
-				return {{$param.Code}}
+				return {{$param.Code}}, nil
 			},
 		})
 	{{- end}}
