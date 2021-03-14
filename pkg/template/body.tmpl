@@ -64,12 +64,25 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			{{ else }}{{/* todo */}}
 
 			{{ if ne $service.Value "" }}
+			{{/*
+			    // struct with method with pointer receiver
+			    type myStruct struct {}
+			    func (*myStruct) SetName(s string) {}
+
+                // it will work, because we pass pointer to value here
+			    v := myStruct{}
+			    caller.MustCallByName(&v, "SetName", "Jane")
+
+			    // it will not work, because we do not create pointer to `myStruct`
+			    var v interface{} = myStruct{}
+			    caller.MustCallByName(&v, "SetName", "Jane")
+			*/}}
 			{{/* todo explain why we try to have explicit type and we call reflect.Copy (issue with calls, first prepare tests in gontainer-helpers repo) */}}
 			service := {{ $service.Value }}
 			{{ else if ne $service.Type "" }}
 			var service {{ $service.Type }}
 			{{ else }}
-			var service interface
+			var service interface{}
 			{{ end }}
 
 			{{- if ne $service.Constructor "" }}
