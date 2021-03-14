@@ -139,8 +139,8 @@ func CreateDefaultDTO() DTO {
 	result.Meta.CacheParams = defaultCacheParams
 	result.Meta.CacheServices = defaultCacheServices
 	result.Meta.Functions = map[string]string{
-		"env":    consts.GontainerHelperPath + "/env.MustGet",
-		"envInt": consts.GontainerHelperPath + "/env.MustGetInt",
+		"env":    consts.GontainerHelperPath + "/env.Get",
+		"envInt": consts.GontainerHelperPath + "/env.GetInt",
 		"todo":   consts.GontainerHelperPath + "/std.ParameterTodo",
 	}
 	return result
