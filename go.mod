@@ -4,12 +4,11 @@ go 1.13
 
 require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
-	github.com/gomponents/gontainer-helpers v0.0.0-20210314192952-5fcd904a4c83 // indirect
+	github.com/gomponents/gontainer-helpers v0.1.0
 	github.com/kataras/tablewriter v0.0.0-20180708051242-e063d29b7c23 // indirect
-	github.com/landoop/tableprinter v0.0.0-20200805134727-ea32388e35c1
-	github.com/mattn/go-runewidth v0.0.9 // indirect
-	github.com/spf13/cobra v1.0.0
-	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.6.1
-	gopkg.in/yaml.v2 v2.3.0
+	github.com/landoop/tableprinter v0.0.0-20201125135848-89e81fc956e7
+	github.com/mattn/go-runewidth v0.0.10 // indirect
+	github.com/spf13/cobra v1.1.3
+	github.com/stretchr/testify v1.7.0
+	gopkg.in/yaml.v2 v2.4.0
 )
