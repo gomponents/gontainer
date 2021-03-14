@@ -36,8 +36,7 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
         }()
         f()
     }
-    // todo remove, for now just to make sure variable will not be unused
-    must("", func(){})
+    _ = must
 
 	var container struct {
 		*{{containerAlias}}.Container
