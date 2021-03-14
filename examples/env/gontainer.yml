@@ -2,9 +2,6 @@ parameters:
   name: '%env("PERSON_NAME")%'
 
 services:
-  yolo:
-    todo: true
-
   person:
     getter: "GetPerson"
     type: "*Person"
