@@ -77,7 +77,6 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			    var v interface{} = myStruct{}
 			    caller.MustCallByName(&v, "SetName", "Jane")
 			*/}}
-			{{/* todo explain why we try to have explicit type and we call reflect.Copy (issue with calls, first prepare tests in gontainer-helpers repo) */}}
 			service := {{ $service.Value }}
 			{{ else if ne $service.Type "" }}
 			var service {{ $service.Type }}

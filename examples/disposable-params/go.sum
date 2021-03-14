@@ -1,6 +1,7 @@
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gomponents/gontainer-helpers v0.0.0-20210314102024-c0b05598ab12 h1:bPnF+7KqO9d+FVuatSITHLnObf6uy4zRpRiSXGeKUio=
 github.com/gomponents/gontainer-helpers v0.0.0-20210314102024-c0b05598ab12/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314164756-6944cbbc6c6e h1:u6gixJTitkniSZO2Q6FAvWGy25EQJQl8u/1aT93e6DQ=
+github.com/gomponents/gontainer-helpers v0.0.0-20210314164756-6944cbbc6c6e/go.mod h1:YzjzPnzUdBdCf4NgwZKdp5vmYaRT0hNBPvdKjxrzNic=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=

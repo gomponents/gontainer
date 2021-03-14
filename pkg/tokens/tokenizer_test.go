@@ -140,7 +140,7 @@ func TestPatternTokenizer_RegisterFunction(t *testing.T) {
 			{
 				Kind: KindCode,
 				Raw:  expr,
-				Code: `myAlias.Getenv("VAR")`,
+				Code: `myAlias.WrapMustCallProvider("cannot execute %env(\"VAR\")%", myAlias.Getenv, "VAR")`,
 			},
 		},
 		tkns2,
