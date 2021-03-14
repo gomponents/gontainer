@@ -36,15 +36,17 @@ clean-up-go-sum:
 	cd examples/disposable-params && rm go.sum || true
 	find . -name 'go.sum' | grep --invert "vendor" | xargs git add
 
+HELPERS_VERSION ?= master
+
 update-helpers: export HELPERS_PATH = github.com/gomponents/gontainer-helpers
 update-helpers: clean-up-go-sum
 update-helpers:
-	go get -u ${HELPERS_PATH}
-	cd examples/env && go get -u ${HELPERS_PATH}
-	cd examples/global-var && go get -u ${HELPERS_PATH}
-	cd examples/library && go get -u ${HELPERS_PATH}
-	cd examples/decorators && go get -u ${HELPERS_PATH}
-	cd examples/disposable-params && go get -u ${HELPERS_PATH}
+	go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
+	cd examples/env && go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
+	cd examples/global-var && go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
+	cd examples/library && go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
+	cd examples/decorators && go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
+	cd examples/disposable-params && go get -u ${HELPERS_PATH}@${HELPERS_VERSION}
 
 run-example-library:
 	cd examples/library && go generate && go run main.go
