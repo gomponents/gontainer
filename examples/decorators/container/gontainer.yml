@@ -15,12 +15,12 @@ services:
   doer1:
     constructor: "pkg.NewSimpleDoer"
     args: [1]
-    tags: ["doer.step"]
+    tags: ["doer.step"] # default priority is 0
 
   doer2:
     constructor: "pkg.NewSimpleDoer"
     args: [2]
-    tags: ["doer.step"]
+    tags: [{name: "doer.step", priority: -10}]
 
   doer3:
     constructor: "pkg.NewSimpleDoer"
