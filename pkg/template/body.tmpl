@@ -76,6 +76,8 @@ func {{ .Input.Meta.ContainerConstructor }}() *{{$containerType}} {
 			    // it will not work, because we do not create pointer to `myStruct`
 			    var v interface{} = myStruct{}
 			    caller.MustCallByName(&v, "SetName", "Jane")
+
+			    // see https://github.com/golang/go/wiki/MethodSets#interfaces
 			*/}}
 			service := {{ $service.Value }}
 			{{ else if ne $service.Type "" }}
